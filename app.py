@@ -33,6 +33,7 @@ db_host=secrets['HOST']
 db_user=secrets['USER']
 db_password=secrets['PASSWORD']
 db_database=secrets['DATABASE']
+token=secrets['TOKEN']
 
 #endregion Secrets
 
@@ -443,7 +444,7 @@ async def on_message(message):
 #region Core Execution
 
 try:
-    bot.run('MTA5MjYzNDcwNzU0MTM2MDc2Mg.GPtN2w.orxNEoWtbjslz7JSYcsotVc9-FL1XZ70QIim5g')
+    bot.run(token)
 except:
     print('Token err')
 
