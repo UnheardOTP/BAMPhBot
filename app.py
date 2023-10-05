@@ -438,6 +438,8 @@ async def on_message(message):
   elif "chuggy" in messageContent or '<@284719233601110016>' in messageContent:
     emoji = 'chuggy:1148715141651763270'
     await message.add_reaction(emoji) 
+  elif "saad" in messageContent:
+     await channel.send('ALLAHU AKBAR')
 
 #endregion Bot Events
 
