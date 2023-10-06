@@ -440,7 +440,7 @@ async def on_message(message):
     emoji = 'chuggy:1148715141651763270'
     await message.add_reaction(emoji)
   elif '<@1092634707541360762>' in messageContent:
-     await channel.send(f'What the fuck do you want, {author_name}?')
+     await channel.send(f'What the fuck did you tag me, {author_name}?')
 
 #endregion Bot Events
 
