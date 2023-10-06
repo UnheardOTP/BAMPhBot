@@ -424,6 +424,7 @@ async def button(ctx):
 async def on_message(message):
   channel = message.channel
   author = message.author.id
+  author_name = message.author.mention
   messageContent = message.content.lower()
   if "clemson" in messageContent or "clempson" in messageContent:
     emoji = '\N{PILE OF POO}'
@@ -439,7 +440,7 @@ async def on_message(message):
     emoji = 'chuggy:1148715141651763270'
     await message.add_reaction(emoji)
   elif '<@1092634707541360762>' in messageContent:
-     await channel.send(f'What the fuck do you want, {author}?')
+     await channel.send(f'What the fuck do you want, {author_name}?')
 
 #endregion Bot Events
 
