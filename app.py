@@ -34,6 +34,8 @@ db_user=secrets['USER']
 db_password=secrets['PASSWORD']
 db_database=secrets['DATABASE']
 token=secrets['TOKEN']
+wx_apikey=secrets['WX_APIKEY']
+wx_appkey=secrets['WX_APPKEY']
 
 #endregion Secrets
 
@@ -244,9 +246,7 @@ def birthday_check():
      return False
 
 def get_chuggys_temp():
-  apiKey  = '4594a08911ae4f91b02153b634186c76aae5c855a005484083ab0be6a57a64ef'
-  appKey  = '025d97c09b7c44bc970c44af91ff31046d88fbd426ec4381a107979a1e20e899'
-  url     = f'https://api.ambientweather.net/v1/devices?apiKey={apiKey}&applicationKey={appKey}'
+  url     = f'https://api.ambientweather.net/v1/devices?apiKey={wx_apikey}&applicationKey={wx_appkey}'
 
   response = requests.get(url)
   data = response.json()
