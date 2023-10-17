@@ -259,7 +259,7 @@ def get_chuggys_temp():
 ################### END FUNCTIONS ###################
 
 
-################### CRON JOBS ###################
+#region Cron Jobs
 
 intents = discord.Intents.all()
 intents.typing = True
@@ -330,10 +330,13 @@ async def rand_photo():
 # Start cron jobs
 @bot.event
 async def on_ready():
+  if not bday_check.is_running():
     bday_check.start()
+  if not rand_quote.is_running():
     rand_quote.start()
+  if not rand_photo.is_running():
     rand_photo.start() 
-
+    
 #endregion Cron Jobs
   
 #region Slash Commands
