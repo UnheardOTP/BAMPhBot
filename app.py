@@ -336,26 +336,10 @@ async def on_ready():
     rand_quote.start()
   if not rand_photo.is_running():
     rand_photo.start() 
-    
+
 #endregion Cron Jobs
   
 #region Slash Commands
-
-# /preggo_check
-@bot.slash_command(name="preggo_check",
-                  description="BAMPh First Ladies Pregnancy Check?",
-                  guild_ids=[692123814989004862])
-async def preggo_check(ctx):
-  def check(msg):
-    return msg.author == ctx.author and msg.channel == ctx.channel
-
-  s_preg_status = os.environ['s_preg_status']
-  v_preg_status = os.environ['v_preg_status']
-  c_preg_status = os.environ['c_preg_status']
-  
-  await ctx.respond(f"Sarah's Pregnancy Status: **{s_preg_status}** \
-                    \nVanessa's Pregnancy Status: **{v_preg_status}** \
-                    \nCollette's Pregnancy Status: **{c_preg_status}**")
 
 # /quote
 @bot.slash_command(name="quote",
