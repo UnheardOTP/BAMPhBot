@@ -46,6 +46,7 @@ def create_db_connection():
   mydb = mysql.connector.connect(
               host=db_host,
               user=db_user,
+
               password=db_password,
               database=db_database
           )
