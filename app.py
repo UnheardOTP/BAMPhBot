@@ -457,7 +457,13 @@ async def on_message(message):
     )
     response_msg = response['choices'][0]['message']['content']
     # Send the response as a message
-    await message.channel.send(response_msg)
+    if len(response_msg) > 1500:
+      chunkLength = 1500
+      chunks = [response_msg[i:i+chunkLength ] for i in range(0, len(response_msg), chunkLength)]
+      for chunk in chunks:
+        await message.channel.send(chunk)
+    else:
+      await message.channel.send(response_msg)
 
 #endregion Bot Events
 
