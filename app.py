@@ -454,6 +454,7 @@ async def on_message(message):
          {'role': 'user', 'content': msg}
       ],
       temperature=0.9,
+      max_tokens=15500
     )
     # Send the response as a message
     await message.channel.send(response['choices'][0]['message']['content'])
