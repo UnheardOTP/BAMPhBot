@@ -447,7 +447,7 @@ async def on_message(message):
     # Use the OpenAI API to generate a response to the message
     response = openai.ChatCompletion.create(
       model="gpt-3.5-turbo",
-      messages=f"{message.content}",
+      messages=f"[{'role': 'user', 'content': '{message.content}'}]",
       max_tokens=2048,
       temperature=0.9,
     )
