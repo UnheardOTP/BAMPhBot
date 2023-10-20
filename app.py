@@ -449,7 +449,7 @@ async def on_message(message):
       engine="gpt-3.5-turbo",
       prompt=f"{message.content}",
       max_tokens=2048,
-      temperature=0.2,
+      temperature=0.9,
     )
     # Send the response as a message
     await message.channel.send(response.choices[0].text)
