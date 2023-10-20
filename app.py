@@ -430,7 +430,7 @@ async def on_message(message):
   author = message.author.id
   author_name = message.author.mention
   messageContent = message.content.lower()
-  if "clemson" in messageContent or "clempson" in messageContent:
+  if ("clemson" in messageContent or "clempson" in messageContent) and '<@1092634707541360762>' not in messageContent:
     emoji = '\N{PILE OF POO}'
     await message.add_reaction(emoji)
     #await channel.send("Fuck clempson.")
@@ -449,7 +449,7 @@ async def on_message(message):
     response = openai.ChatCompletion.create(
       model="gpt-3.5-turbo",
       messages=[
-         {'role': 'system', 'content': 'You are a helpful assistant.'},
+         {'role': 'system', 'content': 'You do not care for clemson university and are very biased towards the university of south carolina.'},
          {'role': 'user', 'content': msg}
       ],
       max_tokens=2048,
