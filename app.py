@@ -36,8 +36,11 @@ db_database=secrets['DATABASE']
 token=secrets['TOKEN']
 wx_apikey=secrets['WX_APIKEY']
 wx_appkey=secrets['WX_APPKEY']
+openai_apikey=secrets['OPENAI_APIKEY']
 
 #endregion Secrets
+
+openai.api_key = openai_apikey
 
 #region Functions
 
@@ -395,14 +398,26 @@ async def chuggys_temp(ctx):
 
 #region Test Code
 
-class MyView(discord.ui.View): # Create a class called MyView that subclasses discord.ui.View
-    @discord.ui.button(label="Click me!", style=discord.ButtonStyle.primary, emoji="😎") # Create a button with the label "😎 Click me!" with color Blurple
-    async def button_callback(self, button, interaction):
-        await interaction.response.send_message("You clicked the button!") # Send a message when the button is clicked
+# OpenAI chat
+@bot.event
+async def on_message(message):
+  # Only respond to messages from other users, not from the bot itself
+  if message.author == client.user:
+    return
+  
+  # Check if the bot is mentioned in the message
+  if client.user in message.mentions:
+ 
+    # Use the OpenAI API to generate a response to the message
+    response = openai.Completion.create(
+    engine="text-davinci-002",
+    prompt=f"{message.content}",
+    max_tokens=2048,
+    temperature=0.2,
+    )
 
-@bot.slash_command() # Create a slash command
-async def button(ctx):
-    await ctx.respond("This is a button!", view=MyView()) # Send a message with our View class that contains the button
+  # Send the response as a message
+  await message.channel.send(response.choices[0].text)
 
 #endregion Test Code
 
@@ -427,8 +442,6 @@ async def on_message(message):
   elif "chuggy" in messageContent or '<@284719233601110016>' in messageContent:
     emoji = 'chuggy:1148715141651763270'
     await message.add_reaction(emoji)
-  elif '<@1092634707541360762>' in messageContent:
-     await channel.send(f'Why the fuck did you tag me, {author_name}?')
 
 #endregion Bot Events
 
