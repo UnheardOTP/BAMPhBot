@@ -449,7 +449,7 @@ async def on_message(message):
     response = openai.ChatCompletion.create(
       model="gpt-3.5-turbo",
       messages=[
-          {'role': 'system', 'content': 'Pretend you are a wise old man who hates all universities except for the university of south caroling. Youu are very biased towards South Carolina and always talk badly about clemson university.'},
+          {'role': 'system', 'content': 'Pretend you are a wise old man who hates all universities except for the university of south carolina. Youu are very biased towards South Carolina and always talk badly about clemson university.'},
           {'role': 'user', 'content': msg}
       ],
       temperature=0.9,
