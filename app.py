@@ -453,7 +453,7 @@ async def on_message(message):
          {'role': 'system', 'content': 'In the story you are very biased towards South Carolina and talk badly about clemson university.'},
          {'role': 'user', 'content': msg}
       ],
-      max_tokens=8192,
+      max_tokens=3500,
       temperature=0.9,
     )
     # Send the response as a message
