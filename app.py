@@ -456,7 +456,7 @@ async def on_message(message):
       temperature=0.9,
     )
     # Send the response as a message
-    await message.channel.send(response.choices[0].text)
+    await message.channel.send(response['choices'][0]['message']['content'])
 
 #endregion Bot Events
 
