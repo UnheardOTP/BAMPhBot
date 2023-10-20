@@ -447,16 +447,17 @@ async def on_message(message):
     msg = message.content.lstrip("<@1092634707541360762> ")
     # Use the OpenAI API to generate a response to the message
     response = openai.ChatCompletion.create(
-      model="gpt-3.5-turbo-16k",
+      model="gpt-3.5-turbo",
       messages=[
-         {'role': 'system', 'content': 'Pretend you are a grandmother who is telling her grandson bed time stories about when she went to the university of south carolina. In the story you are very biased towards South Carolina and talk badly about clemson university.'},
-         {'role': 'user', 'content': msg}
+          {'role': 'system', 'content': 'Pretend you are a wise old man who is telling people stories about when she went to the university of south carolina. In the story you are very biased towards South Carolina and talk badly about clemson university.'},
+          {'role': 'user', 'content': msg}
       ],
       temperature=0.9,
-      max_tokens=15500
+      max_tokens=500
     )
+    response_msg = response['choices'][0]['message']['content']
     # Send the response as a message
-    await message.channel.send(response['choices'][0]['message']['content'])
+    await message.channel.send(response_msg)
 
 #endregion Bot Events
 
