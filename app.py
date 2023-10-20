@@ -446,7 +446,7 @@ async def on_message(message):
   elif '<@1092634707541360762>' in messageContent:
     # Use the OpenAI API to generate a response to the message
     response = openai.ChatCompletion.create(
-      engine="gpt-3.5-turbo",
+      model="gpt-3.5-turbo",
       messages=f"{message.content}",
       max_tokens=2048,
       temperature=0.9,
