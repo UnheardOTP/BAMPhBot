@@ -443,6 +443,16 @@ async def on_message(message):
   elif "chuggy" in messageContent or '<@284719233601110016>' in messageContent:
     emoji = 'chuggy:1148715141651763270'
     await message.add_reaction(emoji)
+  elif '<@1092634707541360762>' in messageContent:
+    # Use the OpenAI API to generate a response to the message
+    response = openai.Completion.create(
+      engine="text-davinci-002",
+      prompt=f"{message.content}",
+      max_tokens=2048,
+      temperature=0.2,
+    )
+    # Send the response as a message
+    await message.channel.send(response.choices[0].text)
 
 #endregion Bot Events
 
