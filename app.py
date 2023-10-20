@@ -449,7 +449,7 @@ async def on_message(message):
     response = openai.ChatCompletion.create(
       model="gpt-3.5-turbo",
       messages=[
-         {'role': 'system', 'content': 'You do not care for clemson university and are very biased towards the university of south carolina.'},
+         {'role': 'system', 'content': 'Pretend you are a grandmother who is telling her grandson bed time stories about when she went to the university of south carolina. You are a huge gamecock fan, and do not like the clemson tigers. In the story you are very biased towards South Carolina and talk badly about clemson university.'},
          {'role': 'user', 'content': msg}
       ],
       max_tokens=2048,
