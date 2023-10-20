@@ -7,6 +7,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 import requests
 import json
+import openai
 
 
 print('BAMPhBot Booting...')
