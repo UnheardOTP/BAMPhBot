@@ -444,10 +444,12 @@ async def on_message(message):
     emoji = 'chuggy:1148715141651763270'
     await message.add_reaction(emoji)
   elif '<@1092634707541360762>' in messageContent:
+    message = message.content.lstrip("<@1092634707541360762> ")
+    print(message)
     # Use the OpenAI API to generate a response to the message
     response = openai.ChatCompletion.create(
       model="gpt-3.5-turbo",
-      messages=f"[{'role': 'user', 'content': {message.content}}]",
+      messages=f"[{'role': 'user', 'content': '{message}'}]",
       max_tokens=2048,
       temperature=0.9,
     )
