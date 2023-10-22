@@ -77,6 +77,7 @@ def update_ai_prompt(prompt):
   db_conn = create_db_connection()
   db_cursor = db_conn.cursor()
 
+  print(prompt)
   sql = f"update ai_prompt set prompt = '{prompt}'"
 
   db_cursor.execute(sql)
@@ -288,8 +289,7 @@ def get_chuggys_temp():
 
   return temp
 
-
-################### END FUNCTIONS ###################
+#endregion functions
 
 
 #region Cron Jobs
