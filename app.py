@@ -409,6 +409,18 @@ async def add_quote(ctx, prompt):
 
   await ctx.respond("AI Prompt Updated")
 
+# /get_current_ai_prompt
+@bot.slash_command(name="get_current_ai_prompt",
+                  description="Set the style of AI response.",
+                  guild_ids=[692123814989004862])
+async def add_quote(ctx):
+  def check(msg):
+    return msg.author == ctx.author and msg.channel == ctx.channel 
+
+  prompt = get_ai_prompt()
+
+  await ctx.respond(f"Currently I am programmed to respond based on this: {prompt}")
+
 # /mantrip
 @bot.slash_command(name="mantrip",
                 description="Days remaining til ManTrip™.",
