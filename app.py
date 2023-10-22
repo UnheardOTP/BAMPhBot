@@ -69,7 +69,6 @@ def get_ai_prompt():
   
   db_conn.commit()
   db_conn.close()
-  print(ai_prompt[0][0])
   return str(ai_prompt[0][0])
 
 # Update AI Prompt
@@ -77,7 +76,6 @@ def update_ai_prompt(prompt):
   db_conn = create_db_connection()
   db_cursor = db_conn.cursor()
 
-  print(prompt)
   sql = f"update ai_prompt set prompt = '{prompt}'"
 
   db_cursor.execute(sql)
@@ -404,7 +402,6 @@ async def add_quote(ctx, prompt):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
 
-  print(prompt)
   update_ai_prompt(prompt)
 
   await ctx.respond("AI Prompt Updated")
