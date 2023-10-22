@@ -57,6 +57,34 @@ def create_db_connection():
   
   return mydb
 
+# Get current AI training prompt
+def get_ai_prompt():
+  db_conn = create_db_connection()
+  db_cursor = db_conn.cursor()
+  
+  sql = f"select prompt from ai_prompt"
+  
+  db_cursor.execute(sql)
+  ai_prompt = db_cursor.fetchall()
+  
+  db_conn.commit()
+  db_conn.close()
+  
+  return str(ai_prompt[0][0])
+
+# Update AI Prompt
+def update_ai_prompt(prompt):
+  db_conn = create_db_connection()
+  db_cursor = db_conn.cursor()
+
+  sql = f"update ai_prompt set prompt = {prompt}"
+
+  db_cursor.execute(sql)
+
+  db_conn.commit()
+  db_conn.close()
+
+
 # Used quote reset (when all quotes have been used)
 def reset_quotes():
     db_conn = create_db_connection()
@@ -368,6 +396,18 @@ async def add_quote(ctx, quote, author):
 
   await ctx.respond(f"{quote} - {author} - Added")
 
+# /set_ap_prompt
+@bot.slash_command(name="set_ai_prompt",
+                  description="Set the style of AI response.",
+                  guild_ids=[692123814989004862])
+async def add_quote(ctx, prompt):
+  def check(msg):
+    return msg.author == ctx.author and msg.channel == ctx.channel 
+
+  update_ai_prompt(prompt)
+
+  await ctx.respond("AI Prompt Updated")
+
 # /mantrip
 @bot.slash_command(name="mantrip",
                 description="Days remaining til ManTrip™.",
@@ -449,7 +489,7 @@ async def on_message(message):
     response = openai.ChatCompletion.create(
       model="gpt-3.5-turbo",
       messages=[
-          {'role': 'system', 'content': 'Pretend you are a narcissistic asshole who only replies to questions with snarky, tongue in check, responses.'},
+          {'role': 'system', 'content': get_ai_prompt()},
           {'role': 'user', 'content': msg}
       ],
       temperature=0.9,
