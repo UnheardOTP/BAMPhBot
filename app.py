@@ -404,7 +404,7 @@ async def add_quote(ctx, prompt):
 
   update_ai_prompt(prompt)
 
-  await ctx.respond("AI Prompt Updated")
+  await ctx.respond(f"AI prompt set to: {prompt}")
 
 # /get_current_ai_prompt
 @bot.slash_command(name="get_current_ai_prompt",
