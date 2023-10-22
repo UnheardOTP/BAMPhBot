@@ -69,7 +69,7 @@ def get_ai_prompt():
   
   db_conn.commit()
   db_conn.close()
-  print(ai_prompt)
+  print(ai_prompt[0][0])
   return str(ai_prompt[0][0])
 
 # Update AI Prompt
