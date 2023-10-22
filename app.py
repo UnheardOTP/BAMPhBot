@@ -396,7 +396,7 @@ async def add_quote(ctx, quote, author):
 
   await ctx.respond(f"{quote} - {author} - Added")
 
-# /set_ap_prompt
+# /set_ai_prompt
 @bot.slash_command(name="set_ai_prompt",
                   description="Set the style of AI response.",
                   guild_ids=[692123814989004862])
@@ -404,6 +404,7 @@ async def add_quote(ctx, prompt):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
 
+  print(prompt)
   update_ai_prompt(prompt)
 
   await ctx.respond("AI Prompt Updated")
