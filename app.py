@@ -422,7 +422,10 @@ async def on_ready():
 async def everyone_is_alex(ctx):
   for member in ctx.guild.members:
     print(f"Changing {member.nick}")
-    await member.edit(nick="Alex")
+    try:
+      await member.edit(nick="Alex")
+    except:
+      print("Permission error.")
 
 
 # /reset_all_names
