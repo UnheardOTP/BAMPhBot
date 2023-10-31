@@ -441,8 +441,10 @@ async def reset_all_names(ctx):
 
     # update name to one from database
     current_member = await bot.get_guild(ctx.guild.id).fetch_member(int(id))
-
-    await current_member.edit(nick=name)
+    try:
+      await current_member.edit(nick=name)
+    except:
+      print("Permission error.")
       
 
 # /quote
