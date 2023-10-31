@@ -487,6 +487,7 @@ async def on_message(message):
 async def on_message(message):
   channel = message.channel
   author = message.author.id
+  print(author)
   author_name = message.author.mention
   messageContent = message.content.lower()
   if ("clemson" in messageContent or "clempson" in messageContent) and '<@1092634707541360762>' not in messageContent:
@@ -523,6 +524,12 @@ async def on_message(message):
         await message.channel.send(chunk)
     else:
       await message.channel.send(response_msg)
+
+@bot.event # Set username back to the name I gave them
+async def on_member_update(before, after):
+   new_nick = after.nick
+   if new_nick:
+      await after.edit(nick=before.nick)
 
 #endregion Bot Events
 
