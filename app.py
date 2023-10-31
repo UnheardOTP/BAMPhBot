@@ -421,7 +421,7 @@ async def on_ready():
                   guild_ids=[692123814989004862])
 async def everyone_is_alex(ctx):
   for member in ctx.guild.members:
-    member.edit(nick="Alex")
+    await member.edit(nick="Alex")
 
 
 # /reset_all_names
@@ -438,7 +438,7 @@ async def reset_all_names(ctx):
     # update name to one from database
     current_member = await bot.get_guild(ctx.guild.id).fetch_member(int(id))
 
-    current_member.edit(nick=name)
+    await current_member.edit(nick=name)
       
 
 # /quote
