@@ -337,6 +337,13 @@ async def bday_check():
 
   if bday != False:
     await channel.send(f"{bday}")
+
+# Tag Alex
+@tasks.loop(hours=27)
+async def bug_alex():
+  await bot.wait_until_ready()
+  channel = bot.get_channel(1092446896158679131)
+  await channel.send('<@770090117712314379>')
   
 # Send a random quote every 4 hours
 @tasks.loop(hours=24)
@@ -367,6 +374,8 @@ async def on_ready():
     rand_quote.start()
   if not rand_photo.is_running():
     rand_photo.start() 
+  if not bug_alex.is_running():
+    bug_alex.start() 
 
 #endregion Cron Jobs
   
