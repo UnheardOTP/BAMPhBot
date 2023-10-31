@@ -436,7 +436,8 @@ async def reset_all_names(ctx):
 
     # update name to one from database
     current_member = bot.get_guild(692123814989004862).get_member(id)
-    current_member.edit(nick=name)
+    print(current_member)
+    #current_member.edit(nick=name)
       
 
 # /quote
