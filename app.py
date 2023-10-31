@@ -392,7 +392,7 @@ async def on_ready():
     rand_quote.start()
   if not rand_photo.is_running():
     rand_photo.start() 
-  if not bug_alex.is_running():
+  #if not bug_alex.is_running():
     #bug_alex.start() 
 
 #endregion Cron Jobs
