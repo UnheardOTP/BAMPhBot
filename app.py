@@ -328,13 +328,14 @@ intents.message_content = True
 bot = discord.Bot(intents=intents)
 
 # Start loops
-
+'''
 @bot.event
 async def on_ready():
   bday_check.start()
   rand_quote.start()
   rand_photo.start()
-  
+'''
+
 @bot.event
 async def on_message(message):
   channel = message.channel
@@ -429,12 +430,12 @@ async def everyone_is_alex(ctx):
 async def reset_all_names(ctx):
   all_members = get_all_members()
 
-  for member in members:
+  for member in all_members:
     id = member[0]
     name = member[1]
 
     # update name to one from database
-    current_member = member = bot.get_guild(692123814989004862).get_member(id)
+    current_member = bot.get_guild(692123814989004862).get_member(id)
     current_member.edit(nick=name)
       
 
