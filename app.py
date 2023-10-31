@@ -421,6 +421,7 @@ async def on_ready():
                   guild_ids=[692123814989004862])
 async def everyone_is_alex(ctx):
   for member in ctx.guild.members:
+    print(f"Changing {member.nick}")
     await member.edit(nick="Alex")
 
 
