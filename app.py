@@ -64,8 +64,6 @@ def get_nickname(discord_id):
   db_cursor = db_conn.cursor()
   
   sql = f"select real_name from bamph_users where discord_id = '{discord_id}'"
-
-  print(sql)
   
   db_cursor.execute(sql)
   real_name = db_cursor.fetchall()
@@ -75,6 +73,18 @@ def get_nickname(discord_id):
   db_conn.commit()
   db_conn.close()
   return str(real_name[0][0])
+
+# Get all members names from database
+def get_all_members():
+  db_conn = create_db_connection()
+  db_cursor = db_conn.cursor()
+  
+  sql = f"select discord_id, real_name from bamph_users"
+
+  db_cursor.execute(sql)
+  members = db_cursor.fetchall()
+
+  return members
 
 # Get current AI training prompt
 def get_ai_prompt():
@@ -321,7 +331,7 @@ bot = discord.Bot(intents=intents)
 
 @bot.event
 async def on_ready():
-  #bday_check.start()
+  bday_check.start()
   rand_quote.start()
   rand_photo.start()
   
@@ -385,6 +395,7 @@ async def rand_photo():
       update_last_run('photo', datetime.now().isoformat())
 
 # Start cron jobs
+'''
 @bot.event
 async def on_ready():
   if not bday_check.is_running():
@@ -395,10 +406,37 @@ async def on_ready():
     rand_photo.start() 
   if not bug_alex.is_running():
     bug_alex.start() 
+'''
 
 #endregion Cron Jobs
   
 #region Slash Commands
+
+'''
+# /everyone_is_alex
+@bot.slash_command(name="everyone_is_alex",
+                  description="Make everyone Alex",
+                  guild_ids=[692123814989004862])
+async def everyone_is_alex(ctx):
+  for member in ctx.guild.members:
+    member.edit(nick="Alex")
+'''
+
+# /reset_all_names
+@bot.slash_command(name="reset_all_names",
+                  description="Reset all nicknames",
+                  guild_ids=[692123814989004862])
+async def reset_all_names(ctx):
+  all_members = get_all_members()
+
+  for member in members:
+    id = member[0]
+    name = member[1]
+
+    # update name to one from database
+    current_member = member = bot.get_guild(692123814989004862).get_member(id)
+    current_member.edit(nick=name)
+      
 
 # /quote
 @bot.slash_command(name="quote",
