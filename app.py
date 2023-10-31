@@ -20,6 +20,8 @@ intents.messages = True
 intents.message_content = True
 bot = discord.Bot(intents=intents)
 
+print(discord.Guild.id)
+
 #endregion Bot Definitions
 
 #region Secrets
@@ -323,7 +325,6 @@ async def on_ready():
   #bday_check.start()
   rand_quote.start()
   rand_photo.start()
-  print(client.guilds)
   
 @bot.event
 async def on_message(message):
