@@ -63,9 +63,13 @@ def get_nickname(discord_id):
   db_cursor = db_conn.cursor()
   
   sql = f"select real_name from bamph_users where discord_id = '{discord_id}'"
+
+  print(sql)
   
   db_cursor.execute(sql)
   real_name = db_cursor.fetchall()
+
+  print(real_name)
   
   db_conn.commit()
   db_conn.close()
@@ -316,7 +320,7 @@ bot = discord.Bot(intents=intents)
 
 @bot.event
 async def on_ready():
-    bday_check.start()
+    #bday_check.start()
     rand_quote.start()
     rand_photo.start()
 
@@ -389,7 +393,7 @@ async def on_ready():
   if not rand_photo.is_running():
     rand_photo.start() 
   if not bug_alex.is_running():
-    bug_alex.start() 
+    #bug_alex.start() 
 
 #endregion Cron Jobs
   
