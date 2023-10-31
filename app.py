@@ -387,14 +387,14 @@ async def rand_photo():
 # Start cron jobs
 @bot.event
 async def on_ready():
-  #if not bday_check.is_running():
-  #  bday_check.start()
+  if not bday_check.is_running():
+    bday_check.start()
   if not rand_quote.is_running():
     rand_quote.start()
   if not rand_photo.is_running():
     rand_photo.start() 
-  #if not bug_alex.is_running():
-    #bug_alex.start() 
+  if not bug_alex.is_running():
+    bug_alex.start() 
 
 #endregion Cron Jobs
   
@@ -481,11 +481,11 @@ async def chuggys_temp(ctx):
 @bot.event
 async def on_message(message):
   # Only respond to messages from other users, not from the bot itself
-  if message.author == client.user:
+  if message.author == bot.user:
     return
   
   # Check if the bot is mentioned in the message
-  if client.user in message.mentions:
+  if bot.user in message.mentions:
  
     # Use the OpenAI API to generate a response to the message
     response = openai.Completion.create(
@@ -545,13 +545,13 @@ async def on_message(message):
 
 @bot.event # Set username back to the name I gave them
 async def on_member_update(before, after):
-  member = bot.get_guild(before.guild.id).get_member(before.id)
-  new_nick = after.nick
+  if (before.guild.name == "BAMPh Worldwide"):
+    member = bot.get_guild(before.guild.id).get_member(before.id)
+    new_nick = after.nick
 
-  # Get what their name should be
-  real_name = get_nickname(member.id)
-  await after.edit(nick=real_name)
-  return
+    # Get what their name should be
+    real_name = get_nickname(member.id)
+    await after.edit(nick=real_name)
 
 #endregion Bot Events
 
