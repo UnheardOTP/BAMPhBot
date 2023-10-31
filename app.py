@@ -436,7 +436,7 @@ async def on_ready():
 async def everyone_is_alex(ctx):
   for member in ctx.guild.members:
     print(f"Changing {member.nick}")
-    if !member.bot:
+    if not member.bot:
       try:
         await member.edit(nick="Alex")
       except:
@@ -457,7 +457,7 @@ async def reset_all_names(ctx):
     # update name to one from database
     current_member = await bot.get_guild(ctx.guild.id).fetch_member(int(id))
 
-    if !current_member.bot:
+    if not current_member.bot:
       try:
         await current_member.edit(nick=name)
       except:
