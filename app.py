@@ -551,6 +551,7 @@ async def on_member_update(before, after):
   # Get what their name should be
   real_name = get_nickname(member.id)
   await after.edit(nick=real_name)
+  return
 
 #endregion Bot Events
 
