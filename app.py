@@ -59,6 +59,20 @@ def create_db_connection():
   
   return mydb
 
+# Check if nick protection is on
+def nick_protect():
+  db_conn = create_db_connection()
+  db_cursor = db_conn.cursor()
+  
+  sql = f"select value from flags where param = 'nick_protect'"
+  
+  db_cursor.execute(sql)
+  nick_protect = db_cursor.fetchall()
+  
+  db_conn.commit()
+  db_conn.close()
+  return bool(nick_protect[0][0])
+
 # Get user nickname
 def get_nickname(discord_id):
   db_conn = create_db_connection()
@@ -592,7 +606,7 @@ async def on_message(message):
 
 @bot.event # Set username back to the name I gave them
 async def on_member_update(before, after):
-  if before.nick != after.nick:
+  if before.nick != after.nick and nick_protect() == false:
     member = bot.get_guild(before.guild.id).get_member(before.id)
     new_nick = after.nick
 
