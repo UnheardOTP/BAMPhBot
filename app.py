@@ -320,11 +320,11 @@ bot = discord.Bot(intents=intents)
 
 @bot.event
 async def on_ready():
-    #bday_check.start()
-    rand_quote.start()
-    rand_photo.start()
-    print(bot.guild.name)
-
+  #bday_check.start()
+  rand_quote.start()
+  rand_photo.start()
+  print(client.guilds)
+  
 @bot.event
 async def on_message(message):
   channel = message.channel
