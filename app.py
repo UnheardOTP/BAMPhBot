@@ -436,7 +436,7 @@ async def reset_all_names(ctx):
     name = member[1]
 
     # update name to one from database
-    current_member = bot.get_guild(ctx.guild.id).fetch_member(int(id))
+    current_member = await bot.get_guild(ctx.guild.id).fetch_member(int(id))
     print(current_member)
     print(bot.get_guild(ctx.guild.id))
     print(id)
