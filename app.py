@@ -20,7 +20,9 @@ intents.messages = True
 intents.message_content = True
 bot = discord.Bot(intents=intents)
 
-print(discord.Guild.id)
+guilds = discord.Guild.id
+for guild in guilds:
+  print(guild)
 
 #endregion Bot Definitions
 
