@@ -414,7 +414,7 @@ async def on_ready():
   
 #region Slash Commands
 
-'''
+
 # /everyone_is_alex
 @bot.slash_command(name="everyone_is_alex",
                   description="Make everyone Alex",
@@ -422,7 +422,7 @@ async def on_ready():
 async def everyone_is_alex(ctx):
   for member in ctx.guild.members:
     member.edit(nick="Alex")
-'''
+
 
 # /reset_all_names
 @bot.slash_command(name="reset_all_names",
@@ -437,10 +437,8 @@ async def reset_all_names(ctx):
 
     # update name to one from database
     current_member = await bot.get_guild(ctx.guild.id).fetch_member(int(id))
-    print(current_member)
-    print(bot.get_guild(ctx.guild.id))
-    print(id)
-    #current_member.edit(nick=name)
+
+    current_member.edit(nick=name)
       
 
 # /quote
