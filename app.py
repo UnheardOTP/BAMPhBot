@@ -323,6 +323,7 @@ async def on_ready():
     #bday_check.start()
     rand_quote.start()
     rand_photo.start()
+    print(bot.guild.name)
 
 @bot.event
 async def on_message(message):
