@@ -429,16 +429,16 @@ async def on_ready():
 #region Slash Commands
 
 
-# /everyone_is_alex
-@bot.slash_command(name="everyone_is_alex",
+# /rename_everyone
+@bot.slash_command(name="rename_everyone",
                   description="Make everyone Alex",
                   guild_ids=[692123814989004862])
-async def everyone_is_alex(ctx):
+async def rename_everyone(ctx, name):
   for member in ctx.guild.members:
     print(f"Changing {member.nick}")
     if not member.bot:
       try:
-        await member.edit(nick="Alex")
+        await member.edit(nick=name)
       except:
         print("Permission error.")
 
