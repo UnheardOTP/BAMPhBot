@@ -65,22 +65,24 @@ def nick_protect(flag=None):
   db_conn = create_db_connection()
   db_cursor = db_conn.cursor()
   
-  if flag == None:
-    sql = f"select value from flags where param = 'nick_protect'"
-  elif flag.lower() == "off": # Turn off nick protect
-      sql = f"update flags set value = 0 where param = 'nick_protect'"
-  elif flag.lower() == "on": # Turn on nick protect
-      sql = f"update flags set value = 1 where param = 'nick_protect'"
-  
-  db_cursor.execute(sql)
-  nick_protect = db_cursor.fetchall()
-  
-  db_conn.commit()
-  db_conn.close()
-  if flag == None:
-    result = bool(nick_protect[0][0])
-  else:
+  if flag.lower() == "off": # Turn off nick protect
+    sql = f"update flags set value = 0 where param = 'nick_protect'"
     result = None
+  elif flag.lower() == "on": # Turn on nick protect
+    sql = f"update flags set value = 1 where param = 'nick_protect'"
+    result = None
+  elif flag == None:
+    sql = f"select value from flags where param = 'nick_protect'"
+  
+    db_cursor.execute(sql)
+    nick_protect = db_cursor.fetchall()
+    
+    db_conn.commit()
+    db_conn.close()
+    if flag == None:
+      result = bool(nick_protect[0][0])
+    else:
+      result = None
   
   return result
 
