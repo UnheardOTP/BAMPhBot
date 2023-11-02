@@ -1,7 +1,7 @@
 import os
 import discord
 from datetime import datetime, timedelta, date
-from discord.ext import commands, tasks
+from discord.ext import commands, tasks, has_permissions
 import mysql.connector
 import pandas as pd
 from sqlalchemy import create_engine
@@ -477,6 +477,7 @@ async def reset_all_names(ctx):
 @bot.slash_command(name="nickname_protect",
                    description="Enable/Disable Nick Protection",
                    guild_ids=[692123814989004862])
+@has_permissions(administrator=True)
 async def nickname_protect(ctx, flag=None):
    if ctx.message.author.guild_permissions.administrator and flag != None:
       nick_protect(flag)
