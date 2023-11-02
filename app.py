@@ -60,18 +60,28 @@ def create_db_connection():
   return mydb
 
 # Check if nick protection is on
-def nick_protect():
+def nick_protect(flag=None):
   db_conn = create_db_connection()
   db_cursor = db_conn.cursor()
   
-  sql = f"select value from flags where param = 'nick_protect'"
+  if flag == None:
+    sql = f"select value from flags where param = 'nick_protect'"
+  elif flag == "Off": # Turn off nick protect
+      sql = f"update flags set value = 0 param = 'nick_protect'"
+  elif flag == "On": # Turn on nick protect
+      sql = f"update flags set value = 1 param = 'nick_protect'"
   
   db_cursor.execute(sql)
   nick_protect = db_cursor.fetchall()
   
   db_conn.commit()
   db_conn.close()
-  return bool(nick_protect[0][0])
+  if flag == None:
+    result = bool(nick_protect[0][0])
+  else:
+    result = None
+  
+  return result
 
 # Get user nickname
 def get_nickname(discord_id):
@@ -462,6 +472,17 @@ async def reset_all_names(ctx):
         await current_member.edit(nick=name)
       except:
         print("Permission error.")
+
+# /nick_protect
+@bot.slash_command(name="nick_protect",
+                   description="Enable/Disable Nick Protection",
+                   guild_ids=[692123814989004862])
+async def nick_protect(ctx, flag=None):
+   if ctx.message.author.guild_permissions.administrator and flag != None:
+      nick_protect(flag)
+      await ctx.respond(f"Nick protection set to: {flag}")
+   
+
       
 
 # /quote
@@ -536,6 +557,8 @@ async def chuggys_temp(ctx):
   temp = get_chuggys_temp()
 
   await ctx.respond(f"The current temperature in Chuggy's backyard is {temp}F.")
+
+
 
 #endregion Slash Commands
 
