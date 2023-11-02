@@ -73,18 +73,13 @@ def nick_protect(flag=''):
     sql = f"update flags set value = 1 where param = 'nick_protect'"
     db_cursor.execute(sql)
     result = None
-  elif flag == '':
+  elif flag == None:
     sql = f"select value from flags where param = 'nick_protect'"
   
     db_cursor.execute(sql)
     nick_protect = db_cursor.fetchall()
     
-    if flag == None:
-      result = bool(nick_protect[0][0])
-    else:
-      result = None
-
-    print(f"Result: {result}")
+    result = bool(nick_protect[0][0])
   
   db_conn.commit()
   db_conn.close()
