@@ -609,8 +609,9 @@ async def on_message(message):
 
 @bot.event # Set username back to the name I gave them
 async def on_member_update(before, after):
-  if before.nick != after.nick and nick_protect() == 1:
-    member = bot.get_guild(before.guild.id).get_member(before.id)
+  member = bot.get_guild(before.guild.id).get_member(before.id)
+  
+  if get_nickname(member.id) != after.nick and nick_protect() == 1:
     new_nick = after.nick
 
     # Get what their name should be
