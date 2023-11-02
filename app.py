@@ -1,7 +1,8 @@
 import os
 import discord
 from datetime import datetime, timedelta, date
-from discord.ext import commands, tasks, has_permissions
+from discord.ext import commands, tasks
+from discord.ext.commands import has_permissions
 import mysql.connector
 import pandas as pd
 from sqlalchemy import create_engine
