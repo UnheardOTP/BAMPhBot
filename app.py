@@ -83,6 +83,8 @@ def nick_protect(flag=''):
       result = bool(nick_protect[0][0])
     else:
       result = None
+
+    print(f"Result: {result}")
   
   db_conn.commit()
   db_conn.close()
