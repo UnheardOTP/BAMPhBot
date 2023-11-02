@@ -617,6 +617,10 @@ async def on_member_update(before, after):
     real_name = get_nickname(member.id)
     await after.edit(nick=real_name)
 
+    channel = bot.get_channel(1092446896158679131)
+    await channel.send(f"No no no no no {real_name}!")
+
+
 #endregion Bot Events
 
 #region Core Execution
