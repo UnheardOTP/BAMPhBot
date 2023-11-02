@@ -64,6 +64,8 @@ def create_db_connection():
 def nick_protect(flag=None):
   db_conn = create_db_connection()
   db_cursor = db_conn.cursor()
+
+  print(flag)
   
   if flag.lower() == "off": # Turn off nick protect
     sql = f"update flags set value = 0 where param = 'nick_protect'"
