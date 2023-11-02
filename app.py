@@ -479,7 +479,7 @@ async def reset_all_names(ctx):
                    guild_ids=[692123814989004862])
 @has_permissions(administrator=True)
 async def nickname_protect(ctx, flag=None):
-   if ctx.message.author.guild_permissions.administrator and flag != None:
+   if flag != None:
       nick_protect(flag)
       await ctx.respond(f"Nick protection set to: {flag}")
    
