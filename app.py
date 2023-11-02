@@ -67,10 +67,10 @@ def nick_protect(flag=None):
   
   if flag == None:
     sql = f"select value from flags where param = 'nick_protect'"
-  elif flag == "Off": # Turn off nick protect
-      sql = f"update flags set value = 0 param = 'nick_protect'"
-  elif flag == "On": # Turn on nick protect
-      sql = f"update flags set value = 1 param = 'nick_protect'"
+  elif flag.lower() == "off": # Turn off nick protect
+      sql = f"update flags set value = 0 where param = 'nick_protect'"
+  elif flag.lower() == "on": # Turn on nick protect
+      sql = f"update flags set value = 1 where param = 'nick_protect'"
   
   db_cursor.execute(sql)
   nick_protect = db_cursor.fetchall()
