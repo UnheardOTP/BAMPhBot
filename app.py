@@ -474,10 +474,10 @@ async def reset_all_names(ctx):
         print("Permission error.")
 
 # /nick_protect
-@bot.slash_command(name="nick_protect",
+@bot.slash_command(name="nickname_protect",
                    description="Enable/Disable Nick Protection",
                    guild_ids=[692123814989004862])
-async def nick_protect(ctx, flag=None):
+async def nickname_protect(ctx, flag=None):
    if ctx.message.author.guild_permissions.administrator and flag != None:
       nick_protect(flag)
       await ctx.respond(f"Nick protection set to: {flag}")
