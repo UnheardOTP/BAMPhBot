@@ -73,7 +73,7 @@ def nick_protect(flag=''):
     sql = f"update flags set value = 1 where param = 'nick_protect'"
     db_cursor.execute(sql)
     result = None
-  elif flag == None:
+  elif flag == '':
     sql = f"select value from flags where param = 'nick_protect'"
   
     db_cursor.execute(sql)
