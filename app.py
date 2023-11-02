@@ -79,12 +79,13 @@ def nick_protect(flag=None):
     db_cursor.execute(sql)
     nick_protect = db_cursor.fetchall()
     
-    db_conn.commit()
-    db_conn.close()
     if flag == None:
       result = bool(nick_protect[0][0])
     else:
       result = None
+  
+  db_conn.commit()
+  db_conn.close()
   
   return result
 
