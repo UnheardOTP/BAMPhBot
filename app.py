@@ -565,6 +565,17 @@ async def chuggys_temp(ctx):
 
   await ctx.respond(f"The current temperature in Chuggy's backyard is {temp}F.")
 
+# /say_stuff - make the bot say what you type
+@bot.slash_command(name="say_stuff",
+                  description="Say stuff",
+                  guild_ids=[692123814989004862])
+@has_permissions(administrator=True)
+async def say_stuff(ctx, words):
+  def check(msg):
+    return msg.author == ctx.author and msg.channel == ctx.channel 
+
+  await ctx.respond(f"{words}")
+
 
 
 #endregion Slash Commands
