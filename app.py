@@ -424,7 +424,6 @@ async def rand_photo():
       update_last_run('photo', datetime.now().isoformat())
 
 # Start cron jobs
-'''
 @bot.event
 async def on_ready():
   if not bday_check.is_running():
@@ -434,8 +433,7 @@ async def on_ready():
   if not rand_photo.is_running():
     rand_photo.start() 
   if not bug_alex.is_running():
-    bug_alex.start() 
-'''
+    bug_alex.start()
 
 #endregion Cron Jobs
   
