@@ -383,7 +383,7 @@ async def on_message(message):
     emoji = 'chuggy:1148715141651763270'
     await message.add_reaction(emoji)
   elif "acc" in messageContent:
-    emoji = '\N{CUPCAKE}'
+    emoji = '🧁'
     await message.add_reaction(emoji)
   
   
