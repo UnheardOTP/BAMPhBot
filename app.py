@@ -624,6 +624,8 @@ async def on_message(message):
   elif ("chuggy" in messageContent or '<@284719233601110016>' in messageContent) and '<@1092634707541360762>' not in messageContent:
     emoji = 'chuggy:1148715141651763270'
     await message.add_reaction(emoji)
+  elif ("nice" in messageContent):
+     await message.channel.send("Nice.")
   elif '<@1092634707541360762>' in messageContent:
     msg = message.content.lstrip("<@1092634707541360762> ")
     # Use the OpenAI API to generate a response to the message
