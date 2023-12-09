@@ -360,7 +360,6 @@ async def on_message(message):
   channel = message.channel
   author = message.author.id
   messageContent = message.content.lower()
-  await channel.send(messageContent)
   if "clemson" in messageContent or "clempson" in messageContent:
     emoji = '\N{PILE OF POO}'
     await message.add_reaction(emoji)
@@ -375,7 +374,6 @@ async def on_message(message):
     emoji = 'chuggy:1148715141651763270'
     await message.add_reaction(emoji)
   elif "alex" in messageContent or '<@770090117712314379>' in messageContent:
-    await channel.send('TOOT')
     emoji = '\N{TRUMPET}'
     await message.add_reaction(emoji)
   
