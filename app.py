@@ -383,7 +383,8 @@ async def on_message(message):
     emoji = 'chuggy:1148715141651763270'
     await message.add_reaction(emoji)
   elif "alex" in messageContent or '<@770090117712314379>' in messageContent:
-    await message.add_reaction('🎺')
+    emoji = '\U0001F3BA'
+    await message.add_reaction(emoji)
   
   
 
@@ -403,7 +404,8 @@ async def bday_check():
 async def bug_alex():
   await bot.wait_until_ready()
   channel = bot.get_channel(1092446896158679131)
-  await channel.send('<@770090117712314379>')
+  if datetime.now() - timedelta(hours=26.9) > datetime.fromisoformat(last_run_time('quote')):
+    await channel.send('<@770090117712314379>')
   
 # Send a random quote every 4 hours
 @tasks.loop(hours=24)
