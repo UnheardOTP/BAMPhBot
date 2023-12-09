@@ -360,6 +360,7 @@ async def on_message(message):
   channel = message.channel
   author = message.author.id
   messageContent = message.content.lower()
+  await channel.send(messageContent)
   if "clemson" in messageContent or "clempson" in messageContent:
     emoji = '\N{PILE OF POO}'
     await message.add_reaction(emoji)
