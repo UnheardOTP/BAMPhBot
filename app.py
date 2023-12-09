@@ -355,15 +355,6 @@ intents.messages = True
 intents.message_content = True
 bot = discord.Bot(intents=intents)
 
-# Start loops
-'''
-@bot.event
-async def on_ready():
-  bday_check.start()
-  rand_quote.start()
-  rand_photo.start()
-'''
-
 @bot.event
 async def on_message(message):
   channel = message.channel
@@ -384,7 +375,7 @@ async def on_message(message):
     await message.add_reaction(emoji)
   elif "alex" in messageContent or '<@770090117712314379>' in messageContent:
     print("Alex TRIGGGGGERED")
-    emoji = '\U0001F3BA'
+    emoji = '\N{TRUMPET}'
     await message.add_reaction(emoji)
   
   
@@ -405,7 +396,7 @@ async def bday_check():
 async def bug_alex():
   await bot.wait_until_ready()
   channel = bot.get_channel(1092446896158679131)
-  if datetime.now() - timedelta(hours=26.9) > datetime.fromisoformat(last_run_time('quote')):
+  if datetime.now() - timedelta(hours=13) > datetime.fromisoformat(last_run_time('quote')):
     await channel.send('<@770090117712314379>')
   
 # Send a random quote every 4 hours
