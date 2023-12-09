@@ -384,6 +384,7 @@ async def on_message(message):
     await message.add_reaction(emoji)
   elif "alex" in messageContent or '<@770090117712314379>' in messageContent:
     emoji = '\U0001F3BA'
+    print(f"Emoji: {emoji}")
     await message.add_reaction(emoji)
   
   
