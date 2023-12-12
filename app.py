@@ -569,6 +569,16 @@ async def say_stuff(ctx, words):
 
   await ctx.respond(f"{words}")
 
+@bot.slash_command(name="discipline_point",
+                   description="Add discipline point to user.",
+                   guild_ids=[692123814989004862])
+async def discipline_point(ctx, amount, user, reason):
+  def check(msg):
+    return msg.author == ctx.author and msg.channel == ctx.channel 
+
+  await ctx.respond(f"{amount} discipline point(s) given to {user}. REASON - {reason}")
+   
+
 
 
 #endregion Slash Commands
