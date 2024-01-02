@@ -577,6 +577,15 @@ async def discipline_point(ctx, amount, user, reason):
     return msg.author == ctx.author and msg.channel == ctx.channel 
 
   await ctx.respond(f"{amount} discipline point(s) given to {user}. REASON - {reason}")
+
+@bot.slash_command(name="Clowney",
+                   description="FLAWLESS VICTORY",
+                   guild_ids=[692123814989004862])
+async def clowney(ctx):
+  def check(msg):
+      return msg.author == ctx.author and msg.channel == ctx.channel 
+
+  await ctx.respond("https://files.catbox.moe/ntj07p.gif")
    
 
 
