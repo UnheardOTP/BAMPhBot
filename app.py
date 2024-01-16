@@ -21,8 +21,7 @@ intents.messages = True
 intents.message_content = True
 intents.members = True
 bot = discord.Bot(intents=intents)
-messages = []
-response_msg = ""
+
 
 
 #endregion Bot Definitions
@@ -447,6 +446,8 @@ async def on_ready():
     rand_photo.start() 
   if not bug_alex.is_running():
     bug_alex.start()
+  
+  globals()['messages'] = [{"role": "system", "content": get_ai_prompt()}]
 
 #endregion Cron Jobs
   
@@ -667,10 +668,11 @@ async def on_message(message):
     print()
     if len(globals()['messages']) > 9 or len(globals()['messages']) == 0:
       globals()['messages'] = [{"role": "system", "content": get_ai_prompt()}]
-      globals()['messages'].append({"role": "user", "content":msg},)
-      response = chat_with_bot(globals()['messages'])
-      print(f"Response: {response}")
-      globals()['answer'] = response.choices[0].message.content
+    
+    globals()['messages'].append({"role": "user", "content":msg},)
+    response = chat_with_bot(globals()['messages'])
+    print(f"Response: {response}")
+    globals()['answer'] = response.choices[0].message.content
 
     # Send the response as a message
     if len(globals()['answer']) > 1500:
