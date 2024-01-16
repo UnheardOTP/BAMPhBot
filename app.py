@@ -357,7 +357,7 @@ def chat_with_bot(question):
         model="gpt-3.5-turbo",
     )
 
-    messages.append({"role": "assistant", "content":chat_completion.choices[0].message.content})
+    globals()['messages'].append({"role": "assistant", "content":chat_completion.choices[0].message.content})
 
     return chat_completion
    
@@ -664,12 +664,12 @@ async def on_message(message):
   elif '<@1092634707541360762>' in messageContent:
     msg = message.content.lstrip("<@1092634707541360762> ")
 
-    print(globals()['response_msg'])
-
+    print()
     if len(globals()['messages']) > 9 or len(globals()['messages']) == 0:
       globals()['messages'] = [{"role": "system", "content": get_ai_prompt()}]
       globals()['messages'].append({"role": "user", "content":msg},)
       response = chat_with_bot(globals()['messages'])
+      print(f"Response: {response}")
       globals()['answer'] = response.choices[0].message.content
 
     # Send the response as a message
