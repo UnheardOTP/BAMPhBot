@@ -664,7 +664,7 @@ async def on_message(message):
   elif '<@1092634707541360762>' in messageContent:
     msg = message.content.lstrip("<@1092634707541360762> ")
 
-    print(globals()['messages'])
+    print(globals()['response_msg'])
 
     if len(globals()['messages']) > 9 or len(globals()['messages']) == 0:
       globals()['messages'] = [{"role": "system", "content": get_ai_prompt()}]
@@ -672,9 +672,9 @@ async def on_message(message):
       response = chat_with_bot(globals()['messages'])
 
     # Send the response as a message
-    if len(response]) > 1500:
+    if len(response) > 1500:
       chunkLength = 1500
-      chunks = [response][i:i+chunkLength ] for i in range(0, len(response), chunkLength)]
+      chunks = [response[i:i+chunkLength ] for i in range(0, len(response), chunkLength)]
       for chunk in chunks:
         await message.channel.send(chunk)
     else:
