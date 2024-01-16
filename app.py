@@ -8,7 +8,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 import requests
 import json
-import openai
+from openai import OpenAI
 
 
 print('BAMPhBot Booting...')
@@ -41,10 +41,10 @@ token=secrets['TOKEN']
 wx_apikey=secrets['WX_APIKEY']
 wx_appkey=secrets['WX_APPKEY']
 openai_apikey=secrets['OPENAI_APIKEY']
+messages=[]
 
 #endregion Secrets
 
-openai.api_key = openai_apikey
 
 #region Functions
 
@@ -344,6 +344,23 @@ def get_chuggys_temp():
 
   return temp
 
+def chat_with_bot(question):
+    # Check to see where we are in the conversation. Conversations are limited to 4 items.
+
+    client = OpenAI(
+        api_key=openai_apikey,
+    )
+
+    chat_completion = client.chat.completions.create(
+        messages=question,
+        model="gpt-3.5-turbo",
+    )
+
+    messages.append({"role": "assistant", "content":chat_completion.choices[0].message.content})
+
+    return chat_completion
+   
+
 #endregion functions
 
 
@@ -540,7 +557,7 @@ async def mantrip(ctx):
     return msg.author == ctx.author and msg.channel == ctx.channel
   
   today = datetime.now().date()
-  mantrip = date(2024, 1, 12)
+  mantrip = date(2025, 1, 17)
   days_til = mantrip - today
   days_til = days_til.days
 
@@ -640,19 +657,16 @@ async def on_message(message):
     await message.add_reaction(emoji)
   elif ("nice" in messageContent):
      await message.channel.send("Noice.")
+  # This is for ChatGPT interactions
   elif '<@1092634707541360762>' in messageContent:
     msg = message.content.lstrip("<@1092634707541360762> ")
-    # Use the OpenAI API to generate a response to the message
-    response = openai.ChatCompletion.create(
-      model="gpt-3.5-turbo",
-      messages=[
-          {'role': 'system', 'content': get_ai_prompt()},
-          {'role': 'user', 'content': msg}
-      ],
-      temperature=0.9,
-      max_tokens=500
-    )
-    response_msg = response['choices'][0]['message']['content']
+
+    if len(messages) > 9 or len(messages) == 0:
+      messages = [{"role": "system", "content": get_ai_prompt()}]
+      messages.append({"role": "user", "content":msg},)
+      response = chat_with_bot(messages)
+      response_msg = response.choices[0].message.content
+
     # Send the response as a message
     if len(response_msg) > 1500:
       chunkLength = 1500
