@@ -671,7 +671,6 @@ async def on_message(message):
     
     globals()['messages'].append({"role": "user", "content":msg},)
     response = chat_with_bot(globals()['messages'])
-    print(f"Response: {response}")
     globals()['answer'] = response.choices[0].message.content
 
     # Send the response as a message
