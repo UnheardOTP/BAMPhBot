@@ -21,8 +21,6 @@ intents.messages = True
 intents.message_content = True
 intents.members = True
 bot = discord.Bot(intents=intents)
-global messages
-global response_msg
 messages = []
 response_msg = ""
 
@@ -614,6 +612,7 @@ async def clowney(ctx):
 
 #region Test Code
 
+'''
 # OpenAI chat
 @bot.event
 async def on_message(message):
@@ -634,17 +633,18 @@ async def on_message(message):
 
   # Send the response as a message
   await message.channel.send(response.choices[0].text)
-
+'''
 #endregion Test Code
 
 #region Bot Events
 
 @bot.event
-async def on_message(message, messages=messages, response_msg=response_msg):
+async def on_message(message):
   channel = message.channel
   author = message.author.id
   author_name = message.author.mention
   messageContent = message.content.lower()
+
   if ("clemson" in messageContent or "clempson" in messageContent) and '<@1092634707541360762>' not in messageContent:
     emoji = '\N{PILE OF POO}'
     await message.add_reaction(emoji)
@@ -664,10 +664,10 @@ async def on_message(message, messages=messages, response_msg=response_msg):
   elif '<@1092634707541360762>' in messageContent:
     msg = message.content.lstrip("<@1092634707541360762> ")
 
-    if len(messages) > 9 or len(messages) == 0:
-      messages = [{"role": "system", "content": get_ai_prompt()}]
-      messages.append({"role": "user", "content":msg},)
-      response = chat_with_bot(messages)
+    if len(globals()['messages']) > 9 or len(globals()['messages']) == 0:
+      globals()['messages'] = [{"role": "system", "content": get_ai_prompt()}]
+      globals()['messages'].append({"role": "user", "content":msg},)
+      response = chat_with_bot(globals()['messages'])
       response_msg = response.choices[0].message.content
 
     # Send the response as a message
