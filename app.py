@@ -21,6 +21,7 @@ intents.messages = True
 intents.message_content = True
 intents.members = True
 bot = discord.Bot(intents=intents)
+global messages
 messages = []
 
 
@@ -42,7 +43,6 @@ token=secrets['TOKEN']
 wx_apikey=secrets['WX_APIKEY']
 wx_appkey=secrets['WX_APPKEY']
 openai_apikey=secrets['OPENAI_APIKEY']
-messages=[]
 
 #endregion Secrets
 
@@ -639,6 +639,7 @@ async def on_message(message):
 
 @bot.event
 async def on_message(message):
+  global messages
   channel = message.channel
   author = message.author.id
   author_name = message.author.mention
