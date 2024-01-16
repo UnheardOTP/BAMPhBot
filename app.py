@@ -22,6 +22,7 @@ intents.message_content = True
 intents.members = True
 bot = discord.Bot(intents=intents)
 global messages
+global response_msg
 messages = []
 
 
@@ -640,6 +641,7 @@ async def on_message(message):
 @bot.event
 async def on_message(message):
   global messages
+  global response_msg
   channel = message.channel
   author = message.author.id
   author_name = message.author.mention
