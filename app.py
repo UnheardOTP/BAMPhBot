@@ -21,6 +21,7 @@ intents.messages = True
 intents.message_content = True
 intents.members = True
 bot = discord.Bot(intents=intents)
+messages = []
 
 
 #endregion Bot Definitions
