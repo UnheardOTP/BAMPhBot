@@ -664,20 +664,21 @@ async def on_message(message):
   elif '<@1092634707541360762>' in messageContent:
     msg = message.content.lstrip("<@1092634707541360762> ")
 
+    print(globals()['messages'])
+
     if len(globals()['messages']) > 9 or len(globals()['messages']) == 0:
       globals()['messages'] = [{"role": "system", "content": get_ai_prompt()}]
       globals()['messages'].append({"role": "user", "content":msg},)
       response = chat_with_bot(globals()['messages'])
-      globals()['response_msg'] = response.choices[0].message.content
 
     # Send the response as a message
-    if len(globals()['response_msg']) > 1500:
+    if len(response]) > 1500:
       chunkLength = 1500
-      chunks = [globals()['response_msg'][i:i+chunkLength ] for i in range(0, len(globals()['response_msg']), chunkLength)]
+      chunks = [response][i:i+chunkLength ] for i in range(0, len(response), chunkLength)]
       for chunk in chunks:
         await message.channel.send(chunk)
     else:
-      await message.channel.send(globals()['response_msg'])
+      await message.channel.send(response)
 
 @bot.event # Set username back to the name I gave them
 async def on_member_update(before, after):
