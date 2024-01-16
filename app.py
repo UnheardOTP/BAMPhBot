@@ -640,8 +640,6 @@ async def on_message(message):
 
 @bot.event
 async def on_message(message):
-  global messages
-  global response_msg
   channel = message.channel
   author = message.author.id
   author_name = message.author.mention
