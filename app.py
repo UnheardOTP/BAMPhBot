@@ -670,16 +670,16 @@ async def on_message(message):
       globals()['messages'] = [{"role": "system", "content": get_ai_prompt()}]
       globals()['messages'].append({"role": "user", "content":msg},)
       response = chat_with_bot(globals()['messages'])
-      answer = response.choices[0].message.content
+      globals()['answer'] = response.choices[0].message.content
 
     # Send the response as a message
-    if len(answer) > 1500:
+    if len(globals()['answer']) > 1500:
       chunkLength = 1500
-      chunks = [answer[i:i+chunkLength ] for i in range(0, len(answer), chunkLength)]
+      chunks = [globals()['answer'][i:i+chunkLength ] for i in range(0, len(globals()['answer']), chunkLength)]
       for chunk in chunks:
         await message.channel.send(chunk)
     else:
-      await message.channel.send(answer)
+      await message.channel.send(globals()['answer'])
 
 @bot.event # Set username back to the name I gave them
 async def on_member_update(before, after):
