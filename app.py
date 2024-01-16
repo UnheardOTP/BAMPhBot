@@ -24,6 +24,7 @@ bot = discord.Bot(intents=intents)
 global messages
 global response_msg
 messages = []
+response_msg = ""
 
 
 #endregion Bot Definitions
@@ -639,7 +640,7 @@ async def on_message(message):
 #region Bot Events
 
 @bot.event
-async def on_message(message):
+async def on_message(message, messages=messages, response_msg=response_msg):
   channel = message.channel
   author = message.author.id
   author_name = message.author.mention
