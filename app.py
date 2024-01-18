@@ -535,6 +535,8 @@ async def add_quote(ctx, prompt):
     return msg.author == ctx.author and msg.channel == ctx.channel 
 
   update_ai_prompt(prompt)
+  # Reset prompt and memory
+  globals()['messages'] = []
 
   await ctx.respond(f"AI prompt set to: {prompt}")
 
@@ -666,7 +668,7 @@ async def on_message(message):
     msg = message.content.lstrip("<@1092634707541360762> ")
 
     print()
-    if len(globals()['messages']) > 9 or len(globals()['messages']) == 0:
+    if len(globals()['messages']) > 10 or len(globals()['messages']) == 0:
       globals()['messages'] = [{"role": "system", "content": get_ai_prompt()}]
     
     globals()['messages'].append({"role": "user", "content":msg},)
