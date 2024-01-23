@@ -353,7 +353,7 @@ def chat_with_bot(question):
 
     chat_completion = client.chat.completions.create(
         messages=question,
-        model="gpt-3.5-turbo",
+        model="gpt-4",
     )
 
     globals()['messages'].append({"role": "assistant", "content":chat_completion.choices[0].message.content})
