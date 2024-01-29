@@ -605,7 +605,7 @@ async def discipline_point(ctx, amount, user, reason):
 async def clowney(ctx):
   def check(msg):
       return msg.author == ctx.author and msg.channel == ctx.channel 
-  image_url = 'https://files.catbox.moe/ntj07p.gif'
+  image_url = f"'https://files.catbox.moe/ntj07p.gif'"
   await ctx.respond(image_url)
    
 
