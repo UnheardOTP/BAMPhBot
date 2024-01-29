@@ -565,7 +565,7 @@ async def mantrip(ctx):
   days_til = mantrip - today
   days_til = days_til.days
 
-  await ctx.respond(f"There's {days_til} day(s) left until ManTrip 2024!")
+  await ctx.respond(f"There's {days_til} day(s) left until ManTrip 2025!")
 
 # /chuggys_temp
 @bot.slash_command(name="chuggys_temp",
