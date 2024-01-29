@@ -671,7 +671,7 @@ async def on_message(message):
   elif ("nice" in messageContent):
      await message.channel.send("Noice.")
   # This is for ChatGPT interactions
-  elif '<@1092634707541360762>' in messageContent and channel == "1201578989882445835":
+  elif '<@1092634707541360762>' in messageContent and channel.id == 1201578989882445835:
     msg = message.content.lstrip("<@1092634707541360762> ")
 
     print()
