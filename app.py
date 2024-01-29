@@ -606,7 +606,11 @@ async def clowney(ctx):
   def check(msg):
       return msg.author == ctx.author and msg.channel == ctx.channel 
   image_url = f"'https://files.catbox.moe/ntj07p.gif'"
-  await ctx.respond(image_url)
+  embed = discord.Embed(title='Test')
+  embed.set_image(url=image_url)
+  await ctx.send(embed=embed)
+
+  #await ctx.respond(image_url)
    
 
 
