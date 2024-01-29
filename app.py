@@ -579,6 +579,8 @@ async def chuggys_temp(ctx):
 
   await ctx.respond(f"The current temperature in Chuggy's backyard is {temp}F.")
 
+
+
 # /say_stuff - make the bot say what you type
 @bot.slash_command(name="say_stuff",
                   description="Say stuff",
@@ -669,7 +671,7 @@ async def on_message(message):
   elif ("nice" in messageContent):
      await message.channel.send("Noice.")
   # This is for ChatGPT interactions
-  elif '<@1092634707541360762>' in messageContent:
+  elif '<@1092634707541360762>' in messageContent and message.channel.id == "1201578989882445835":
     msg = message.content.lstrip("<@1092634707541360762> ")
 
     print()
