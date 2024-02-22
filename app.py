@@ -21,6 +21,7 @@ intents.messages = True
 intents.message_content = True
 intents.members = True
 bot = discord.Bot(intents=intents)
+client = discord.client()
 
 
 
@@ -605,7 +606,7 @@ async def discipline_point(ctx, amount, user, reason):
                     description="Clear All Events",
                     guild_ids=[692123814989004862])
 @has_permissions(administrator=True)
-async def say_stuff(ctx, words):
+async def say_stuff(ctx):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
   
