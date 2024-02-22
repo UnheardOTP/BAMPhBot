@@ -21,7 +21,6 @@ intents.messages = True
 intents.message_content = True
 intents.members = True
 bot = discord.Bot(intents=intents)
-client = discord.client()
 
 
 
@@ -602,18 +601,6 @@ async def discipline_point(ctx, amount, user, reason):
 
   await ctx.respond(f"{amount} discipline point(s) given to {user}. REASON - {reason}")
 
-@bot.slash_command(name="clear_events",
-                    description="Clear All Events",
-                    guild_ids=[692123814989004862])
-@has_permissions(administrator=True)
-async def say_stuff(ctx):
-  def check(msg):
-    return msg.author == ctx.author and msg.channel == ctx.channel 
-  
-  for guild in client.guilds:
-    for event in guild.scheduled_events:
-      event = await client.fetch_scheduled_event(event.id)
-      await event.delete()
 
 
 '''
