@@ -672,6 +672,8 @@ async def on_message(message):
     await message.add_reaction(emoji)
   elif ("nice" in messageContent):
      await message.channel.send("Noice.")
+  elif ("tax" in messageContent):
+     await message.channel.send("Taxation is theft.")
   # This is for ChatGPT interactions
   elif '<@1092634707541360762>' in messageContent and channel.id == 1201578989882445835:
     msg = message.content.lstrip("<@1092634707541360762> ")
