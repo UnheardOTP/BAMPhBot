@@ -83,7 +83,6 @@ def nick_protect(flag=''):
   
   db_conn.commit()
   db_conn.close()
-  
   return result
 
 # Get user nickname
@@ -201,10 +200,14 @@ def add_quote_to_db(quote, author):
         (quote, author) \
         values \
         ('{quote}', '{author}')"
+  try:
+    db_cursor.execute(sql)
+    db_conn.commit()
+    db_conn.close()
 
-  db_cursor.execute(sql)
-  db_conn.commit()
-  db_conn.close()
+    return "Success"
+  except Exception as err:
+     return err
    
 # Last available quote check
 def last_quote_check():
@@ -522,9 +525,12 @@ async def add_quote(ctx, quote, author):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
 
-  add_quote_to_db(quote, author)
-
-  await ctx.respond(f"{quote} - {author} - Added")
+  result = add_quote_to_db(quote, author)
+  
+  if result == "Success":
+    await ctx.respond(f"{quote} - {author} - Added")
+  else:
+    ctx.respond(result)
 
 # /set_ai_prompt
 @bot.slash_command(name="set_ai_prompt",
