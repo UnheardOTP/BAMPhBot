@@ -55,7 +55,8 @@ def create_db_connection():
               user=db_user,
 
               password=db_password,
-              database=db_database
+              database=db_database,
+              auth_plugin='mysql_native_password'
           )
   
   return mydb
