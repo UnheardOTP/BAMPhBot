@@ -418,8 +418,16 @@ async def bug_alex():
   channel = bot.get_channel(1092446896158679131)
   if datetime.now() - timedelta(hours=13) > datetime.fromisoformat(last_run_time('quote')):
     await channel.send('<@770090117712314379>')
+
+# Tag Cody
+@tasks.loop(hours=32)
+async def bug_alex():
+  await bot.wait_until_ready()
+  channel = bot.get_channel(1092446896158679131)
+  if datetime.now() - timedelta(hours=13) > datetime.fromisoformat(last_run_time('quote')):
+    await channel.send('<@336129831622410251>')
   
-# Send a random quote every 4 hours
+# Send a random quote every 24 hours
 @tasks.loop(hours=24)
 async def rand_quote():
     await bot.wait_until_ready()
