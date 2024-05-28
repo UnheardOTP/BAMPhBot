@@ -649,8 +649,6 @@ async def discipline_point(ctx, amount, user, reason):
 
   await ctx.respond(f"{amount} discipline point(s) given to {user}. REASON - {reason}")
 
-get_discipline_point(user)
-
 @bot.slash_command(name="discipline_point_total",
                    description="Get users discipline point total.",
                    guild_ids=[692123814989004862])
