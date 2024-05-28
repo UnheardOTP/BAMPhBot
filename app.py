@@ -43,8 +43,6 @@ wx_apikey=secrets['WX_APIKEY']
 wx_appkey=secrets['WX_APPKEY']
 openai_apikey=secrets['OPENAI_APIKEY']
 
-print(db_host)
-
 #endregion Secrets
 
 
@@ -58,21 +56,10 @@ def create_db_connection():
 
               password=db_password,
               database=db_database,
-              auth_plugin='sha256_password'
+              auth_plugin='mysql_native_password'
           )
   
   return mydb
-
-# Discipline Points
-def add_discipline_point(user, points, reason):
-   db_conn = create_db_connection()
-   db_cursor = db_conn.cursor()
-
-   sql = f"insert into discipline_points (user, point_amount, reason) values ('{user}', {points}, '{reason}')"
-   db_cursor.execute(sql)
-   result = None
-
-   return result
 
 # Check if nick protection is on
 def nick_protect(flag=''):
@@ -370,7 +357,7 @@ def chat_with_bot(question):
 
     chat_completion = client.chat.completions.create(
         messages=question,
-        model="gpt-4",
+        model="gpt-3.5",
     )
 
     globals()['messages'].append({"role": "assistant", "content":chat_completion.choices[0].message.content})
@@ -431,8 +418,16 @@ async def bug_alex():
   channel = bot.get_channel(1092446896158679131)
   if datetime.now() - timedelta(hours=13) > datetime.fromisoformat(last_run_time('quote')):
     await channel.send('<@770090117712314379>')
+
+# Tag Cody
+@tasks.loop(hours=32)
+async def bug_alex():
+  await bot.wait_until_ready()
+  channel = bot.get_channel(1092446896158679131)
+  if datetime.now() - timedelta(hours=13) > datetime.fromisoformat(last_run_time('quote')):
+    await channel.send('<@336129831622410251>')
   
-# Send a random quote every 4 hours
+# Send a random quote every 24 hours
 @tasks.loop(hours=24)
 async def rand_quote():
     await bot.wait_until_ready()
@@ -618,8 +613,6 @@ async def say_stuff(ctx, words):
 async def discipline_point(ctx, amount, user, reason):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
-  
-  add_discipline_point(user, amount, reason)
 
   await ctx.respond(f"{amount} discipline point(s) given to {user}. REASON - {reason}")
 
