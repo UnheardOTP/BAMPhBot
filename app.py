@@ -79,6 +79,27 @@ def add_discipline_point(user, points, reason):
 
   return result
 
+def get_discipline_point(user):
+  db_conn = create_db_connection()
+  db_cursor = db_conn.cursor()
+
+  sql = f"select sum(point_amount) from discipline_points where user = '{user}'"
+   
+  try:
+    rows = db_cursor.execute(sql)
+    db_conn.commit()
+    db_conn.close()
+
+    point_total = db_cursor.fetchall()
+  except Exception as err:
+    return err
+  
+  if rows > 0:
+    return str(point_total[0][0])
+  else:
+    return 0
+   
+
 # Check if nick protection is on
 def nick_protect(flag=''):
   db_conn = create_db_connection()
@@ -428,7 +449,7 @@ async def bday_check():
 
   if bday != False:
     await channel.send(f"{bday}")
-
+'''
 # Tag Alex
 @tasks.loop(hours=27)
 async def bug_alex():
@@ -436,7 +457,7 @@ async def bug_alex():
   channel = bot.get_channel(1092446896158679131)
   if datetime.now() - timedelta(hours=13) > datetime.fromisoformat(last_run_time('quote')):
     await channel.send('<@770090117712314379>')
-  
+'''  
 # Send a random quote every 24 hours
 @tasks.loop(hours=24)
 async def rand_quote():
@@ -627,6 +648,19 @@ async def discipline_point(ctx, amount, user, reason):
   add_discipline_point(user, amount, reason)
 
   await ctx.respond(f"{amount} discipline point(s) given to {user}. REASON - {reason}")
+
+get_discipline_point(user)
+
+@bot.slash_command(name="discipline_point_total",
+                   description="Get users discipline point total.",
+                   guild_ids=[692123814989004862])
+async def discipline_point(ctx, user):
+  def check(msg):
+    return msg.author == ctx.author and msg.channel == ctx.channel 
+
+  total_points = get_discipline_point(user)
+
+  await ctx.respond(f"{user} currently has {total_points} discipline point(s).")
 
 
 
