@@ -70,6 +70,9 @@ def add_discipline_point(user, points, reason):
    db_cursor.execute(sql)
    result = None
 
+   db_conn.commit()
+   db_conn.close()
+
    return result
 
 # Check if nick protection is on
