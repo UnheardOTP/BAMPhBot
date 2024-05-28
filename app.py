@@ -61,6 +61,17 @@ def create_db_connection():
   
   return mydb
 
+# Discipline Points
+def add_discipline_point(user, points, reason):
+   db_conn = create_db_connection()
+   db_cursor = db_conn.cursor()
+
+   sql = f"insert into discipline_points (user, point_amount, reason) values ('{user}', {points}, '{reason}')"
+   db_cursor.execute(sql)
+   result = None
+
+   return result
+
 # Check if nick protection is on
 def nick_protect(flag=''):
   db_conn = create_db_connection()
@@ -613,6 +624,8 @@ async def say_stuff(ctx, words):
 async def discipline_point(ctx, amount, user, reason):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
+  
+  add_discipline_point(user, amount, reason)
 
   await ctx.respond(f"{amount} discipline point(s) given to {user}. REASON - {reason}")
 
