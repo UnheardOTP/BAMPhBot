@@ -43,6 +43,8 @@ wx_apikey=secrets['WX_APIKEY']
 wx_appkey=secrets['WX_APPKEY']
 openai_apikey=secrets['OPENAI_APIKEY']
 
+print(db_host)
+
 #endregion Secrets
 
 
@@ -55,10 +57,22 @@ def create_db_connection():
               user=db_user,
 
               password=db_password,
-              database=db_database
+              database=db_database,
+              auth_plugin='sha256_password'
           )
   
   return mydb
+
+# Discipline Points
+def add_discipline_point(user, points, reason):
+   db_conn = create_db_connection()
+   db_cursor = db_conn.cursor()
+
+   sql = f"insert into discipline_points (user, point_amount, reason) values ('{user}', {points}, '{reason}')"
+   db_cursor.execute(sql)
+   result = None
+
+   return result
 
 # Check if nick protection is on
 def nick_protect(flag=''):
@@ -604,6 +618,8 @@ async def say_stuff(ctx, words):
 async def discipline_point(ctx, amount, user, reason):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
+  
+  add_discipline_point(user, amount, reason)
 
   await ctx.respond(f"{amount} discipline point(s) given to {user}. REASON - {reason}")
 
