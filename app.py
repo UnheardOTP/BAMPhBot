@@ -623,32 +623,6 @@ async def clowney(ctx):
 
 #endregion Slash Commands
 
-#region Test Code
-
-'''
-# OpenAI chat
-@bot.event
-async def on_message(message):
-  # Only respond to messages from other users, not from the bot itself
-  if message.author == bot.user:
-    return
-  
-  # Check if the bot is mentioned in the message
-  if bot.user in message.mentions:
- 
-    # Use the OpenAI API to generate a response to the message
-    response = openai.Completion.create(
-    engine="text-davinci-002",
-    prompt=f"{message.content}",
-    max_tokens=2048,
-    temperature=0.2,
-    )
-
-  # Send the response as a message
-  await message.channel.send(response.choices[0].text)
-'''
-#endregion Test Code
-
 #region Bot Events
 
 @bot.event
@@ -695,21 +669,6 @@ async def on_message(message):
      await message.channel.send("Noice.")
   elif ("tax" in messageContent and message.author.id != 1092634707541360762):
      await message.channel.send("Taxation is theft.")
-
-@bot.event # Set username back to the name I gave them
-async def on_member_update(before, after):
-  member = bot.get_guild(before.guild.id).get_member(before.id)
-  
-  if get_nickname(member.id) != after.nick and nick_protect() == 1:
-    new_nick = after.nick
-
-    # Get what their name should be
-    real_name = get_nickname(member.id)
-    await after.edit(nick=real_name)
-
-    channel = bot.get_channel(1092446896158679131)
-    await channel.send(f"No {real_name}, {new_nick} is a stupid name! I'm changing it back.")
-
 
 #endregion Bot Events
 
