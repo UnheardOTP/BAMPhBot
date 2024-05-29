@@ -22,7 +22,7 @@ intents.message_content = True
 intents.members = True
 bot = discord.Bot(intents=intents)
 
-
+globals()['messages'] = 0
 
 #endregion Bot Definitions
 
