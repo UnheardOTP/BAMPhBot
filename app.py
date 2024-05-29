@@ -637,7 +637,7 @@ async def on_message(message):
     await message.add_reaction(emoji)
     #await channel.send("Fuck clempson.")
   # This is for ChatGPT interactions
-  elif '<@1092634707541360762>' in messageContent:
+  elif '<@1092634707541360762>' in messageContent and '<@1092634707541360762>' not in author:
     msg = message.content.lstrip("<@1092634707541360762> ")
 
     print('Chat interaction started')
