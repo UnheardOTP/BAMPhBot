@@ -449,15 +449,7 @@ async def bday_check():
 
   if bday != False:
     await channel.send(f"{bday}")
-'''
-# Tag Alex
-@tasks.loop(hours=27)
-async def bug_alex():
-  await bot.wait_until_ready()
-  channel = bot.get_channel(1092446896158679131)
-  if datetime.now() - timedelta(hours=13) > datetime.fromisoformat(last_run_time('quote')):
-    await channel.send('<@770090117712314379>')
-'''  
+
 # Send a random quote every 24 hours
 @tasks.loop(hours=24)
 async def rand_quote():
@@ -487,8 +479,6 @@ async def on_ready():
     rand_quote.start()
   if not rand_photo.is_running():
     rand_photo.start() 
-  if not bug_alex.is_running():
-    bug_alex.start()
   
   globals()['messages'] = [{"role": "system", "content": get_ai_prompt()}]
 
@@ -497,55 +487,7 @@ async def on_ready():
 #region Slash Commands
 
 
-# /rename_everyone
-@bot.slash_command(name="rename_everyone",
-                  description="Make everyone Alex",
-                  guild_ids=[692123814989004862])
-async def rename_everyone(ctx, name):
-  for member in ctx.guild.members:
-    print(f"Changing {member.nick}")
-    if not member.bot:
-      try:
-        await member.edit(nick=name)
-      except:
-        print("Permission error.")
-
-
-# /reset_all_names
-@bot.slash_command(name="reset_all_names",
-                  description="Reset all nicknames",
-                  guild_ids=[692123814989004862])
-async def reset_all_names(ctx):
-  all_members = get_all_members()
-
-  for member in all_members:
-    id = member[0]
-    name = member[1]
-
-    try:
-        # update name to one from database
-        current_member = await bot.get_guild(ctx.guild.id).fetch_member(int(id))
-    
-        if not current_member.bot:
-          try:
-            await current_member.edit(nick=name)
-          except:
-            print("Permission error.")
-    except:
-        print("Username error.")
-
-# /nick_protect
-@bot.slash_command(name="nickname_protect",
-                   description="Enable/Disable Nick Protection",
-                   guild_ids=[692123814989004862])
-@has_permissions(administrator=True)
-async def nickname_protect(ctx, flag=None):
-   if flag != None:
-      nick_protect(flag)
-      await ctx.respond(f"Nick protection set to: {flag}")
-   
-
-      
+  
 
 # /quote
 @bot.slash_command(name="quote",
