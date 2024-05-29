@@ -86,18 +86,18 @@ def get_discipline_point(user):
   sql = f"select sum(point_amount) from discipline_points where user = '{user}'"
    
   try:
-    rows = db_cursor.execute(sql)
+    db_cursor.execute(sql)
+    point_total = db_cursor.fetchone()
+    row_count = db_cursor.rowcount
     db_conn.commit()
     db_conn.close()
-
-    point_total = db_cursor.fetchall()
   except Exception as err:
-    return err
-  
-  if rows > 0:
-    return str(point_total[0][0])
+      print(err)
+
+  if point_total[0] != None:
+      return int(point_total[0])
   else:
-    return 0
+      return 0
    
 
 # Check if nick protection is on
