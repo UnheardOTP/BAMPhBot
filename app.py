@@ -487,6 +487,8 @@ async def on_ready():
     rand_quote.start()
   if not rand_photo.is_running():
     rand_photo.start() 
+  if not bug_alex.is_running():
+    bug_alex.start()
   
   globals()['messages'] = [{"role": "system", "content": get_ai_prompt()}]
 
@@ -718,24 +720,11 @@ async def on_message(message):
     emoji = '\N{PILE OF POO}'
     await message.add_reaction(emoji)
     #await channel.send("Fuck clempson.")
-  elif ("jeff" in messageContent or '<@804804163904340029>' in messageContent) and '<@1092634707541360762>' not in messageContent:
-    emoji = 'mynameisjeff:1096781925114466405'
-    await message.add_reaction(emoji)
-  elif ("berry" in messageContent or '<@462087982523088908>' in messageContent) and '<@1092634707541360762>' not in messageContent:
-    emoji = 'berry:1096783181228814438'
-    await message.add_reaction(emoji)
-  elif ("chuggy" in messageContent or '<@284719233601110016>' in messageContent) and '<@1092634707541360762>' not in messageContent:
-    emoji = 'chuggy:1148715141651763270'
-    await message.add_reaction(emoji)
-  elif ("nice" in messageContent):
-     await message.channel.send("Noice.")
-  elif ("tax" in messageContent and message.author.id != 1092634707541360762):
-     await message.channel.send("Taxation is theft.")
   # This is for ChatGPT interactions
   elif '<@1092634707541360762>' in messageContent:
     msg = message.content.lstrip("<@1092634707541360762> ")
 
-    print()
+    print('Chat interaction started')
     if len(globals()['messages']) > 10 or len(globals()['messages']) == 0:
       globals()['messages'] = [{"role": "system", "content": get_ai_prompt()}]
     
@@ -751,6 +740,19 @@ async def on_message(message):
         await message.channel.send(chunk)
     else:
       await message.channel.send(globals()['answer'])
+  elif ("jeff" in messageContent or '<@804804163904340029>' in messageContent) and '<@1092634707541360762>' not in messageContent:
+    emoji = 'mynameisjeff:1096781925114466405'
+    await message.add_reaction(emoji)
+  elif ("berry" in messageContent or '<@462087982523088908>' in messageContent) and '<@1092634707541360762>' not in messageContent:
+    emoji = 'berry:1096783181228814438'
+    await message.add_reaction(emoji)
+  elif ("chuggy" in messageContent or '<@284719233601110016>' in messageContent) and '<@1092634707541360762>' not in messageContent:
+    emoji = 'chuggy:1148715141651763270'
+    await message.add_reaction(emoji)
+  elif ("nice" in messageContent):
+     await message.channel.send("Noice.")
+  elif ("tax" in messageContent and message.author.id != 1092634707541360762):
+     await message.channel.send("Taxation is theft.")
 
 @bot.event # Set username back to the name I gave them
 async def on_member_update(before, after):
