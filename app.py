@@ -632,7 +632,7 @@ async def on_message(message):
   # This is for ChatGPT interactions
   elif ('<@1092634707541360762>' in messageContent and message.author.id != 1092634707541360762):
     msg = message.content.replace('<@1092634707541360762>','')
-    msg = f"You are talking to <@{message.author.id}>. " + msg
+    msg = f"My name is <@{message.author.id}>. Please refer to me as that when you are interacting with me. " + msg
 
     print('Chat interaction started')
     if len(globals()['messages']) > 100 or len(globals()['messages']) == 0:
