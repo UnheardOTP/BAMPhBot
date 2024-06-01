@@ -500,7 +500,7 @@ async def quote(ctx):
   await ctx.respond(get_quote())
 
 # /reset_bot_conversation
-@bot.slash_command(name="reset_bot_conversation.",
+@bot.slash_command(name="reset_bot_conversation",
                    description="Wipes bots AI conversation memory for a fresh start.",
                    guild_ids=[692123814989004862])
 async def reset_bot_conversation(ctx):
