@@ -499,6 +499,18 @@ async def quote(ctx):
 
   await ctx.respond(get_quote())
 
+# /reset_bot_conversation
+@bot.slash_command(name="reset_bot_conversation.",
+                   description="Wipes bots AI conversation memory for a fresh start.",
+                   guild_ids=[692123814989004862])
+async def reset_bot_conversation(ctx):
+  def check(msg):
+    return msg.author == ctx.author and msg.channel == ctx.channel
+  
+  globals()['messages'] = ""
+
+  await ctx.respond("My memory has been wiped and I am ready to start anew!")
+
 # /add_quote
 @bot.slash_command(name="add_quote",
                   description="Add BAMPh quote.",
@@ -602,25 +614,6 @@ async def discipline_point(ctx, user):
 
   await ctx.respond(f"{user} currently has {total_points} discipline point(s).")
 
-
-
-'''
-@bot.slash_command(name="clowney",
-                   description="FLAWLESS VICTORY",
-                   guild_ids=[692123814989004862])
-async def clowney(ctx):
-  def check(msg):
-      return msg.author == ctx.author and msg.channel == ctx.channel 
-  image_url = 'https://files.catbox.moe/ntj07p.gif'
-  embed = discord.Embed(title='Test')
-  embed.set_image(url=image_url)
-  await ctx.send(embed=embed)
-
-  #await ctx.respond(image_url)
-'''   
-
-
-
 #endregion Slash Commands
 
 #region Bot Events
@@ -641,7 +634,7 @@ async def on_message(message):
     msg = message.content.lstrip("<@1092634707541360762> ")
 
     print('Chat interaction started')
-    if len(globals()['messages']) > 10 or len(globals()['messages']) == 0:
+    if len(globals()['messages']) > 100 or len(globals()['messages']) == 0:
       globals()['messages'] = [{"role": "system", "content": get_ai_prompt()}]
     
     globals()['messages'].append({"role": "user", "content":msg},)
