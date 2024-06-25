@@ -492,7 +492,8 @@ async def on_ready():
 # /quote
 @bot.slash_command(name="quote",
                   description="Get a random BAMPh quote.",
-                  guild_ids=[692123814989004862])
+                  guild_ids=[692123814989004862],
+                  role_ids=[1092591212202045552])
 async def quote(ctx):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel    
@@ -634,7 +635,6 @@ async def on_message(message):
     msg = message.content.replace('<@1092634707541360762>','')
     msg = f"My name is <@{message.author.id}>. Please refer to me as that when you are interacting with me. " + msg
 
-    print('Chat interaction started')
     if len(globals()['messages']) > 100 or len(globals()['messages']) == 0:
       globals()['messages'] = [{"role": "system", "content": get_ai_prompt()}]
     
