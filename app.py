@@ -492,8 +492,7 @@ async def on_ready():
 # /quote
 @bot.slash_command(name="quote",
                   description="Get a random BAMPh quote.",
-                  guild_ids=[692123814989004862],
-                  role_ids=[1092591212202045552])
+                  guild_ids=[692123814989004862])
 async def quote(ctx):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel    
@@ -503,7 +502,8 @@ async def quote(ctx):
 # /reset_bot_conversation
 @bot.slash_command(name="reset_bot_conversation",
                    description="Wipes bots AI conversation memory for a fresh start.",
-                   guild_ids=[692123814989004862])
+                   guild_ids=[692123814989004862],
+                  role_ids=[1092591212202045552])
 async def reset_bot_conversation(ctx):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel
@@ -530,7 +530,8 @@ async def add_quote(ctx, quote, author):
 # /set_ai_prompt
 @bot.slash_command(name="set_ai_prompt",
                   description="Set the style of AI response.",
-                  guild_ids=[692123814989004862])
+                  guild_ids=[692123814989004862],
+                  role_ids=[1092591212202045552])
 async def add_quote(ctx, prompt):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
@@ -585,7 +586,8 @@ async def chuggys_temp(ctx):
 # /say_stuff - make the bot say what you type
 @bot.slash_command(name="say_stuff",
                   description="Say stuff",
-                  guild_ids=[692123814989004862])
+                  guild_ids=[692123814989004862],
+                  role_ids=[1092591212202045552])
 @has_permissions(administrator=True)
 async def say_stuff(ctx, words):
   def check(msg):
@@ -594,8 +596,9 @@ async def say_stuff(ctx, words):
   await ctx.respond(f"{words}")
 
 @bot.slash_command(name="discipline_point",
-                   description="Add discipline point to user.",
-                   guild_ids=[692123814989004862])
+                  description="Add discipline point to user.",
+                  guild_ids=[692123814989004862],
+                  role_ids=[1092591212202045552])
 async def discipline_point(ctx, amount, user, reason):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
@@ -605,8 +608,8 @@ async def discipline_point(ctx, amount, user, reason):
   await ctx.respond(f"{amount} discipline point(s) given to {user}. REASON - {reason}")
 
 @bot.slash_command(name="discipline_point_total",
-                   description="Get users discipline point total.",
-                   guild_ids=[692123814989004862])
+                  description="Get users discipline point total.",
+                  guild_ids=[692123814989004862])
 async def discipline_point(ctx, user):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
