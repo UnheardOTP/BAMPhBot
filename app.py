@@ -2,7 +2,6 @@ import os
 import discord
 from datetime import datetime, timedelta, date
 from discord.ext import commands, tasks
-from discord.ext.commands import has_permissions
 import mysql.connector
 import pandas as pd
 from sqlalchemy import create_engine
@@ -588,7 +587,6 @@ async def chuggys_temp(ctx):
                   description="Say stuff",
                   guild_ids=[692123814989004862],
                   role_ids=[1092591212202045552])
-@has_permissions(administrator=True)
 async def say_stuff(ctx, words):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
