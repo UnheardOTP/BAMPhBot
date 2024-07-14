@@ -485,6 +485,15 @@ async def on_ready():
   
 #region Slash Commands
 
+@bot.slash_command(name="meg",
+                  description="Meg",
+                  guild_ids=[692123814989004862],
+                  role_ids=[1092591212202045552])
+async def meg(ctx):
+  def check(msg):
+    return msg.author == ctx.author and msg.channel == ctx.channel 
+
+  await ctx.respond(f"https://files.catbox.moe/p8gggz.gif")
 
   
 
