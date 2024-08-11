@@ -589,6 +589,18 @@ async def chuggys_temp(ctx):
 
   await ctx.respond(f"The current temperature in Chuggy's backyard is {temp}F.")
 
+# /give_beer - note that you owe someone a beer
+@bot.slash_command(name="give_beer",
+                  description="Give a beer to someone for them to claim.",
+                  guild_ids=[692123814989004862])
+async def give_beer(ctx, owed_to):
+  def check(msg):
+    return msg.author == ctx.author and msg.channel == ctx.channel
+
+    await ctx.respond(f"{msg.author} has just given {owed_to} a beer!")
+# /claim_beer - remove the given beer after claiming
+
+# /beer_tally - check if you have any free beers in queue
 
 
 # /say_stuff - make the bot say what you type
