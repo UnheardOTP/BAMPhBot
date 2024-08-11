@@ -597,7 +597,7 @@ async def give_beer(ctx, owed_to):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel
 
-  await ctx.respond(f"{msg.author} has just given {owed_to} a beer!")
+  await ctx.respond(f"{ctx.author} has just given {owed_to} a beer!")
 # /claim_beer - remove the given beer after claiming
 
 # /beer_tally - check if you have any free beers in queue
