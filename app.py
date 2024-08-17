@@ -97,6 +97,25 @@ def get_discipline_point(user):
       return int(point_total[0])
   else:
       return 0
+  
+# Beer credits
+def give_beer_insert(giver, receiver, reason):
+   db_conn = create_db_connection()
+   db_cursor = db_conn.cursor()
+
+   sql = f"insert into beer_credits (giver, receiver, reason) values ('{giver}', '{receiver}', '{reason}')"
+
+   try:
+    db_cursor.execute(sql)
+    point_total = db_cursor.fetchone()
+    row_count = db_cursor.rowcount
+    db_conn.commit()
+    db_conn.close()
+
+    return True
+   except Exception as err:
+    print(err)
+    return False
    
 
 # Check if nick protection is on
@@ -593,11 +612,13 @@ async def chuggys_temp(ctx):
 @bot.slash_command(name="give_beer",
                   description="Give a beer to someone for them to claim.",
                   guild_ids=[692123814989004862])
-async def give_beer(ctx, owed_to):
+async def give_beer(ctx, owed_to, reason):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel
+  
+  give_beer_insert(ctx.author.id, owed_to, reason)
 
-  await ctx.respond(f"<@{ctx.author.id}> has just given {owed_to} a beer!")
+  await ctx.respond(f"<@{ctx.author.id}> has just given {owed_to} a beer for {reason}!")
 # /claim_beer - remove the given beer after claiming
 
 # /beer_tally - check if you have any free beers in queue
@@ -636,6 +657,8 @@ async def discipline_point(ctx, user):
   total_points = get_discipline_point(user)
 
   await ctx.respond(f"{user} currently has {total_points} discipline point(s).")
+
+
 
 #endregion Slash Commands
 
