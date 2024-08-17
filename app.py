@@ -103,7 +103,7 @@ def give_beer_insert(giver, receiver, reason):
    db_conn = create_db_connection()
    db_cursor = db_conn.cursor()
 
-   sql = f"insert into beer_credits (giver, receiver, reason) values ('{giver}', '{receiver}', '{reason}')"
+   sql = f"insert into beer_credits (giver, receiver, reason) values ('<@{giver}>', '{receiver}', '{reason}')"
 
    try:
     db_cursor.execute(sql)
