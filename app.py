@@ -309,6 +309,20 @@ def last_photo_check():
     else:
         return False
 
+def add_photo(message):
+  db_conn = create_db_connection()
+  db_cursor = db_conn.cursor()
+
+  sql = f"insert into photos (photo_link, used) values ('{message}', 0)"
+
+  db_cursor.execute(sql)
+
+  db_conn.commit()
+  db_conn.close()
+
+  return True
+
+
 def get_quote():
     db_conn = create_db_connection()
     db_cursor = db_conn.cursor()
@@ -660,6 +674,7 @@ async def discipline_point(ctx, user):
 
 
 
+
 #endregion Slash Commands
 
 #region Bot Events
@@ -708,6 +723,9 @@ async def on_message(message):
      await message.channel.send("Noice.")
   elif ("tax" in messageContent and message.author.id != 1092634707541360762):
      await message.channel.send("Taxation is theft.")
+  elif ("!addphoto" in messageContent and message.author.id != 1092634707541360762):
+     add_photo(messageContent)
+     await message.channel.send(f"@<{message.author.id}> added a photo to the catalog.")
 
 #endregion Bot Events
 
