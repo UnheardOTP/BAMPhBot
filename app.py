@@ -322,7 +322,7 @@ def add_photo(image_url):
   db_conn = create_db_connection()
   db_cursor = db_conn.cursor()
 
-  sql = f"insert into photos (photo_link, used) values ({response.content}, 0)"
+  sql = f"insert into photos (photo_link, used) values ({response.text}, 0)"
 
   db_cursor.execute(sql)
 
