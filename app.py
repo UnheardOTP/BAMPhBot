@@ -724,8 +724,9 @@ async def on_message(message):
   elif ("tax" in messageContent and message.author.id != 1092634707541360762):
      await message.channel.send("Taxation is theft.")
   elif ("!addphoto" in messageContent and message.author.id != 1092634707541360762):
-     add_photo(messageContent)
-     await message.channel.send(f"@<{message.author.id}> added a photo to the catalog.")
+     attachment = message.attachments[0]
+     add_photo(attachment.url)
+     await message.channel.send(f"<@{message.author.id}> added a photo to the catalog.")
 
 #endregion Bot Events
 
