@@ -658,6 +658,7 @@ async def say_stuff(ctx, words):
 
   await ctx.respond(f"{words}")
 
+# /discipline_pint - give people points for being bad
 @bot.slash_command(name="discipline_point",
                   description="Add discipline point to user.",
                   guild_ids=[692123814989004862],
@@ -670,6 +671,7 @@ async def discipline_point(ctx, amount, user, reason):
 
   await ctx.respond(f"{amount} discipline point(s) given to {user}. REASON - {reason}")
 
+# /discipline_point_total - check how many pointsa user has
 @bot.slash_command(name="discipline_point_total",
                   description="Get users discipline point total.",
                   guild_ids=[692123814989004862])
@@ -681,6 +683,7 @@ async def discipline_point(ctx, user):
 
   await ctx.respond(f"{user} currently has {total_points} discipline point(s).")
 
+# /photo - display a random photo from BAMPh memories
 @bot.slash_command(name="photo",
                    description="Show a random photo from BAMPh activities.",
                    guild_ids=[692123814989004862],
