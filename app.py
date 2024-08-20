@@ -681,7 +681,7 @@ async def discipline_point(ctx, user):
 
   await ctx.respond(f"{user} currently has {total_points} discipline point(s).")
 
-@bot.slash_command("photo",
+@bot.slash_command(name="photo",
                    description="Show a random photo from BAMPh activities.",
                    guild_ids=[692123814989004862],
                    role_ids=[1092591212202045552])
