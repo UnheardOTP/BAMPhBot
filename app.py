@@ -309,11 +309,20 @@ def last_photo_check():
     else:
         return False
 
-def add_photo(message):
+def add_photo(image_url):
+  api_url = "https://catbox.moe/user/api.php"
+  data = {
+          'reqtype': 'urlupload',
+          'userhash': '',
+          'url': f'{image_url}'
+      }
+
+  response = requests.post(api_url, data=data)
+
   db_conn = create_db_connection()
   db_cursor = db_conn.cursor()
 
-  sql = f"insert into photos (photo_link, used) values ('{message}', 0)"
+  sql = f"insert into photos (photo_link, used) values ('{response.content}', 0)"
 
   db_cursor.execute(sql)
 
