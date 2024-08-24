@@ -713,7 +713,7 @@ async def photo(ctx):
                   description="Show top 10 most discipline points",
                   guild_ids=[692123814989004862],
                   role_ids=[1092591212202045552])
-async def top10dp(ctx, amount, user, reason):
+async def top10dp(ctx):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
   
