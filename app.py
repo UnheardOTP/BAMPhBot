@@ -443,6 +443,18 @@ def chat_with_bot(question):
     globals()['messages'].append({"role": "assistant", "content":chat_completion.choices[0].message.content})
 
     return chat_completion
+
+def top10dp():
+  db_conn = create_db_connection()
+  db_cursor = db_conn.cursor()
+
+  sql = "select user, sum(point_amount) as total_points from discipline_points WHERE USER <> '@everyone' GROUP BY USER ORDER BY total_points DESC LIMIT 10"
+  
+  db_cursor.execute(sql)
+
+  points = db_cursor.fetchall()    
+
+  return points
    
 
 #endregion functions
@@ -695,6 +707,20 @@ async def photo(ctx):
   photo = get_photo()
 
   await ctx.respond(f"{photo}")
+
+# /top10dp - show the top 10 discipline point people
+@bot.slash_command(name="top10dp",
+                  description="Show top 10 most discipline points",
+                  guild_ids=[692123814989004862],
+                  role_ids=[1092591212202045552])
+async def top10dp(ctx, amount, user, reason):
+  def check(msg):
+    return msg.author == ctx.author and msg.channel == ctx.channel 
+  
+  results = top10dp()
+
+  for result in results:
+    await ctx.respond(f"{result[0]} - {result[1]}")
 
 
 
