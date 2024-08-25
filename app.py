@@ -447,12 +447,17 @@ def chat_with_bot(question):
 def top10dp():
   db_conn = create_db_connection()
   db_cursor = db_conn.cursor()
+  points = []
 
   sql = "select user, sum(point_amount) as total_points from discipline_points WHERE USER <> '@everyone' GROUP BY USER ORDER BY total_points DESC LIMIT 10"
   
   db_cursor.execute(sql)
 
-  points = db_cursor.fetchall()    
+  for point in db_cursor:
+    points.append(point)
+
+  db_conn.commit()
+  db_conn.close()
 
   return points
    
@@ -720,7 +725,7 @@ async def top10dp(ctx):
   results = top10dp()
 
   for result in results:
-    await ctx.respond(f"{result[0]} - {result[1]}")
+    await ctx.respond(f"{result}")
 
 
 
