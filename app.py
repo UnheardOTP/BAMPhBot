@@ -449,7 +449,7 @@ def dp_point_rankings():
   db_cursor = db_conn.cursor()
   points = []
 
-  sql = "select user, sum(point_amount) as total_points from discipline_points WHERE USER <> '@everyone' GROUP BY USER ORDER BY total_points DESC LIMIT 10"
+  sql = "select user, sum(point_amount) as total_points from discipline_points WHERE USER <> '@everyone' and user <> '<@1092634707541360762>' GROUP BY USER ORDER BY total_points DESC LIMIT 10"
   
   db_cursor.execute(sql)
 
