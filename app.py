@@ -444,7 +444,7 @@ def chat_with_bot(question):
 
     return chat_completion
 
-def top10dp():
+def dp_point_rankings():
   db_conn = create_db_connection()
   db_cursor = db_conn.cursor()
   points = []
@@ -722,7 +722,7 @@ async def top10dp(ctx):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
   
-  results = top10dp()
+  results = dp_point_rankings()
 
   for result in results:
     await ctx.respond(f"{result}")
