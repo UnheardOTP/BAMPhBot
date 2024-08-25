@@ -724,10 +724,8 @@ async def top10dp(ctx):
   
   results = dp_point_rankings()
 
-  result_set ="```"
   for result in results:
-    result_set = result_set + f"{result[0]} - {result[1]}"
-  result_set = result_set + "```"
+    result_set = result_set + f">{result[0]} - {result[1]}"
     
   await ctx.respond(f"{result_set}")
 
