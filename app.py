@@ -8,7 +8,7 @@ from sqlalchemy import create_engine
 import requests
 import json
 from openai import OpenAI
-#test comment
+
 
 
 print('BAMPhBot Booting...')
