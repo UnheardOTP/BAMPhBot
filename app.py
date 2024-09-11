@@ -79,6 +79,26 @@ def add_discipline_point(user, points, reason):
 
   return result
 
+def get_discipline_point_desc(user):
+  db_conn = create_db_connection()
+  db_cursor = db_conn.cursor()
+
+  sql = f"select point_amount, reason from discipline_points where user = '{user}'"
+   
+  try:
+    db_cursor.execute(sql)
+    points = db_cursor.fetch()
+    row_count = db_cursor.rowcount
+    db_conn.commit()
+    db_conn.close()
+  except Exception as err:
+      print(err)
+
+  if row_count != 0:
+      return int(points)
+  else:
+      return 0
+  
 def get_discipline_point(user):
   db_conn = create_db_connection()
   db_cursor = db_conn.cursor()
@@ -713,6 +733,22 @@ async def photo(ctx):
   photo = get_photo()
 
   await ctx.respond(f"{photo}")
+
+# /all_user_points - show all points that have been given with reason to user
+@bot.slash_command(name="all_user_points",
+                  description="Show all points that have been given with reason to user",
+                  guild_ids=[692123814989004862],
+                  role_ids=[1092591212202045552])
+async def all_user_points(ctx, user):
+  def check(msg):
+    return msg.author == ctx.author and msg.channel == ctx.channel 
+
+  all_points = get_discipline_point_desc(user)
+
+  results = dp_point_rankings()
+  result_set = ""
+  for result in results:
+    result_set = result_set + f"\n{result[0]} - {result[1]}"
 
 # /top10dp - show the top 10 discipline point people
 @bot.slash_command(name="top10dp",
