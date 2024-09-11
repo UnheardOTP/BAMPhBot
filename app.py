@@ -88,16 +88,12 @@ def get_discipline_point_desc(user):
   try:
     db_cursor.execute(sql)
     points = db_cursor.fetch()
-    row_count = db_cursor.rowcount
     db_conn.commit()
     db_conn.close()
   except Exception as err:
       print(err)
-
-  if row_count != 0:
-      return int(points)
-  else:
-      return 0
+      
+      return points
   
 def get_discipline_point(user):
   db_conn = create_db_connection()
