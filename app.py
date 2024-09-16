@@ -87,7 +87,7 @@ def get_discipline_point_desc(user):
    
   try:
     db_cursor.execute(sql)
-    points = db_cursor.fetch()
+    points = db_cursor.fetchall()
     db_conn.commit()
     db_conn.close()
   except Exception as err:
