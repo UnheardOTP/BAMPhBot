@@ -90,6 +90,9 @@ def get_discipline_point_desc(user):
     points = db_cursor.fetchall()
     db_conn.commit()
     db_conn.close()
+
+    if db_cursor.rowcount < 1:
+      points = f"User {user} has no points currently. Pehaps they don't belong in BAMPh?"
   except Exception as err:
       print(err)
       
@@ -742,9 +745,12 @@ async def all_user_points(ctx, user):
 
   points = get_discipline_point_desc(user)
 
-  result_set = f"Current Points for {user}"
-  for point in points:
-    result_set = result_set + f"\nPoints Given: {point[0]} - Reason: {point[1]}"
+  if isinstance(points, str) == True:
+    result_set = points
+  else:
+    result_set = f"Current Points for {user}"
+    for point in points:
+      result_set = result_set + f"\nPoints Given: {point[0]} - Reason: {point[1]}"
 
   await ctx.respond(f"{result_set}")
 
