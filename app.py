@@ -740,12 +740,11 @@ async def all_user_points(ctx, user):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
 
-  all_points = get_discipline_point_desc(user)
+  points = get_discipline_point_desc(user)
 
-  results = dp_point_rankings()
   result_set = ""
-  for result in results:
-    result_set = result_set + f"\nReason: {result[0]} - Points: {result[1]}"
+  for point in points:
+    result_set = result_set + f"\nReason: {point[0]} - Points: {point[1]}"
 
   await ctx.respond(f"{result_set}")
 
