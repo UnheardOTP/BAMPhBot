@@ -747,6 +747,8 @@ async def all_user_points(ctx, user):
   for result in results:
     result_set = result_set + f"\nReason: {result[0]} - Points: {result[1]}"
 
+  await ctx.respond(f"{result_set}")
+
 # /top10dp - show the top 10 discipline point people
 @bot.slash_command(name="top10dp",
                   description="Show top 10 most discipline points",
