@@ -744,7 +744,7 @@ async def all_user_points(ctx, user):
 
   result_set = f"Current Points for {user}"
   for point in points:
-    result_set = result_set + f"\nReason: {point[0]} - Points: {point[1]}"
+    result_set = result_set + f"\nPoints Given: {point[0]} - Reason: {point[1]}"
 
   await ctx.respond(f"{result_set}")
 
