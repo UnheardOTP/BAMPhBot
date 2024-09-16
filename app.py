@@ -93,7 +93,8 @@ def get_discipline_point_desc(user):
   except Exception as err:
       print(err)
       
-      return points
+  return points
+      
   
 def get_discipline_point(user):
   db_conn = create_db_connection()
@@ -744,7 +745,7 @@ async def all_user_points(ctx, user):
   results = dp_point_rankings()
   result_set = ""
   for result in results:
-    result_set = result_set + f"\n{result[0]} - {result[1]}"
+    result_set = result_set + f"\nReason: {result[0]} - Points: {result[1]}"
 
 # /top10dp - show the top 10 discipline point people
 @bot.slash_command(name="top10dp",
