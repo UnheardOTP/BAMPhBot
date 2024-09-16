@@ -742,7 +742,7 @@ async def all_user_points(ctx, user):
 
   points = get_discipline_point_desc(user)
 
-  result_set = ""
+  result_set = f"Current Points for {user}"
   for point in points:
     result_set = result_set + f"\nReason: {point[0]} - Points: {point[1]}"
 
