@@ -745,6 +745,7 @@ async def all_user_points(ctx, user):
 
   points = get_discipline_point_desc(user)
 
+  # Handle the instance of the user not currently having any points assigned to them
   if isinstance(points, str) == True:
     result_set = points
   else:
