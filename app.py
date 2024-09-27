@@ -820,7 +820,7 @@ async def on_message(message):
     await message.add_reaction(emoji)
   elif ("nice" in messageContent):
     await message.channel.send("Noice.")
-  elif ("no u" in messageContent):
+  elif ("no u" in messageContent and message.author.id != 1092634707541360762):
     await message.channel.send("no u!")
   elif ("tax" in messageContent and message.author.id != 1092634707541360762):
      await message.channel.send("Taxation is theft.")
