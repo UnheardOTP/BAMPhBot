@@ -278,7 +278,7 @@ def add_quote_to_db(quote, author):
   sql = f"insert into quotes \
         (quote, author) \
         values \
-        ('{quote}', '{author}')"
+        ('{quote.replace("'","''")}', '{author}')"
   try:
     db_cursor.execute(sql)
     db_conn.commit()
