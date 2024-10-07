@@ -61,6 +61,37 @@ def create_db_connection():
   
   return mydb
 
+
+# Punish Jeff functions
+#punish_jeff_check() == True:
+    # Turn off Jeff punishment
+#    punish_jeff_set(False)
+'''
+def punish_jeff_check():
+  db_conn = create_db_connection()
+  db_cursor = db_conn.cursor()
+
+  sql = f"select value from operation_flags where flag = 'punish_jeff'"
+
+  try:
+    db_cursor.execute(sql)
+    db_conn.commit()
+    db_conn.close()
+
+  nick_protect = db_cursor.fetchall()
+    
+    result = bool(nick_protect[0][0])
+
+  db_cursor.execute(sql)
+  real_name = db_cursor.fetchall()
+
+  print(real_name)
+  
+  db_conn.commit()
+  db_conn.close()
+  return str(real_name[0][0])
+'''
+
 # Discipline Points
 def add_discipline_point(user, points, reason):
   db_conn = create_db_connection()
@@ -771,8 +802,25 @@ async def top10dp(ctx):
 
   await ctx.respond(f"{result_set}")
 
+# /punish_jeff - On / Off. If On, Jeff is given a discipline point everytime he makes a post.
+@bot.slash_command(name="punish_jeff",
+                  description="Punish Jeff for being Jeff.",
+                  guild_ids=[692123814989004862],
+                  role_ids=[1092591212202045552])
+async def punish_jeff(ctx):
+  def check(msg):
+    return msg.author == ctx.author and msg.channel == ctx.channel 
 
+  if punish_jeff_check() == True:
+    # Turn off Jeff punishment
+    punish_jeff_set(False)
+    message = "<@804804163904340029> will be spared."
+  else:
+    # Turn on Jeff punishment
+    punish_jeff_set(True)
+    message = "<@804804163904340029> will be punished."
 
+  await ctx.respond(f"{message}")
 
 #endregion Slash Commands
 
