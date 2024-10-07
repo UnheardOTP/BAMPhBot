@@ -78,9 +78,9 @@ def punish_jeff_check():
     db_conn.commit()
     db_conn.close()
 
-    value = db_cursor.fetchall()
+    value = db_cursor.fetchone()
       
-    result = value[0]
+    result = value['value']
     
     return result
   except Exception as err:
