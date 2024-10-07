@@ -66,7 +66,7 @@ def create_db_connection():
 #punish_jeff_check() == True:
     # Turn off Jeff punishment
 #    punish_jeff_set(False)
-'''
+
 def punish_jeff_check():
   db_conn = create_db_connection()
   db_cursor = db_conn.cursor()
@@ -78,19 +78,25 @@ def punish_jeff_check():
     db_conn.commit()
     db_conn.close()
 
-  nick_protect = db_cursor.fetchall()
+    value = db_cursor.fetchall()
+      
+    result = bool(value[0][0])
     
-    result = bool(nick_protect[0][0])
+    return result
+  except:
+    return err
+
+def punish_jeff_set(value):
+  db_conn = create_db_connection()
+  db_cursor = db_conn.cursor()
+
+  sql = f"update operation_flags set value = '{value}' where flag = 'punish_jeff'"
 
   db_cursor.execute(sql)
-  real_name = db_cursor.fetchall()
-
-  print(real_name)
-  
   db_conn.commit()
   db_conn.close()
-  return str(real_name[0][0])
-'''
+
+  return True
 
 # Discipline Points
 def add_discipline_point(user, points, reason):
@@ -876,6 +882,12 @@ async def on_message(message):
      attachment = message.attachments[0]
      add_photo(attachment.url)
      await message.channel.send(f"<@{message.author.id}> added a photo to the catalog.")
+  elif message.author.id == 804804163904340029:
+    # Check to see if Jeff is currently being punished
+    if punish_jeff_check() == True:
+      add_discipline_point('<@804804163904340029>', 1, messageContent)
+      await message.channel.send(f"<@804804163904340029> was punished 1 discipline point for this message.")
+    
 
 #endregion Bot Events
 
