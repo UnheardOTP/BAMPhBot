@@ -80,7 +80,7 @@ def punish_jeff_check():
 
     value = db_cursor.fetchone()
       
-    result = value['value']
+    result = value[0]
     
     return result
   except Exception as err:
