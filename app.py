@@ -67,11 +67,11 @@ def create_db_connection():
     # Turn off Jeff punishment
 #    punish_jeff_set(False)
 
-def punish_jeff_check():
+def punish_check(flag):
   db_conn = create_db_connection()
   db_cursor = db_conn.cursor()
 
-  sql = f"select value from operation_flags where flag = 'punish_jeff'"
+  sql = f"select value from operation_flags where flag = '{flag}'"
 
   try:
     db_cursor.execute(sql)
@@ -87,11 +87,11 @@ def punish_jeff_check():
   except Exception as err:
     return err
 
-def punish_jeff_set(value):
+def punish_set(flag, value):
   db_conn = create_db_connection()
   db_cursor = db_conn.cursor()
 
-  sql = f"update operation_flags set value = {value} where flag = 'punish_jeff'"
+  sql = f"update operation_flags set value = {value} where flag = '{flag}'"
 
   db_cursor.execute(sql)
   db_conn.commit()
@@ -818,16 +818,38 @@ async def punish_jeff(ctx):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
 
-  flag = punish_jeff_check()
+  flag = punish_check('punish_jeff')
 
-  if punish_jeff_check() == 1:
+  if flag == 1:
     # Turn off Jeff punishment
-    punish_jeff_set(0)
+    punish_set('punish_jeff', 0)
     message = "<@804804163904340029> will be spared."
   else:
     # Turn on Jeff punishment
-    punish_jeff_set(1)
+    punish_set('punish_jeff', 0)
     message = "<@804804163904340029> will be punished."
+
+  await ctx.respond(f"{message}")
+
+# /punish_taylor - On / Off. If On, Taylor is given a discipline point everytime he makes a post.
+@bot.slash_command(name="punish_taylor",
+                  description="Punish Taylor for being Taylor.",
+                  guild_ids=[692123814989004862],
+                  role_ids=[1092591212202045552])
+async def punish_taylor(ctx):
+  def check(msg):
+    return msg.author == ctx.author and msg.channel == ctx.channel 
+
+  flag = punish_check('punish_taylor')
+
+  if flag == 1:
+    # Turn off Jeff punishment
+    punish_set('punish_taylor', 0)
+    message = "<@768312411156643840> will be spared."
+  else:
+    # Turn on Jeff punishment
+    punish_set('punish_taylor', 0)
+    message = "<@768312411156643840> will be punished."
 
   await ctx.respond(f"{message}")
 
@@ -887,9 +909,14 @@ async def on_message(message):
      await message.channel.send(f"<@{message.author.id}> added a photo to the catalog.")
   elif message.author.id == 804804163904340029:
     # Check to see if Jeff is currently being punished
-    if punish_jeff_check() == True:
+    if punish_check('punish_jeff') == True:
       add_discipline_point('<@804804163904340029>', 1, messageContent)
       await message.channel.send(f"<@804804163904340029> was punished 1 discipline point for this message.")
+  elif message.author.id == 768312411156643840:
+    # Check to see if Taylor is currently being punished
+    if punish_check('punish_taylor') == True:
+      add_discipline_point('<@768312411156643840>', 1, messageContent)
+      await message.channel.send(f"<@768312411156643840> was punished 1 discipline point for this message.")
     
 
 #endregion Bot Events
