@@ -90,7 +90,7 @@ def punish_jeff_set(value):
   db_conn = create_db_connection()
   db_cursor = db_conn.cursor()
 
-  sql = f"update operation_flags set value = '{value}' where flag = 'punish_jeff'"
+  sql = f"update operation_flags set value = {value} where flag = 'punish_jeff'"
 
   db_cursor.execute(sql)
   db_conn.commit()
@@ -819,11 +819,11 @@ async def punish_jeff(ctx):
 
   if punish_jeff_check() == True:
     # Turn off Jeff punishment
-    punish_jeff_set(False)
+    punish_jeff_set(0)
     message = "<@804804163904340029> will be spared."
   else:
     # Turn on Jeff punishment
-    punish_jeff_set(True)
+    punish_jeff_set(1)
     message = "<@804804163904340029> will be punished."
 
   await ctx.respond(f"{message}")
