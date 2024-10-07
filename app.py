@@ -817,7 +817,7 @@ async def punish_jeff(ctx):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
 
-  if punish_jeff_check() == True:
+  if punish_jeff_check() == 1:
     # Turn off Jeff punishment
     punish_jeff_set(0)
     message = "<@804804163904340029> will be spared."
