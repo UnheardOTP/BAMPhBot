@@ -863,13 +863,13 @@ async def on_message(message):
         await message.channel.send(chunk)
     else:
       await message.channel.send(globals()['answer'])
-  elif ("jeff" in messageContent or '<@804804163904340029>' in messageContent) and '<@1092634707541360762>' not in messageContent:
+  elif ("jeff" in messageContent or '<@804804163904340029>' in messageContent) and '<@1092634707541360762>' not in messageContent and message.author.id != 1092634707541360762:
     emoji = 'mynameisjeff:1096781925114466405'
     await message.add_reaction(emoji)
-  elif ("berry" in messageContent or '<@462087982523088908>' in messageContent) and '<@1092634707541360762>' not in messageContent:
+  elif ("berry" in messageContent or '<@462087982523088908>' in messageContent) and '<@1092634707541360762>' not in messageContent and message.author.id != 1092634707541360762:
     emoji = 'berry:1096783181228814438'
     await message.add_reaction(emoji)
-  elif ("chuggy" in messageContent or '<@284719233601110016>' in messageContent) and '<@1092634707541360762>' not in messageContent:
+  elif ("chuggy" in messageContent or '<@284719233601110016>' in messageContent) and '<@1092634707541360762>' not in messageContent and message.author.id != 1092634707541360762:
     emoji = 'chuggy:1148715141651763270'
     await message.add_reaction(emoji)
   elif ("nice" in messageContent):
