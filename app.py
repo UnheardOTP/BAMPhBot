@@ -83,7 +83,7 @@ def punish_jeff_check():
     result = bool(value[0][0])
     
     return result
-  except:
+  except Exception as err:
     return err
 
 def punish_jeff_set(value):
