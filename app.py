@@ -82,6 +82,8 @@ def punish_jeff_check():
       
     result = value[0]
     
+    print(value)
+    
     return result
   except Exception as err:
     return err
