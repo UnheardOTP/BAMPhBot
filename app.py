@@ -883,6 +883,7 @@ async def on_message(message):
      add_photo(attachment.url)
      await message.channel.send(f"<@{message.author.id}> added a photo to the catalog.")
   elif message.author.id == 804804163904340029:
+    print('Jeff post!')
     # Check to see if Jeff is currently being punished
     if punish_jeff_check() == True:
       add_discipline_point('<@804804163904340029>', 1, messageContent)
