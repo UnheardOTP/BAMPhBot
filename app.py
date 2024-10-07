@@ -80,10 +80,8 @@ def punish_jeff_check():
 
     db_conn.commit()
     db_conn.close()
-      
+
     result = value[0]
-    
-    print(value)
 
     return result
   except Exception as err:
