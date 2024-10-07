@@ -75,15 +75,16 @@ def punish_jeff_check():
 
   try:
     db_cursor.execute(sql)
+    
+    value = db_cursor.fetchone()
+
     db_conn.commit()
     db_conn.close()
-
-    value = db_cursor.fetchone()
       
     result = value[0]
     
     print(value)
-    
+
     return result
   except Exception as err:
     return err
