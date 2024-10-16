@@ -817,7 +817,7 @@ async def top10dp(ctx):
 async def punish_jeff(ctx):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
-
+  print(punish_check('punish_jeff'))
   flag = punish_check('punish_jeff')
 
   if flag == 1:
@@ -839,7 +839,7 @@ async def punish_jeff(ctx):
 async def punish_taylor(ctx):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
-
+  print(punish_check('punish_taylor'))
   flag = punish_check('punish_taylor')
 
   if flag == 1:
