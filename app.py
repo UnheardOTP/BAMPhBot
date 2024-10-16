@@ -826,7 +826,7 @@ async def punish_jeff(ctx):
     message = "<@804804163904340029> will be spared."
   else:
     # Turn on Jeff punishment
-    punish_set('punish_jeff', 0)
+    punish_set('punish_jeff', 1)
     message = "<@804804163904340029> will be punished."
 
   await ctx.respond(f"{message}")
@@ -840,9 +840,6 @@ async def punish_taylor(ctx):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
 
-  
-  print(punish_check('punish_taylor'))
-  
   flag = punish_check('punish_taylor')
 
   if flag == 1:
@@ -851,7 +848,7 @@ async def punish_taylor(ctx):
     message = "<@768312411156643840> will be spared."
   else:
     # Turn on Jeff punishment
-    punish_set('punish_taylor', 0)
+    punish_set('punish_taylor', 1)
     message = "<@768312411156643840> will be punished."
 
   await ctx.respond(f"{message}")
