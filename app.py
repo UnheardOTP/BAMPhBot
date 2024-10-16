@@ -909,11 +909,13 @@ async def on_message(message):
      await message.channel.send(f"<@{message.author.id}> added a photo to the catalog.")
   elif message.author.id == 804804163904340029:
     # Check to see if Jeff is currently being punished
+    print(punish_check('punish_jeff'))
     if punish_check('punish_jeff') == True:
       add_discipline_point('<@804804163904340029>', 1, messageContent)
       await message.channel.send(f"<@804804163904340029> was punished 1 discipline point for this message.")
   elif message.author.id == 768312411156643840:
     # Check to see if Taylor is currently being punished
+    print(punish_check('punish_taylor'))
     if punish_check('punish_taylor') == True:
       add_discipline_point('<@768312411156643840>', 1, messageContent)
       await message.channel.send(f"<@768312411156643840> was punished 1 discipline point for this message.")
