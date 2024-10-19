@@ -866,7 +866,7 @@ async def on_message(message):
     emoji = '\N{PILE OF POO}'
     await message.add_reaction(emoji)
     #await channel.send("Fuck clempson.")
-  elif ("FSU" in messageContent or "Florida State" in messageContent or "powerhouse" in messageContent) and message.author.id != 1092634707541360762:
+  elif ("fsu" in messageContent or "florida state" in messageContent or "powerhouse" in messageContent) and message.author.id != 1092634707541360762:
     await message.channel.send("https://tenor.com/view/a-goddamn-powerhouse-anne-workin-moms-611-youre-the-greatest-of-all-time-gif-25278141")
   # This is for ChatGPT interactions
   elif ('<@1092634707541360762>' in messageContent and message.author.id != 1092634707541360762):
