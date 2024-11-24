@@ -898,6 +898,8 @@ async def on_message(message):
   elif ("chuggy" in messageContent or '<@284719233601110016>' in messageContent) and '<@1092634707541360762>' not in messageContent and message.author.id != 1092634707541360762:
     emoji = 'chuggy:1148715141651763270'
     await message.add_reaction(emoji)
+  elif ("bitch" in messageContent) and '<@1092634707541360762>' not in messageContent and message.author.id != 1092634707541360762:
+      await message.channel.send(f"<@462087982523088908>*")
   elif ("db0fbbe498ff58905ad1c54d0fa74d9a02ea886e452e149cd4c954460682b622" in messageContent):
     msg_del = await channel.fetch_message(msg_id)
     await msg_del.delete()
