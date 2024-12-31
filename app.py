@@ -541,6 +541,9 @@ async def on_message(message):
     emoji = '\N{PILE OF POO}'
     await message.add_reaction(emoji)
     #await channel.send("Fuck clempson.")
+  elif "commanders" in messageContent:
+    await author.timeout(discord.utils.utcnow() + discord.utils.timedelta(minutes=1), reason='They are the Redskins.')
+    await channel.send(f"{author} was given a 1 minute timeout for this message. The are the Redskins.")
   elif "jeff" in messageContent or '<@804804163904340029>' in messageContent:
     emoji = 'mynameisjeff:1096781925114466405'
     await message.add_reaction(emoji)
