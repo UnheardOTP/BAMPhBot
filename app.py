@@ -609,7 +609,7 @@ async def on_ready():
 async def discipline_point(ctx, message: discord.Message):
   add_discipline_point(message.author.id, '1', message.content)
   print(message.author.id)
-  await ctx.respond(f"{message.author_name} was given 1 discipline point for this message.")
+  await ctx.respond(f"{message.author.name} was given 1 discipline point for this message.")
 
 #endregion context commands
   
