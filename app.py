@@ -605,7 +605,7 @@ async def on_ready():
 #endregion Cron Jobs
 
 #region context commands
-@bot.message_command(name="Test"))
+@bot.message_command(name="Test")
 async def test(ctx):
   await ctx.respond(f"TEST!")
 
