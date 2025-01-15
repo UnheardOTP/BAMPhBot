@@ -605,9 +605,10 @@ async def on_ready():
 #endregion Cron Jobs
 
 #region context commands
-@bot.message_command(name="Test")
-async def get_message_id(ctx, message: discord.Message):
-  await ctx.respond(f"Message ID: `{message.id}`")
+@bot.message_command(name="Discipline Point")
+async def discipline_point(ctx):
+  add_discipline_point(ctx.author, '1', ctx.message_content)
+  await ctx.respond(f"{ctx.author} was given 1 discipline point for this message.")
 
 #endregion context commands
   
@@ -743,7 +744,7 @@ async def say_stuff(ctx, words):
     return msg.author == ctx.author and msg.channel == ctx.channel 
 
   await ctx.respond(f"{words}")
-
+'''
 # /discipline_pint - give people points for being bad
 @bot.slash_command(name="discipline_point",
                   description="Add discipline point to user.",
@@ -756,6 +757,7 @@ async def discipline_point(ctx, amount, user, reason):
   add_discipline_point(user, amount, reason)
 
   await ctx.respond(f"{amount} discipline point(s) given to {user}. REASON - {reason}")
+'''
 
 # /discipline_point_total - check how many pointsa user has
 @bot.slash_command(name="discipline_point_total",
