@@ -606,8 +606,8 @@ async def on_ready():
 
 #region context commands
 @bot.message_command(name="Test")
-async def test(ctx):
-  await ctx.respond(f"TEST!")
+async def get_message_id(ctx, message: discord.Message):
+  await ctx.respond(f"Message ID: `{message.id}`")
 
 #endregion context commands
   
