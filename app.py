@@ -603,6 +603,13 @@ async def on_ready():
   globals()['messages'] = [{"role": "system", "content": get_ai_prompt()}]
 
 #endregion Cron Jobs
+
+#region context commands
+@bot.message_command(name="Test"))
+async def test(ctx):
+  await ctx.respond(f"TEST!")
+
+#endregion context commands
   
 #region Slash Commands
 
