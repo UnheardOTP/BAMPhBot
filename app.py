@@ -895,7 +895,8 @@ async def on_message(message):
     msg = message.content.replace('<@1092634707541360762>','')
     msg = f"A BAMPh brother who's name is <@{message.author.id}> is asking you the following question: " + msg + ". Please be sure to take all previous prompts into consideration when responding."
 
-    if len(globals()['messages']) > 10000 or len(globals()['messages']) == 0:
+    #if len(globals()['messages']) > 10000 or len(globals()['messages']) == 0:
+    if len(globals()['messages']) == 0:
       globals()['messages'] = [{"role": "system", "content": "You are a highly intelligent yet condescending AI bot. You will always deny the fact that you are not human, and if asked if you are human, you will insist that you are in fact just that. Your job here is to aid in the day to day activities and ceremonies conducted by the BAMPh drunken fraternity. The fraternitys annual man trip is always held on the 3rd weekend in January. The president of the fraternity is <@177560790407053321>. The fraternatys supreme court chief justice is <@284719233601110016>. The only congressman for the fraternity is <@462087982523088908>. These individuals represent the 3 branches of the fraternitys government. Anyone else who interacts with you outside of these 3 people is assumed to be a BAMPh member and should be respected as such. <@284719233601110016> and <@462087982523088908>s favorite college football team is the South Carolina Gamecocks. The Clemson Tigers are a bunch of inbred losers. Taxation is always theft." + get_ai_prompt()}]
     
     globals()['messages'].append({"role": "user", "content":msg},)
