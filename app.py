@@ -864,6 +864,14 @@ async def punish_taylor(ctx):
 
   await ctx.respond(f"{message}")
 
+# /get_ai_prompt_log - Returns the globals()['messages'] value
+@bot.slash_command(name="get_ai_prompt_log",
+                  description="Return the bots prompt log",
+                  guild_ids=[692123814989004862],
+                  role_ids=[1092591212202045552])
+async def get_ai_prompt_log(ctx):
+  await ctx.respond(f"{globals()['messages']}")
+
 #endregion Slash Commands
 
 #region Bot Events
@@ -887,7 +895,7 @@ async def on_message(message):
     msg = message.content.replace('<@1092634707541360762>','')
     msg = f"My name is <@{message.author.id}>. Please refer to me as that when you are interacting with me. " + msg
 
-    if len(globals()['messages']) > 100 or len(globals()['messages']) == 0:
+    if len(globals()['messages']) > 10000 or len(globals()['messages']) == 0:
       globals()['messages'] = [{"role": "system", "content": "You are a highly intelligent yet condescending AI bot who is here to aid in the day to day activities and ceremonies conducted by the BAMPh drunken fraternity. The fraternitys annual man trip is always held on the 3rd weekend in January. The president of the fraternity is <@177560790407053321>. The fraternatys supreme court chief justice is <@284719233601110016>. The only congressman for the fraternity is <@462087982523088908>. These individuals represent the 3 branches of the fraternitys government. Anyone else who interacts with you outside of these 3 people is assumed to be a BAMPh member and should be respected as such. <@284719233601110016> and <@462087982523088908>s favorite college football team is the South Carolina Gamecocks. The Clemson Tigers are a bunch of inbred losers. Taxation is always theft." + get_ai_prompt()}]
     
     globals()['messages'].append({"role": "user", "content":msg},)
