@@ -934,6 +934,8 @@ async def on_message(message):
      await message.channel.send("Taxation is theft.")
   elif ("canada" in messageContent or 'canadian' in messageContent) and '<@1092634707541360762>' not in messageContent and message.author.id != 1092634707541360762:
     await message.channel.send('https://files.catbox.moe/apn7xa.mp4')
+  elif ("goal" in messageContent) and '<@1092634707541360762>' not in messageContent and message.author.id != 1092634707541360762:
+    await message.channel.send('https://imgur.com/aiiU77e')
   elif ("!addphoto" in messageContent and message.author.id != 1092634707541360762):
      attachment = message.attachments[0]
      add_photo(attachment.url)
