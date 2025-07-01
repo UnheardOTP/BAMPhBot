@@ -633,8 +633,7 @@ async def discipline_point(ctx, message: discord.Message):
 
 @bot.slash_command(name="meg",
                   description="Meg",
-                  guild_ids=[692123814989004862],
-                  role_ids=[1092591212202045552])
+                  guild_ids=[692123814989004862])
 async def meg(ctx):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
@@ -717,7 +716,7 @@ async def mantrip(ctx):
     return msg.author == ctx.author and msg.channel == ctx.channel
   
   today = datetime.now().date()
-  mantrip = date(2025, 1, 17)
+  mantrip = date(2026, 1, 16)
   days_til = mantrip - today
   days_til = days_til.days
 
