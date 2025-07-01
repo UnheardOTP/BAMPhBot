@@ -8,7 +8,7 @@ from sqlalchemy import create_engine
 import requests
 import json
 from openai import OpenAI
-#rom bs4 import BeautifulSoup
+from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 
 
