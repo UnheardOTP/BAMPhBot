@@ -606,6 +606,17 @@ async def rand_photo():
       await channel.send(get_photo())
       update_last_run('photo', datetime.now().isoformat())
 
+@tasks.loop(minutes=15)
+async def course_status_cron():
+    await bot.wait_until_ready()
+    channel = bot.get_channel(1145531746901819493) # #golf channel
+    
+    course_status = course_status()
+    if course_status != last_course_status:
+      last_course_status = course_status
+      await channel.send(course_status)
+  
+
 # Start cron jobs
 @bot.event
 async def on_ready():
@@ -615,6 +626,8 @@ async def on_ready():
     rand_quote.start()
   if not rand_photo.is_running():
     rand_photo.start() 
+  if not course_status_cron.is_running():
+    course_status_cron.start()
   
   globals()['messages'] = [{"role": "system", "content": get_ai_prompt()}]
 
