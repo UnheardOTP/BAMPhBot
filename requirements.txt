@@ -6,3 +6,5 @@ requests
 py-cord
 openai
 mysql-connector-python
+UserAgent
+fake_useragent

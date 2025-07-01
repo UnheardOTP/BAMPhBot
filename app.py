@@ -8,6 +8,8 @@ from sqlalchemy import create_engine
 import requests
 import json
 from openai import OpenAI
+from bs4 import BeautifulSoup
+from fake_useragent import UserAgent
 
 
 
@@ -66,6 +68,20 @@ def create_db_connection():
 #punish_jeff_check() == True:
     # Turn off Jeff punishment
 #    punish_jeff_set(False)
+
+def course_status_check():
+  url = 'https://www.bradshawfarmgc.com/'
+  ua = UserAgent()
+  headers = {'User-Agent': ua.random}
+  response = requests.get(url, headers=headers)
+  response.raise_for_status()
+
+  soup = BeautifulSoup(response.text, 'html.parser')
+
+  course_status = soup.find('div', class_='eb-content').find_all('span')
+  course_status = course_status[0].text.strip()
+
+  return course_status
 
 def punish_check(flag):
   db_conn = create_db_connection()
@@ -821,6 +837,19 @@ async def top10dp(ctx):
     result_set = result_set + f"\n{result[0]} - {result[1]}"
 
   await ctx.respond(f"{result_set}")
+
+# Get the course status of Bradshaw
+@bot.slash_command(name="course_status",
+                  description="Check Bradshaw course status.",
+                  guild_ids=[692123814989004862],
+                  role_ids=[1092591212202045552])
+async def course_status(ctx):
+  def check(msg):
+    return msg.author == ctx.author and msg.channel == ctx.channel 
+  
+  course_status = course_status_check()
+
+  await ctx.respond(f"Bradshaw Course Status: {course_status}")
 
 # /punish_jeff - On / Off. If On, Jeff is given a discipline point everytime he makes a post.
 @bot.slash_command(name="punish_jeff",
