@@ -841,8 +841,7 @@ async def top10dp(ctx):
 # Get the course status of Bradshaw
 @bot.slash_command(name="course_status",
                   description="Check Bradshaw course status.",
-                  guild_ids=[692123814989004862],
-                  role_ids=[1092591212202045552])
+                  guild_ids=[692123814989004862])
 async def course_status(ctx):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
