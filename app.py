@@ -25,6 +25,7 @@ intents.members = True
 bot = discord.Bot(intents=intents)
 
 globals()['messages'] = 0
+globals()['last_course_status'] = ''
 
 #endregion Bot Definitions
 
@@ -78,8 +79,8 @@ def course_status_check():
 
   soup = BeautifulSoup(response.text, 'html.parser')
 
-  course_status = soup.find('div', class_='eb-content').find_all('span')
-  course_status = course_status[0].text.strip()
+  returned_status = soup.find('div', class_='eb-content').find_all('span')
+  course_status = returned_status[0].text.strip()
 
   return course_status
 
@@ -612,8 +613,8 @@ async def course_status_cron():
     channel = bot.get_channel(1145531746901819493) # #golf channel
     
     course_status = course_status()
-    if course_status != last_course_status:
-      last_course_status = course_status
+    if course_status != globals()['last_course_status']:
+      globals()['last_course_status'] = course_status
       await channel.send(course_status)
   
 
