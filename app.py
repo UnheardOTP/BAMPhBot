@@ -70,7 +70,7 @@ def create_db_connection():
     # Turn off Jeff punishment
 #    punish_jeff_set(False)
 
-def course_status_check():
+def get_course_status():
   url = 'https://www.bradshawfarmgc.com/'
   ua = UserAgent()
   headers = {'User-Agent': ua.random}
@@ -612,7 +612,7 @@ async def course_status_cron():
     await bot.wait_until_ready()
     channel = bot.get_channel(1145531746901819493) # #golf channel
     
-    course_status = course_status()
+    course_status = get_course_status()
     if course_status != globals()['last_course_status']:
       globals()['last_course_status'] = course_status
       await channel.send(course_status)
