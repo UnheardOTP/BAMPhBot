@@ -615,7 +615,7 @@ async def course_status_cron():
     course_status = get_course_status()
     if course_status != globals()['last_course_status']:
       globals()['last_course_status'] = course_status
-      await channel.send(course_status)
+      await channel.send(f"Bradshaw Course/Range Status Update: {course_status}")
   
 
 # Start cron jobs
