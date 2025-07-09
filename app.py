@@ -925,14 +925,8 @@ async def on_message(message):
   messageContent = message.content.lower()
   msg_id = message.id
 
-  if ("clemson" in messageContent or "clempson" in messageContent) and message.author.id != 1092634707541360762:
-    emoji = '\N{PILE OF POO}'
-    await message.add_reaction(emoji)
-    #await channel.send("Fuck clempson.")
-  elif ("fsu" in messageContent or "florida state" in messageContent or "powerhouse" in messageContent) and message.author.id != 1092634707541360762:
-    await message.channel.send("https://tenor.com/view/a-goddamn-powerhouse-anne-workin-moms-611-youre-the-greatest-of-all-time-gif-25278141")
   # This is for ChatGPT interactions
-  elif ('<@1092634707541360762>' in messageContent and message.author.id != 1092634707541360762):
+  if ('<@1092634707541360762>' in messageContent and message.author.id != 1092634707541360762):
     msg = message.content.replace('<@1092634707541360762>','')
     msg = f"A BAMPh brother who's name is <@{message.author.id}> is asking you the following question: " + msg + ". Please be sure to take all previous prompts into consideration when responding."
 
@@ -952,6 +946,12 @@ async def on_message(message):
         await message.channel.send(chunk)
     else:
       await message.channel.send(globals()['answer'])
+  elif ("clemson" in messageContent or "clempson" in messageContent) and message.author.id != 1092634707541360762:
+    emoji = '\N{PILE OF POO}'
+    await message.add_reaction(emoji)
+    #await channel.send("Fuck clempson.")
+  elif ("fsu" in messageContent or "florida state" in messageContent or "powerhouse" in messageContent) and message.author.id != 1092634707541360762:
+    await message.channel.send("https://tenor.com/view/a-goddamn-powerhouse-anne-workin-moms-611-youre-the-greatest-of-all-time-gif-25278141")
   elif ("jeff" in messageContent or '<@804804163904340029>' in messageContent) and '<@1092634707541360762>' not in messageContent and message.author.id != 1092634707541360762:
     emoji = 'mynameisjeff:1096781925114466405'
     await message.add_reaction(emoji)
