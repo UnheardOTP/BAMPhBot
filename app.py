@@ -859,7 +859,7 @@ async def course_status(ctx):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
   
-  course_status = course_status_check()
+  course_status = get_course_status()
 
   await ctx.respond(f"Bradshaw Course Status: {course_status}")
 
