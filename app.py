@@ -431,8 +431,10 @@ def get_quote():
     author = quote[0][2]
     created_date = quote[0][3]
 
-    if created_date == '1900-01-01':
-      created_date = 'Unknown'
+    if created_date == date(1900, 1, 1):
+        created_date = 'Date Unknown'
+    else:
+        created_date = created_date.strftime("%d-%m-%Y")
 
     # Build return string
     rand_quote = f"{quote_text} - {author} - {created_date}"
