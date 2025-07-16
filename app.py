@@ -412,7 +412,7 @@ def get_quote():
     db_conn = create_db_connection()
     db_cursor = db_conn.cursor()
 
-    sql = "select id, quote, author \
+    sql = "select id, quote, author, created_date \
         from quotes \
         where quote_used = 0 \
         ORDER BY RAND() \
@@ -429,9 +429,13 @@ def get_quote():
     quote_id = quote[0][0]
     quote_text = quote[0][1]
     author = quote[0][2]
+    created_date = quote[0][3]
+
+    if created_date == '1900-01-01':
+      created_date = 'Unknown'
 
     # Build return string
-    rand_quote = f"{quote_text} - {author}"
+    rand_quote = f"{quote_text} - {author} - {created_date}"
 
     # Update random quote as used
     sql = f"update quotes \
