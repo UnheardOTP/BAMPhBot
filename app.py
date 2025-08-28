@@ -749,7 +749,17 @@ async def quote(ctx):
 
   await ctx.respond(get_locker_inventory())
 
-  
+# /add_bottle 
+@bot.slash_command(name="add_bottle",
+                description="Add a bottle to the Cigar Bar locker inventory.",
+                guild_ids=[692123814989004862])
+async def quote(ctx, bottle_name, liquor_type):
+  def check(msg):
+    return msg.author == ctx.author and msg.channel == ctx.channel    
+
+  add_bottle(bottle_name, liquor_type)
+
+  await ctx.respond(f'{bottle_name} added to locker inventory.')
 
 # /quote
 @bot.slash_command(name="quote",
