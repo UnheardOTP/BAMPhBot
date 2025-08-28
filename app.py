@@ -129,11 +129,11 @@ def set_bottle_low(bottle_id):
   except Exception as err:
     return err
 
-def get_bottle_inventory():
+def get_locker_inventory():
   db_conn = create_db_connection()
   db_cursor = db_conn.cursor()
   
-  sql = f"select * from bottle_inventory"
+  sql = f"select * from locker_inventory"
   try:
     db_cursor.execute(sql)
     
@@ -747,7 +747,7 @@ async def quote(ctx):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel    
 
-  await ctx.respond(get_bottle_inventory())
+  await ctx.respond(get_locker_inventory())
 
   
 
