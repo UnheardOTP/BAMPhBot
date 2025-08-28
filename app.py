@@ -70,6 +70,84 @@ def create_db_connection():
     # Turn off Jeff punishment
 #    punish_jeff_set(False)
 
+
+# Locker inventory functions
+def add_bottle(bottle_name, liquor_type):
+  db_conn = create_db_connection()
+  db_cursor = db_conn.cursor()
+
+  sql = f"insert into locker_inventory (bottle_name, liquor_type) values ('{bottle_name}', '{liquor_type}')"
+  try:
+    db_cursor.execute(sql)
+    
+    value = db_cursor.fetchone()
+
+    db_conn.commit()
+    db_conn.close()
+
+    result = value[0]
+
+    return result
+  except Exception as err:
+    return err
+
+def rem_bottle(bottle_id):
+  db_conn = create_db_connection()
+  db_cursor = db_conn.cursor()
+
+  sql = f"delete from locker_inventory where id = {bottle_id}"
+  try:
+    db_cursor.execute(sql)
+    
+    value = db_cursor.fetchone()
+
+    db_conn.commit()
+    db_conn.close()
+
+    result = value[0]
+
+    return result
+  except Exception as err:
+    return err
+
+def set_bottle_low(bottle_id):
+  db_conn = create_db_connection()
+  db_cursor = db_conn.cursor()
+  
+  sql = f"update bottle_inventory set is_low = 1 where id = {bottle_id}"
+  try:
+    db_cursor.execute(sql)
+    
+    value = db_cursor.fetchone()
+
+    db_conn.commit()
+    db_conn.close()
+
+    result = value[0]
+
+    return result
+  except Exception as err:
+    return err
+
+def get_bottle_inventory():
+  db_conn = create_db_connection()
+  db_cursor = db_conn.cursor()
+  
+  sql = f"select * from bottle_inventory"
+  try:
+    db_cursor.execute(sql)
+    
+    value = db_cursor.fetchall()
+
+    db_conn.commit()
+    db_conn.close()
+
+    result = value
+
+    return result
+  except Exception as err:
+    return err
+
 def get_course_status():
   url = 'https://www.bradshawfarmgc.com/'
   ua = UserAgent()
@@ -659,6 +737,17 @@ async def meg(ctx):
     return msg.author == ctx.author and msg.channel == ctx.channel 
 
   await ctx.respond(f"https://files.catbox.moe/p8gggz.gif")
+
+# Locker Inventory
+# /locker_inventory
+@bot.slash_command(name="locker_inventory",
+                description="Get a Cigar Bar locker inventory.",
+                guild_ids=[692123814989004862])
+async def quote(ctx):
+  def check(msg):
+    return msg.author == ctx.author and msg.channel == ctx.channel    
+
+  await ctx.respond(get_bottle_inventory())
 
   
 
