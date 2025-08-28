@@ -114,7 +114,7 @@ def mark_bottle_low(bottle_id):
   db_conn = create_db_connection()
   db_cursor = db_conn.cursor()
   
-  sql = f"update bottle_inventory set is_low = 1 where id = {bottle_id}"
+  sql = f"update bottle_inventory set is_low = '1' where id = '{bottle_id}'"
   try:
     db_cursor.execute(sql)
     
