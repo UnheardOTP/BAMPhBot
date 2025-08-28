@@ -110,7 +110,7 @@ def rem_bottle(bottle_id):
   except Exception as err:
     return err
 
-def set_bottle_low(bottle_id):
+def mark_bottle_low(bottle_id):
   db_conn = create_db_connection()
   db_cursor = db_conn.cursor()
   
@@ -760,6 +760,30 @@ async def quote(ctx, bottle_name, liquor_type):
   add_bottle(bottle_name, liquor_type)
 
   await ctx.respond(f'{bottle_name} added to locker inventory.')
+
+# /remove_bottle
+@bot.slash_command(name="remove_bottle",
+                description="Remove a bottle to the Cigar Bar locker inventory.",
+                guild_ids=[692123814989004862])
+async def quote(ctx, bottle_id):
+  def check(msg):
+    return msg.author == ctx.author and msg.channel == ctx.channel    
+
+  rem_bottle(bottle_id)
+
+  await ctx.respond(f'Bottle #{bottle_id} removed locker inventory.')
+
+# /mark_bottle_low
+@bot.slash_command(name="mark_bottle_low",
+                description="Mark bottle low volume.",
+                guild_ids=[692123814989004862])
+async def quote(ctx, bottle_id):
+  def check(msg):
+    return msg.author == ctx.author and msg.channel == ctx.channel    
+
+  mark_bottle_low(bottle_id)
+
+  await ctx.respond(f'Bottle #{bottle_id} has been marked low. Please resupply.')
 
 # /quote
 @bot.slash_command(name="quote",
