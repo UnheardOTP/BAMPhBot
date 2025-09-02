@@ -11,9 +11,8 @@ from openai import OpenAI
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 
-
-
 print('BAMPhBot Booting...')
+
 
 #region Bot Definitions
 
@@ -512,7 +511,7 @@ def get_quote():
     if created_date == date(1900, 1, 1):
         created_date = 'Date Unknown'
     else:
-        created_date = created_date.strftime("%d-%m-%Y")
+        created_date = created_date.strftime("%m-%d-%Y")
 
     # Build return string
     rand_quote = f"{quote_text} - {author} - {created_date}"
