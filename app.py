@@ -874,7 +874,7 @@ async def chuggys_temp(ctx):
 
   temp = get_chuggys_temp()
 
-  await ctx.respond(f"The current temperature in Chuggy's backyard is {temp}F.")
+  await ctx.respond(f"The current temperature in Chuggy's backyard is {temp}F.\nFor complete weather conditions, go here: https://www.pwsweather.com/station/pws/w4spdwx")
 
 # /give_beer - note that you owe someone a beer
 @bot.slash_command(name="give_beer",
