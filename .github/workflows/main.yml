@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Deploy via SSH with password
         uses: appleboy/ssh-action@v0.1.10
         with:
@@ -18,5 +21,7 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: 22
           script: |
-            cd ~
-            ./bamphbot.sh
+            cd /path/to/app
+            git pull origin main
+            docker-compose down
+            docker-compose up -d --build
