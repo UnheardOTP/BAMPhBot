@@ -1,9 +1,9 @@
-name: Deploy to Server
+name: Deploy BAMPhBot
 
 on:
   push:
     branches:
-      - main
+      - main   # run this when you push to main
 
 jobs:
   deploy:
@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Deploy via SSH with password
+      - name: SSH into server and deploy
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.SERVER_HOST }}
@@ -22,6 +22,6 @@ jobs:
           port: 22
           script: |
             cd ~/docker/BAMPhBot
-            docker stop a9972fdd1294
+            docker stop a9972fdd1294 || true
             git pull
             docker start a9972fdd1294
