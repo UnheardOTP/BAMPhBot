@@ -23,6 +23,7 @@ intents.message_content = True
 intents.members = True
 bot = discord.Bot(intents=intents)
 
+
 globals()['messages'] = 0
 globals()['last_course_status'] = ''
 
@@ -216,7 +217,7 @@ def add_good_citizen_point(user, points, reason):
   db_conn = create_db_connection()
   db_cursor = db_conn.cursor()
 
-  sql = f"insert into citizen_points (user, point_amount, reason) values ('{user}', {points}, '{reason}')"
+  sql = f"insert into good_citizen_points (user, point_amount, reason) values ('{user}', {points}, '{reason}')"
    
   try:
     db_cursor.execute(sql)
