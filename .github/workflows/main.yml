@@ -21,7 +21,7 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: 22
           script: |
-            cd /path/to/app
-            git pull origin main
-            docker-compose down
-            docker-compose up -d --build
+            cd ~/docker/BAMPhBot
+            docker stop a9972fdd1294
+            git pull
+            docker start a9972fdd1294
