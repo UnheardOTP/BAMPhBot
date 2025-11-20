@@ -211,6 +211,24 @@ def add_discipline_point(user, points, reason):
 
   return result
 
+# Good Citizen Points
+def add_good_citizen_point(user, points, reason):
+  db_conn = create_db_connection()
+  db_cursor = db_conn.cursor()
+
+  sql = f"insert into citizen_points (user, point_amount, reason) values ('{user}', {points}, '{reason}')"
+   
+  try:
+    db_cursor.execute(sql)
+    db_conn.commit()
+    db_conn.close()
+
+    return "Success"
+  except Exception as err:
+    return err
+
+  return result
+
 def get_discipline_point_desc(user):
   db_conn = create_db_connection()
   db_cursor = db_conn.cursor()
@@ -723,6 +741,12 @@ async def discipline_point(ctx, message: discord.Message):
   add_discipline_point(f"<@{message.author.id}>", '1', message.content)
   print(message.author.id)
   await ctx.respond(f"<@{message.author.id}> was given 1 discipline point for this message.")
+
+@bot.message_command(name="Good Citizen Point")
+async def discipline_point(ctx, message: discord.Message):
+  add_good_citizen_point(f"<@{message.author.id}>", '1', message.content)
+  print(message.author.id)
+  await ctx.respond(f"<@{message.author.id}> was given 1 good citizen point for this message.")
 
 #endregion context commands
   
