@@ -1,3 +1,4 @@
+import functions
 import os
 import discord
 from datetime import datetime, timedelta, date
@@ -10,7 +11,7 @@ import json
 from openai import OpenAI
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
-import functions
+
 
 print('BAMPhBot Booting...')
 
