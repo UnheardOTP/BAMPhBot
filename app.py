@@ -16,7 +16,7 @@ from fake_useragent import UserAgent
 print('BAMPhBot Booting...')
 
 # Init error logging
-init_logger()
+functions.init_logger()
 
 #region Bot Definitions
 
@@ -230,7 +230,7 @@ def add_good_citizen_point(user, points, reason):
 
     return "Success"
   except Exception as err:
-    log_Error(f"An error occured while adding a good citizen point: {err}")
+    functions.log_Error(f"An error occured while adding a good citizen point: {err}")
 
   return result
 
