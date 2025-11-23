@@ -10,9 +10,12 @@ import json
 from openai import OpenAI
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
+import functions
 
 print('BAMPhBot Booting...')
 
+# Init error logging
+init_logger()
 
 #region Bot Definitions
 
@@ -226,7 +229,7 @@ def add_good_citizen_point(user, points, reason):
 
     return "Success"
   except Exception as err:
-    return err
+    log_Error(f"An error occured while adding a good citizen point: {err}")
 
   return result
 

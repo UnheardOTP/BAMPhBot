@@ -8,3 +8,4 @@ openai
 mysql-connector-python
 UserAgent
 fake_useragent
+logging
