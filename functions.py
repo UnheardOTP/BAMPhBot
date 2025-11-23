@@ -8,5 +8,5 @@ def init_logger(log_file="errors.log"):
         format="%(asctime)s - %(levelname)s - %(message)s"
     )
 
-def log_Error(message)
+def log_Error(message):
     logging.error(message)
