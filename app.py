@@ -234,6 +234,8 @@ def add_good_citizen_point(user, points, reason):
 
   return result
 
+
+
 def get_discipline_point_desc(user):
   db_conn = create_db_connection()
   db_cursor = db_conn.cursor()
@@ -748,10 +750,23 @@ async def discipline_point(ctx, message: discord.Message):
   await ctx.respond(f"<@{message.author.id}> was given 1 discipline point for this message.")
 
 @bot.message_command(name="Good Citizen Point")
-async def discipline_point(ctx, message: discord.Message):
+async def good_citizen_point(ctx, message: discord.Message):
   add_good_citizen_point(f"<@{message.author.id}>", '1', message.content)
   print(message.author.id)
   await ctx.respond(f"<@{message.author.id}> was given 1 good citizen point for this message.")
+
+#1455447745958776905
+@bot.message_command(name="Banish to #tard")
+async def tard(ctx, message: discord.message):
+  user = message.author
+  role = discord.utils.get(user.guild.roles, name="tard")
+  await user.add_roles(role)
+
+@bot.message_command(name="Unbanish from #tard")
+async def tard(ctx, message: discord.message):
+  user = message.author
+  role = discord.utils.get(user.guild.roles, name="tard")
+  await user.remove_roles(role)
 
 #endregion context commands
   
@@ -765,6 +780,7 @@ async def meg(ctx):
     return msg.author == ctx.author and msg.channel == ctx.channel 
 
   await ctx.respond(f"https://files.catbox.moe/p8gggz.gif")
+
 
 # Locker Inventory
 # /locker_inventory
