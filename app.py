@@ -761,12 +761,13 @@ async def tard(ctx, message: discord.message):
   user = message.author
   role = discord.utils.get(user.guild.roles, name="tard")
   await user.add_roles(role)
+  await ctx.respond(f"<@{message.author.id}> was banished to <#1455447383524642900> for this message.")
 
-@bot.message_command(name="Unbanish from #tard")
-async def tard(ctx, message: discord.message):
-  user = message.author
+@bot.user_command(name="Unbanish from #tard")
+async def tard(ctx, user: discord.Member):
   role = discord.utils.get(user.guild.roles, name="tard")
   await user.remove_roles(role)
+  await ctx.respond(f"<@{user.display_name> has been unbanished from <#1455447383524642900>.")
 
 #endregion context commands
   
