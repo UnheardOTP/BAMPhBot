@@ -214,7 +214,7 @@ def add_discipline_point(user, points, reason):
   except Exception as err:
     return err
 
-  return result
+  return
 
 # Good Citizen Points
 def add_good_citizen_point(user, points, reason):
@@ -232,7 +232,7 @@ def add_good_citizen_point(user, points, reason):
   except Exception as err:
     functions.log_Error(f"An error occured while adding a good citizen point: {err}")
 
-  return result
+  return
 
 
 
