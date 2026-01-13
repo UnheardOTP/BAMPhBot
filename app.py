@@ -756,7 +756,7 @@ async def good_citizen_point(ctx, message: discord.Message):
   await ctx.respond(f"<@{message.author.id}> was given 1 good citizen point for this message.")
 
 #1455447745958776905
-@bot.message_command(name="Banish to #tard")
+@bot.message_command(name="Banish to #tards")
 async def tard(ctx, message: discord.message):
   user = message.author
   role = discord.utils.get(user.guild.roles, name="tard")
