@@ -948,7 +948,7 @@ async def chuggys_temp(ctx):
 @bot.slash_command(name="beer_bitch",
                   description="Get information on current Beer Bitch",
                   guild_ids=[692123814989004862])
-async def beer_bitch(ctx)
+async def beer_bitch(ctx):
   def check(msg):
       return msg.author == ctx.author and msg.channel == ctx.channel
 
