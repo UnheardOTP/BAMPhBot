@@ -968,7 +968,7 @@ async def beer_bitch(ctx):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel
   
-  beer_bitch = functions.get_beer_bitch_info()    
+  beer_bitch = functions.get_beer_bitch_info(db)    
   await ctx.respond(beer_bitch)
 
 # /give_beer - note that you owe someone a beer
