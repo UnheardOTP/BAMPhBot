@@ -32,7 +32,7 @@ def get_beer_bitch_info():
     beer_bitch = db.query("select value from params where param = 'beer_bitch'")
     beer_bitch_beer = db.query("select value from params where param = 'beer_bitch_beer'")
 
-    return (f'This years beer bitch is {beer_bitch} and the beer is {beer_bitch_beer}.'))
+    return (f'This years beer bitch is {beer_bitch} and the beer is {beer_bitch_beer}.')
 
 
 
