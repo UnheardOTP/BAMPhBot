@@ -1,5 +1,4 @@
 datetime 
-mysql.connector 
 pandas 
 sqlalchemy 
 requests 

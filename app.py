@@ -782,6 +782,28 @@ async def meg(ctx):
 
   await ctx.respond(f"https://files.catbox.moe/p8gggz.gif")
 
+# Beer bitch functionality
+# /bb_iou
+@bot.slash_command(name="bb_iou",
+                description="Record a missed Beer Bitch $1 payment",
+                guild_ids=[692123814989004862])
+async def bb_iou(ctx, debtor):
+  def check(msg):
+    return msg.author == ctx.author and msg.channel == ctx.channel 
+  
+  result = add_quote_to_db(debtor)
+
+  beer_bitch = get_beer_bitch()
+  
+  if result == "Success":
+    await ctx.respond(f"{debtor} owes $1 to {beer_bitch}. {beer_bitch} please use <thumb emoji> in response to this message to confirm payment.")
+  else:
+    ctx.respond(result)
+
+
+# /bb_paid
+
+
 
 # Locker Inventory
 # /locker_inventory
@@ -921,6 +943,18 @@ async def chuggys_temp(ctx):
   temp = get_chuggys_temp()
 
   await ctx.respond(f"The current temperature in Chuggy's backyard is {temp}F.\nFor complete weather conditions, go here: https://www.pwsweather.com/station/pws/w4spdwx")
+
+# /beer_bitch
+@bot.slash_command(name="beer_bitch",
+                  description="Get information on current Beer Bitch",
+                  guild_ids=[692123814989004862])
+async def beer_bitch(ctx)
+  def check(msg):
+      return msg.author == ctx.author and msg.channel == ctx.channel
+
+      beer_bitch = functions.get_beer_bitch_info()
+      
+      await ctx.respond(beer_bitch)
 
 # /give_beer - note that you owe someone a beer
 @bot.slash_command(name="give_beer",
