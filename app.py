@@ -737,9 +737,7 @@ async def course_status_cron():
     channel = bot.get_channel(1145531746901819493) # #golf channel
     
     course_status = get_course_status()
-    #if course_status != globals()['last_course_status']:
-    if course_status != last_course_status(db)
-      #globals()['last_course_status'] = course_status
+    if course_status != last_course_status(db):
       set_course_status(db, course_status)
       await channel.send(f"Bradshaw Course/Range Status Update: {course_status}")
   
