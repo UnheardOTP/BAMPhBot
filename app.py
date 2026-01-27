@@ -11,7 +11,23 @@ import json
 from openai import OpenAI
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
+from database import database
 
+#region Secrets
+with open('secrets.txt', 'r') as f:
+    data = f.read()
+    f.close()
+
+secrets = json.loads(data)
+
+db_host=secrets['HOST']
+db_user=secrets['USER']
+db_password=secrets['PASSWORD']
+db_database=secrets['DATABASE']
+#endregion Secrets
+
+# Create multi use db object
+db = database(db_host, db_user, db_password, db_database)
 
 print('BAMPhBot Booting...')
 
@@ -793,7 +809,7 @@ async def bb_iou(ctx, debtor):
   
   result = add_quote_to_db(debtor)
 
-  beer_bitch = get_beer_bitch()
+  beer_bitch = get_beer_bitch(db)
   
   if result == "Success":
     await ctx.respond(f"{debtor} owes $1 to {beer_bitch}. {beer_bitch} please use <thumb emoji> in response to this message to confirm payment.")
