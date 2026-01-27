@@ -950,11 +950,10 @@ async def chuggys_temp(ctx):
                   guild_ids=[692123814989004862])
 async def beer_bitch(ctx):
   def check(msg):
-      return msg.author == ctx.author and msg.channel == ctx.channel
-
-      beer_bitch = functions.get_beer_bitch_info()
-      
-      await ctx.respond(beer_bitch)
+    return msg.author == ctx.author and msg.channel == ctx.channel
+  
+  beer_bitch = functions.get_beer_bitch_info()    
+  await ctx.respond(beer_bitch)
 
 # /give_beer - note that you owe someone a beer
 @bot.slash_command(name="give_beer",
