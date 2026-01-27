@@ -45,7 +45,6 @@ bot = discord.Bot(intents=intents)
 
 
 globals()['messages'] = 0
-globals()['last_course_status'] = ''
 
 #endregion Bot Definitions
 
