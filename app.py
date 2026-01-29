@@ -699,7 +699,7 @@ async def on_message(message):
   
   
 
-# Check for bamph birthday
+# Check daily at 10am for bamph birthday
 @tasks.loop(time=dt.time(hour=10, minute=00))
 async def bday_check():
   await bot.wait_until_ready()
