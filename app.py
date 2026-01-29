@@ -41,13 +41,11 @@ intents.message_content = True
 intents.members = True
 bot = discord.Bot(intents=intents)
 
-await bot.wait_until_ready()
-channel = bot.get_channel(1245331722342629376)
-if channel:
-  channel.send(f"BAMPhBot Online @ {datetime.now()}.")
-else:
-  print('Bot not ready.')
-
+@bot.event
+async def on_ready():
+  channel = bot.get_channel(1245331722342629376)
+  if channel:
+    channel.send(f"BAMPhBot Online @ {datetime.now()}.")
 
 globals()['messages'] = 0
 
