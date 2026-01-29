@@ -601,19 +601,14 @@ def get_photo():
 
     return photo_link
   
-def birthday_check():
-  db_conn = create_db_connection()
-  db_cursor = db_conn.cursor()
-
+def birthday_check(db):
   sql = "SELECT * FROM birthdays \
          WHERE MONTH(birthday) = MONTH(curdate()) and day(birthday) = DAY(curdate())"
-  
-  db_cursor.execute(sql)
 
-  birthday = db_cursor.fetchall()
+  birthday = db.query("select * from birthdays_new where month = MONTH(curdate()) and day = DAY(curdate())")
 
-  if db_cursor.rowcount > 0:
-     return f"Happy birthday {birthday[0][1]}"
+  if birthday:
+     return f"Happy birthday {birthday[0]['user']}!"
   else:
      return False
 
@@ -700,12 +695,12 @@ async def on_message(message):
   
 
 # Check daily at 10am for bamph birthday
-@tasks.loop(time=time(hour=10, minute=00))
+@tasks.loop(time=time(hour=17, minute=10))
 async def bday_check():
   await bot.wait_until_ready()
   channel = bot.get_channel(1092446896158679131)
 
-  bday = birthday_check()
+  bday = birthday_check(db)
 
   if bday != False:
     await channel.send(f"{bday}")
