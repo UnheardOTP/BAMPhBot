@@ -736,6 +736,7 @@ async def course_status_cron():
 async def on_ready():
   if not bday_check.is_running():
     bday_check.start()
+    print('Birthday check started.')
   if not rand_quote.is_running():
     rand_quote.start()
   if not rand_photo.is_running():
