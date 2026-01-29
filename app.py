@@ -45,6 +45,7 @@ bot = discord.Bot(intents=intents)
 async def on_ready():
   channel = bot.get_channel(1245331722342629376)
   if channel:
+    print(f"BAMPhBot Online @ {datetime.now()}.")
     channel.send(f"BAMPhBot Online @ {datetime.now()}.")
 
 globals()['messages'] = 0
