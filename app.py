@@ -691,16 +691,8 @@ async def on_message(message):
   
 
 # Check daily at 10am for bamph birthday
-@tasks.loop(time=time(hour=17, minute=43))
+@tasks.loop(time=time(hour=18, minute=03))
 async def bday_check():
-  await bot.wait_until_ready()
-  channel = bot.get_channel(1245331722342629376)
-
-  await channel.send(f"Success!")
-
-@tasks.loop(time=time(hour=18, minute=00))
-async def bday_check():
-  await bot.wait_until_ready()
   channel = bot.get_channel(1092446896158679131)
 
   bday = birthday_check(db)
