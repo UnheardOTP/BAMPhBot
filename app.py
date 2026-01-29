@@ -30,6 +30,7 @@ db_database=secrets['DATABASE']
 db = database(db_host, db_user, db_password, db_database)
 
 print('BAMPhBot Booting...')
+print(datetime.now())
 
 # Init error logging
 functions.init_logger()
