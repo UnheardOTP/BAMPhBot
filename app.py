@@ -603,12 +603,17 @@ def get_photo():
     return photo_link
   
 def birthday_check(db):
-  birthday = db.query("select * from birthdays_new where month = MONTH(curdate()) and day = DAY(curdate())")
+  try:
+    birthday = db.query("select * from birthdays_new where month = MONTH(curdate()) and day = DAY(curdate())")
 
-  if birthday:
-     return f"Happy birthday {birthday[0]['user']}!"
-  else:
-     return False
+    if birthday:
+      return f"Happy birthday {birthday[0]['user']}!"
+    else:
+      return False
+  
+  except Exception as e:
+    print("Error: ", e)
+    return False
 
 def get_chuggys_temp():
   url     = f'https://api.ambientweather.net/v1/devices?apiKey={wx_apikey}&applicationKey={wx_appkey}'
@@ -693,7 +698,7 @@ async def on_message(message):
   
 
 # Check daily at 10am for bamph birthday
-@tasks.loop(time=time(hour=17, minute=15))
+@tasks.loop(time=time(hour=17, minute=23))
 async def bday_check():
   await bot.wait_until_ready()
   channel = bot.get_channel(1092446896158679131)
