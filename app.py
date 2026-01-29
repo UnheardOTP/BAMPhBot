@@ -1,7 +1,7 @@
 import functions
 import os
 import discord
-from datetime import datetime, timedelta, date
+from datetime import datetime, timedelta, date, time
 from discord.ext import commands, tasks
 import mysql.connector
 import pandas as pd
@@ -700,7 +700,7 @@ async def on_message(message):
   
 
 # Check daily at 10am for bamph birthday
-@tasks.loop(time=datetime.time(hour=10, minute=00))
+@tasks.loop(time=time(hour=10, minute=00))
 async def bday_check():
   await bot.wait_until_ready()
   channel = bot.get_channel(1092446896158679131)
