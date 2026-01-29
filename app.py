@@ -41,13 +41,6 @@ intents.message_content = True
 intents.members = True
 bot = discord.Bot(intents=intents)
 
-@bot.event
-async def on_ready():
-  channel = bot.get_channel(1245331722342629376)
-  if channel:
-    print(f"BAMPhBot Online @ {datetime.now()}.")
-    channel.send(f"BAMPhBot Online @ {datetime.now()}.")
-
 globals()['messages'] = 0
 
 #endregion Bot Definitions
@@ -760,6 +753,11 @@ async def on_ready():
     rand_photo.start() 
   if not course_status_cron.is_running():
     course_status_cron.start()
+
+  channel = bot.get_channel(1245331722342629376)
+  if channel:
+    print(f"BAMPhBot Online @ {datetime.now()}.")
+    channel.send(f"BAMPhBot Online @ {datetime.now()}.")
   
   globals()['messages'] = [{"role": "system", "content": get_ai_prompt()}]
 
