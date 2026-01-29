@@ -44,7 +44,7 @@ bot = discord.Bot(intents=intents)
 await bot.wait_until_ready()
 channel = bot.get_channel(1245331722342629376)
 if channel:
-  await channel.send(f"BAMPhBot Online @ {datetime.now()}.")
+  channel.send(f"BAMPhBot Online @ {datetime.now()}.")
 else:
   print('Bot not ready.')
 
