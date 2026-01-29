@@ -604,12 +604,9 @@ def birthday_check(db):
 
     if birthday:
       return f"Happy birthday {birthday[0]['user']}!"
-    else:
-      return False
   
   except Exception as e:
     print("Error: ", e)
-    return False
 
 def get_chuggys_temp():
   url     = f'https://api.ambientweather.net/v1/devices?apiKey={wx_apikey}&applicationKey={wx_appkey}'
@@ -701,20 +698,19 @@ async def bday_check():
 
   await channel.send(f"Success!")
 
-@tasks.loop(time=time(hour=17, minute=34))
+@tasks.loop(time=time(hour=18, minute=00))
 async def bday_check():
   await bot.wait_until_ready()
   channel = bot.get_channel(1092446896158679131)
 
   bday = birthday_check(db)
 
-  if bday != False:
+  if bday:
     await channel.send(f"{bday}")
 
 # Send a random quote every 24 hours
 @tasks.loop(hours=24)
 async def rand_quote():
-    await bot.wait_until_ready()
     channel = bot.get_channel(1092446896158679131)
     if datetime.now() - timedelta(hours=23.9) > datetime.fromisoformat(last_run_time('quote')):
       print(f'Quote Run {datetime.now()}')
@@ -724,7 +720,6 @@ async def rand_quote():
 # Send a random quote every 6 hours
 @tasks.loop(hours=28)
 async def rand_photo():
-    await bot.wait_until_ready()
     channel = bot.get_channel(1092446896158679131)
     if datetime.now() - timedelta(hours=27.9) > datetime.fromisoformat(last_run_time('photo')):
       print(f'Photo Run {datetime.now()}')
@@ -733,7 +728,6 @@ async def rand_photo():
 
 @tasks.loop(minutes=15)
 async def course_status_cron():
-    await bot.wait_until_ready()
     channel = bot.get_channel(1145531746901819493) # #golf channel
     
     course_status = get_course_status()
