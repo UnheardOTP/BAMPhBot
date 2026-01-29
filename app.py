@@ -29,9 +29,6 @@ db_database=secrets['DATABASE']
 # Create multi use db object
 db = database(db_host, db_user, db_password, db_database)
 
-print('BAMPhBot Booting...')
-print(datetime.now())
-
 # Init error logging
 functions.init_logger()
 
@@ -43,6 +40,10 @@ intents.messages = True
 intents.message_content = True
 intents.members = True
 bot = discord.Bot(intents=intents)
+
+await bot.wait_until_ready()
+  channel = bot.get_channel(1245331722342629376)
+  await channel.send(f"BAMPhBot Online @ {datetime.now()}.")
 
 
 globals()['messages'] = 0
@@ -698,7 +699,7 @@ async def on_message(message):
   
 
 # Check daily at 10am for bamph birthday
-@tasks.loop(time=time(hour=17, minute=41))
+@tasks.loop(time=time(hour=17, minute=43))
 async def bday_check():
   await bot.wait_until_ready()
   channel = bot.get_channel(1245331722342629376)
