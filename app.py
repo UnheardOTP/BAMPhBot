@@ -604,7 +604,7 @@ def get_photo():
   
 def birthday_check(db):
   try:
-    birthday = db.query("select * from birthdays_new where month = MONTH(curdate()) and day = DAY(curdate())")
+    birthday = db.query("select * from birthdays where month = MONTH(curdate()) and day = DAY(curdate())")
 
     if birthday:
       return f"Happy birthday {birthday[0]['user']}!"
@@ -698,7 +698,7 @@ async def on_message(message):
   
 
 # Check daily at 10am for bamph birthday
-@tasks.loop(time=time(hour=17, minute=23))
+@tasks.loop(time=time(hour=17, minute=34))
 async def bday_check():
   await bot.wait_until_ready()
   channel = bot.get_channel(1092446896158679131)
