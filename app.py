@@ -691,7 +691,7 @@ async def on_message(message):
   
 
 # Check daily at 10am for bamph birthday
-@tasks.loop(minutes=1)
+@tasks.loop(hours=24)
 async def bday_check():
   #channel = bot.get_channel(1092446896158679131)
   channel = bot.get_channel(1245331722342629376)
