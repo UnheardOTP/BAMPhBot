@@ -691,7 +691,7 @@ async def on_message(message):
   
 
 # Check daily at 10am for bamph birthday
-@tasks.loop(time=time(hour=18, minute=7))
+@tasks.loop(minutes=1)
 async def bday_check():
   #channel = bot.get_channel(1092446896158679131)
   channel = bot.get_channel(1245331722342629376)
@@ -736,7 +736,6 @@ async def course_status_cron():
 async def on_ready():
   if not bday_check.is_running():
     bday_check.start()
-    print('Birthday check started.')
   if not rand_quote.is_running():
     rand_quote.start()
   if not rand_photo.is_running():
