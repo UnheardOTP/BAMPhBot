@@ -693,15 +693,12 @@ async def on_message(message):
 # Check daily at 10am for bamph birthday
 @tasks.loop(hours=24)
 async def bday_check():
-  #channel = bot.get_channel(1092446896158679131)
-  channel = bot.get_channel(1245331722342629376)
+  channel = bot.get_channel(1092446896158679131)
   
   bday = birthday_check(db)
 
   if bday:
     await channel.send(f"{bday}")
-  else:
-    await channel.sent(f"No birthdays today!")
 
 # Send a random quote every 24 hours
 @tasks.loop(hours=24)
