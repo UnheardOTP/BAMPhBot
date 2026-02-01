@@ -29,10 +29,6 @@ db_database=secrets['DATABASE']
 # Create multi use db object
 db = database(db_host, db_user, db_password, db_database)
 
-# Init error logging
-functions.init_logger()
-
-
 #region Bot Definitions
 
 intents = discord.Intents.all()
