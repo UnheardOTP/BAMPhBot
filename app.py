@@ -462,7 +462,7 @@ async def on_ready():
   channel = bot.get_channel(1245331722342629376)
   if channel:
     print(f"BAMPhBot Online @ {datetime.now()}.")
-    await channel.send(f"BAMPhBot Online @ {datetime.now()}."
+    await channel.send(f"BAMPhBot Online @ {datetime.now()}.")
 
   try:
     x = 1/0
