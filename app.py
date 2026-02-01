@@ -100,7 +100,7 @@ def add_bottle(db, bottle_name, liquor_type):
 
 def rem_bottle(db, bottle_id):
   try:
-    db.query("delete from locker_inventory where id = %s", (bottle_id,))"
+    db.query("delete from locker_inventory where id = %s", (bottle_id,))
     db.commit()
 
     return True
