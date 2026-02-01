@@ -89,79 +89,36 @@ def create_db_connection():
 
 
 # Locker inventory functions
-def add_bottle(bottle_name, liquor_type):
-  db_conn = create_db_connection()
-  db_cursor = db_conn.cursor()
-
-  sql = f"insert into locker_inventory (bottle_name, liquor_type) values ('{bottle_name}', '{liquor_type}')"
+def add_bottle(db, bottle_name, liquor_type):
   try:
-    db_cursor.execute(sql)
-    
-    value = db_cursor.fetchone()
+    db.query("insert into locker_inventory (bottle_name, liquor_type) values (%s, %s)", (bottle_name, liquor_type))
+    db.commit()
 
-    db_conn.commit()
-    db_conn.close()
-
-    result = value[0]
-
-    return result
+    return True
   except Exception as err:
     return err
 
-def rem_bottle(bottle_id):
-  db_conn = create_db_connection()
-  db_cursor = db_conn.cursor()
-
-  sql = f"delete from locker_inventory where id = {bottle_id}"
+def rem_bottle(db, bottle_id):
   try:
-    db_cursor.execute(sql)
-    
-    value = db_cursor.fetchone()
+    db.query("delete from locker_inventory where id = %s", (bottle_id,))"
+    db.commit()
 
-    db_conn.commit()
-    db_conn.close()
-
-    result = value[0]
-
-    return result
+    return True
   except Exception as err:
     return err
 
-def mark_bottle_low(bottle_id):
-  db_conn = create_db_connection()
-  db_cursor = db_conn.cursor()
-  
-  sql = f"update locker_inventory set is_low = 1 where id = {bottle_id}"
+def mark_bottle_low(db, bottle_id):
   try:
-    db_cursor.execute(sql)
+    db.query("update locker_inventory set is_low = 1 where id = %s", (bottle_id,))
+    db.commit()
     
-    value = db_cursor.fetchone()
-
-    db_conn.commit()
-    db_conn.close()
-
-    result = value[0]
-
-    return result
+    return True
   except Exception as err:
     return err
 
-def get_locker_inventory():
-  db_conn = create_db_connection()
-  db_cursor = db_conn.cursor()
-  
-  sql = f"select * from locker_inventory"
+def get_locker_inventory(db):
   try:
-    db_cursor.execute(sql)
-    
-    value = db_cursor.fetchall()
-
-    db_conn.commit()
-    db_conn.close()
-
-    result = value
-
-    return result
+    return db.query("select * from locker_inventory")
   except Exception as err:
     return err
 
@@ -179,372 +136,198 @@ def get_course_status():
 
   return course_status
 
-def punish_check(flag):
-  db_conn = create_db_connection()
-  db_cursor = db_conn.cursor()
-
-  sql = f"select value from operation_flags where flag = '{flag}'"
-
-  try:
-    db_cursor.execute(sql)
-    
-    value = db_cursor.fetchone()
-
-    db_conn.commit()
-    db_conn.close()
-
-    result = value[0]
-
-    return result
-  except Exception as err:
-    return err
-
-def punish_set(flag, value):
-  db_conn = create_db_connection()
-  db_cursor = db_conn.cursor()
-
-  sql = f"update operation_flags set value = {value} where flag = '{flag}'"
-
-  db_cursor.execute(sql)
-  db_conn.commit()
-  db_conn.close()
-
-  return True
-
 # Discipline Points
-def add_discipline_point(user, points, reason):
-  db_conn = create_db_connection()
-  db_cursor = db_conn.cursor()
-
-  sql = f"insert into discipline_points (user, point_amount, reason) values ('{user}', {points}, '{reason}')"
-   
+def add_discipline_point(db, user, points, reason):
   try:
-    db_cursor.execute(sql)
-    db_conn.commit()
-    db_conn.close()
-
-    return "Success"
-  except Exception as err:
-    return err
-
-  return
-
-# Good Citizen Points
-def add_good_citizen_point(user, points, reason):
-  db_conn = create_db_connection()
-  db_cursor = db_conn.cursor()
-
-  sql = f"insert into good_citizen_points (user, point_amount, reason) values ('{user}', {points}, '{reason}')"
-   
-  try:
-    db_cursor.execute(sql)
-    db_conn.commit()
-    db_conn.close()
-
-    return "Success"
-  except Exception as err:
-    functions.log_Error(f"An error occured while adding a good citizen point: {err}")
-
-  return
-
-
-
-def get_discipline_point_desc(user):
-  db_conn = create_db_connection()
-  db_cursor = db_conn.cursor()
-
-  sql = f"select point_amount, reason from discipline_points where user = '{user}'"
-   
-  try:
-    db_cursor.execute(sql)
-    points = db_cursor.fetchall()
-    db_conn.commit()
-    db_conn.close()
-
-    if db_cursor.rowcount < 1:
-      points = f"User {user} has no points currently. Pehaps they don't belong in BAMPh?"
-  except Exception as err:
-      print(err)
-      
-  return points
-      
-  
-def get_discipline_point(user):
-  db_conn = create_db_connection()
-  db_cursor = db_conn.cursor()
-
-  sql = f"select sum(point_amount) from discipline_points where user = '{user}'"
-   
-  try:
-    db_cursor.execute(sql)
-    point_total = db_cursor.fetchone()
-    row_count = db_cursor.rowcount
-    db_conn.commit()
-    db_conn.close()
-  except Exception as err:
-      print(err)
-
-  if point_total[0] != None:
-      return int(point_total[0])
-  else:
-      return 0
-  
-# Beer credits
-def give_beer_insert(giver, receiver, reason):
-   db_conn = create_db_connection()
-   db_cursor = db_conn.cursor()
-
-   sql = f"insert into beer_credits (giver, receiver, reason) values ('<@{giver}>', '{receiver}', '{reason}')"
-
-   try:
-    db_cursor.execute(sql)
-    point_total = db_cursor.fetchone()
-    row_count = db_cursor.rowcount
-    db_conn.commit()
-    db_conn.close()
+    db.query("insert into discipline_points (user, point_amount, reason) values (%s, %s, %s)", (user, points, reason))
+    db.commit()
 
     return True
-   except Exception as err:
-    print(err)
-    return False
-   
+  except Exception as err:
+    return err
 
-# Check if nick protection is on
-def nick_protect(flag=''):
-  db_conn = create_db_connection()
-  db_cursor = db_conn.cursor()
-  
-  if flag.lower() == "off": # Turn off nick protect
-    sql = f"update flags set value = 0 where param = 'nick_protect'"
-    db_cursor.execute(sql)
-    result = None
-  elif flag.lower() == "on": # Turn on nick protect
-    sql = f"update flags set value = 1 where param = 'nick_protect'"
-    db_cursor.execute(sql)
-    result = None
-  elif flag == '':
-    sql = f"select value from flags where param = 'nick_protect'"
-  
-    db_cursor.execute(sql)
-    nick_protect = db_cursor.fetchall()
-    
-    result = bool(nick_protect[0][0])
-  
-  db_conn.commit()
-  db_conn.close()
-  return result
+# Good Citizen Points
+def add_good_citizen_point(db, user, points, reason): 
+  try:
+    db.query("insert into good_citizen_points (user, point_amount, reason) values (%s, %s, %s)", (user, points, reason))
+    db.commit()
 
-# Get user nickname
-def get_nickname(discord_id):
-  db_conn = create_db_connection()
-  db_cursor = db_conn.cursor()
-  
-  sql = f"select real_name from bamph_users where discord_id = '{discord_id}'"
-  
-  db_cursor.execute(sql)
-  real_name = db_cursor.fetchall()
+    return True
+  except Exception as err:
+    return err
 
-  print(real_name)
+def get_discipline_point_desc(db, user):
+  try:
+    result = db.query("select point_amount, reason from discipline_points where user = %s", (user,))
+
+    if not result:
+      return f"User {user} has no points currently. Pehaps they don't belong in BAMPh?"
+    else:
+      return result
+  except Exception as err:
+    return err
+      
   
-  db_conn.commit()
-  db_conn.close()
-  return str(real_name[0][0])
+def get_discipline_point(db, user):   
+  try:
+    result = db.query("select sum(point_amount) from discipline_points where user = %s", (user,))
 
-# Get all members names from database
-def get_all_members():
-  db_conn = create_db_connection()
-  db_cursor = db_conn.cursor()
+    if result:
+      point_total = result[0][0]
+      return int(point_total) if point_total is not None else 0
+    else:
+      return 0
+  except Exception as err:
+    return err
   
-  sql = f"select discord_id, real_name from bamph_users"
+# Beer credits
+def give_beer_insert(db, giver, receiver, reason):
+  try:
+    db.query("insert into beer_credits (giver, receiver, reason) values (%s, %s, %s)", (f"<@{giver}>", receiver, reason))
+    db.commit()
 
-  db_cursor.execute(sql)
-  members = db_cursor.fetchall()
-
-  return members
+    return True
+  except Exception as err:
+    return err
 
 # Get current AI training prompt
-def get_ai_prompt():
-  db_conn = create_db_connection()
-  db_cursor = db_conn.cursor()
-  
-  sql = f"select prompt from ai_prompt"
-  
-  db_cursor.execute(sql)
-  ai_prompt = db_cursor.fetchall()
-  
-  db_conn.commit()
-  db_conn.close()
-  return str(ai_prompt[0][0])
+def get_ai_prompt(db):
+  try:
+    result = db.query("select prompt from ai_prompt")
+
+    if result:
+      return str(result[0][0]) if result[0][0] is not None else ""
+    else:
+      return ""
+  except Exception as err:
+    return err
 
 # Update AI Prompt
-def update_ai_prompt(prompt):
-  db_conn = create_db_connection()
-  db_cursor = db_conn.cursor()
-
-  sql = f"update ai_prompt set prompt = '{prompt}'"
-
-  db_cursor.execute(sql)
-
-  db_conn.commit()
-  db_conn.close()
-
+def update_ai_prompt(db, prompt):
+  db.query("update ai_prompt set prompt = %s", (prompt, ))
+  db.commit()
+  
+  return True
 
 # Used quote reset (when all quotes have been used)
-def reset_quotes():
-    db_conn = create_db_connection()
-    db_cursor = db_conn.cursor()
+def reset_quotes(db):
+  try:
+    db.query("update quotes set quote_used = 0")
+    db.commit()
 
-    sql = "update quotes \
-           set quote_used = 0"
-    
-    db_cursor.execute(sql)
-    db_conn.commit()
-    db_conn.close()
+    return True
+  except Exception as err:
+    return err 
 
 # Used photo reset (when all photos have been used)
-def reset_photos():
-    db_conn = create_db_connection()
-    db_cursor = db_conn.cursor()
+def reset_photos(db):
+  try:
+    db.query("update photos set used = 0")
+    db.commit()
 
-    sql = "update photos \
-           set used = 0"
-    
-    db_cursor.execute(sql)
-    db_conn.commit()
-    db_conn.close()
+    return True
+  except Exception as err:
+    return err
     
 # Get last run time for photo or quote
-def last_run_time(type):
-    db_conn = create_db_connection()
-    db_cursor = db_conn.cursor()
-    
-    sql = f"select last_run from last_runs where type = '{type}'"
-    
-    db_cursor.execute(sql)
-    last_run = db_cursor.fetchall()
-    
-    db_conn.commit()
-    db_conn.close()
-    
-    return str(last_run[0][0])
+def last_run_time(db, type):    
+  try:
+    last_run = db.query("select last_run from last_runs where type = %s", (type,))
+    if last_run:
+      last_run = last_run[0][0]
+      return str(last_run) if last_run is not None else 0
+    else:
+      return 0
+
+  except Exception as err:
+    return err
 
 # Update last run time for photo or quote
-def update_last_run(type, last_run):
-    db_conn = create_db_connection()
-    db_cursor = db_conn.cursor()
+def update_last_run(db, type, last_run):
+  try:
+    db.query("update last_runs set last_run = %s where type = %s", (last_run, type))
+    db.commit()
 
-    sql = f"update last_runs set last_run = '{last_run}' where type = '{type}'"
-
-    db_cursor.execute(sql)
-
-    db_conn.commit()
-    db_conn.close()
+    return True
+  except Exception as err:
+    return err
 
 # Add quote
-def add_quote_to_db(quote, author):
-  db_conn = create_db_connection()
-  db_cursor = db_conn.cursor()
-
-  sql = f"insert into quotes \
-        (quote, author) \
-        values \
-        ('{quote.replace("'","''")}', '{author}')"
+def add_quote_to_db(db, quote, author):
   try:
-    db_cursor.execute(sql)
-    db_conn.commit()
-    db_conn.close()
+    db.query("insert into quotes (quote, author) values (%s, %s)", (quote, author))
+    db.commit()
 
-    return "Success"
+    return True
   except Exception as err:
      return err
    
 # Last available quote check
-def last_quote_check():
-    db_conn = create_db_connection()
-    db_cursor = db_conn.cursor()
+def last_quote_check(db):
+  try:
+    result = db.query("select count(*) from quotes where quote_used = 0")
 
-    sql = "select count(*) \
-           from quotes \
-           where quote_used = 0"
+    if not result:
+      return False
 
-    db_cursor.execute(sql)
-
-    result = db_cursor.fetchall()
+    quote_count = result[0][0]
  
-    db_conn.commit()
-    db_conn.close()
+    return quote_count == 1
 
-    if result[0][0] == 1:
-        return True
-    else:
-        return False
+  except Exception as err:
+    return err
 
 # Last available quote check
-def last_photo_check():
-    db_conn = create_db_connection()
-    db_cursor = db_conn.cursor()
+def last_photo_check(db):
+  try:
+    result = db.query("select count(*) from photos where used = 0")
 
-    sql = "select count(*) \
-           from photos \
-           where used = 0"
+    if not result:
+      return False
 
-    db_cursor.execute(sql)
-
-    result = db_cursor.fetchall()
+    photo_count = result[0][0]
  
-    db_conn.commit()
-    db_conn.close()
+    return photo_count == 1
 
-    if result[0][0] == 1:
-        return True
-    else:
-        return False
+  except Exception as err:
+    return err
 
-def add_photo(image_url):
-  api_url = "https://catbox.moe/user/api.php"
-  data = {
-          'reqtype': 'urlupload',
-          'userhash': '',
-          'url': f'{image_url}'
-      }
+def add_photo(db, image_url):
+  try:
+    api_url = "https://catbox.moe/user/api.php"
+    data = {
+            'reqtype': 'urlupload',
+            'userhash': '',
+            'url': f'{image_url}'
+        }
 
-  response = requests.post(api_url, data=data)
+    response = requests.post(api_url, data=data)
 
-  db_conn = create_db_connection()
-  db_cursor = db_conn.cursor()
-
-  sql = f"insert into photos (photo_link, used) values ('{response.text}', 0)"
-
-  db_cursor.execute(sql)
-
-  db_conn.commit()
-  db_conn.close()
-
-  return True
+    if not response.ok or not response.text.startswith("https://"):
+      return Exception(f"Catbox upload failed: {response.text}")
 
 
-def get_quote():
-    db_conn = create_db_connection()
-    db_cursor = db_conn.cursor()
+    db.query("insert into photos (photo_link) values (%s)", (response.text,))
+    db.commit()
 
-    sql = "select id, quote, author, created_date \
-        from quotes \
-        where quote_used = 0 \
-        ORDER BY RAND() \
-        LIMIT 1;"
-    db_cursor.execute(sql)
+    return True
+  except Exception as err:
+    return err
 
-    # If this is the last available quote, reset used quotes
-    if last_quote_check() == True:
-        reset_quotes()
-    
+# Get random quote
+def get_quote(db):
+  try:
+    result = db.query("select id, quote, author, created_date from quotes where quote_used = 0 ORDER BY RAND() LIMIT 1;")
+
     # Get random quote
-    quote = db_cursor.fetchall()
+    if not result:
+      return "No quote found."
 
-    quote_id = quote[0][0]
-    quote_text = quote[0][1]
-    author = quote[0][2]
-    created_date = quote[0][3]
+# If this is the last available quote, reset used quotes
+    if last_quote_check(db):
+        reset_quotes(db)      
+
+    quote_id, quote_text, author, created_date = result[0]
 
     if created_date == date(1900, 1, 1):
         created_date = 'Date Unknown'
@@ -555,49 +338,35 @@ def get_quote():
     rand_quote = f"{quote_text} - {author} - {created_date}"
 
     # Update random quote as used
-    sql = f"update quotes \
-        set quote_used = 1 \
-        where id = {quote_id}"
-
-    db_cursor.execute(sql)
-
-    db_conn.commit()
-    db_conn.close()
+    db.query("update quotes set quote_used = 1 where id = %s", (quote_id,))
+    db.commit()
 
     return rand_quote
+  except Exception as err:
+    return err
 
-def get_photo():
-    db_conn = create_db_connection()
-    db_cursor = db_conn.cursor()
+# Get random photo
+def get_photo(db):
+  try:  
+    result = db.query("select id, photo_link from photos where used = 0 ORDER BY RAND() LIMIT 1;")
 
-    sql = "select id, photo_link \
-        from photos \
-        where used = 0 \
-        ORDER BY RAND() \
-        LIMIT 1;"
-    db_cursor.execute(sql)
+    if not result:
+      return "No photo found."
 
-    # If this is the last available quote, reset used quotes
-    if last_photo_check() == True:
-        reset_photos()
+    # If this is the last available photo, reset used photo
+    if last_photo_check(db):
+        reset_photos(db)
     
-    # Get random quote
-    photo = db_cursor.fetchall()
+    photo_id, photo_link = result[0]
 
-    photo_id = photo[0][0]
-    photo_link = photo[0][1]
-
-    # Update random quote as used
-    sql = f"update photos \
-        set used = 1 \
-        where id = {photo_id}"
-
-    db_cursor.execute(sql)
-
-    db_conn.commit()
-    db_conn.close()
+    # Update random photo as used
+    db.query("update photos set used = 1 where id = %s", (photo_id,))
+    db.commit()
 
     return photo_link
+  except Exception as err:
+    return err
+
   
 def birthday_check(db):
   try:
@@ -609,15 +378,25 @@ def birthday_check(db):
   except Exception as e:
     print("Error: ", e)
 
+# API call to my backyard WX station
 def get_chuggys_temp():
-  url     = f'https://api.ambientweather.net/v1/devices?apiKey={wx_apikey}&applicationKey={wx_appkey}'
+  try:
+    url     = f'https://api.ambientweather.net/v1/devices?apiKey={wx_apikey}&applicationKey={wx_appkey}'
 
-  response = requests.get(url)
-  data = response.json()
+    response = requests.get(url)
 
-  temp = data[0]['lastData']['tempf']
+    if not response.ok:
+      return Exception(f"AmbientWeather API error: {response.status_code}")
+    
+    data = response.json()
+    temp = data[0]['lastData']['tempf']
 
-  return temp
+    if temp is None:
+      return Exception("Temperature data not found in API response")
+
+    return temp
+  except Exception as err:
+    return err
 
 def chat_with_bot(question):
     # Check to see where we are in the conversation. Conversations are limited to 4 items.
@@ -635,61 +414,20 @@ def chat_with_bot(question):
 
     return chat_completion
 
-def dp_point_rankings():
-  db_conn = create_db_connection()
-  db_cursor = db_conn.cursor()
-  points = []
+# Discipline point rankings
+def dp_point_rankings(db):
+  try:
+    result = db.query("select user, sum(point_amount) as total_points from discipline_points WHERE USER <> '@everyone' and user <> '<@1092634707541360762>' GROUP BY USER ORDER BY total_points DESC LIMIT 10")
 
-  sql = "select user, sum(point_amount) as total_points from discipline_points WHERE USER <> '@everyone' and user <> '<@1092634707541360762>' GROUP BY USER ORDER BY total_points DESC LIMIT 10"
-  
-  db_cursor.execute(sql)
-
-  for point in db_cursor:
-    points.append(point)
-
-  db_conn.commit()
-  db_conn.close()
-
-  return points
+    return list(result) if result else []
+  except Exception as err:
+    return err
    
 
 #endregion functions
 
 
 #region Cron Jobs
-
-intents = discord.Intents.all()
-intents.typing = True
-intents.messages = True
-intents.message_content = True
-bot = discord.Bot(intents=intents)
-
-@bot.event
-async def on_message(message):
-  channel = message.channel
-  author = message.author.id
-  messageContent = message.content.lower()
-  if "clemson" in messageContent or "clempson" in messageContent:
-    emoji = '\N{PILE OF POO}'
-    await message.add_reaction(emoji)
-    #await channel.send("Fuck clempson.")
-  elif "commanders" in messageContent:
-    await author.timeout(discord.utils.utcnow() + discord.utils.timedelta(minutes=1), reason='They are the Redskins.')
-    await channel.send(f"{author} was given a 1 minute timeout for this message. They are the Redskins.")
-  elif "jeff" in messageContent or '<@804804163904340029>' in messageContent:
-    emoji = 'mynameisjeff:1096781925114466405'
-    await message.add_reaction(emoji)
-  elif "berry" in messageContent or '<@462087982523088908>' in messageContent:
-    emoji = 'berry:1096783181228814438'
-    await message.add_reaction(emoji)
-  elif "chuggy" in messageContent or '<@284719233601110016>' in messageContent:
-    emoji = 'chuggy:1148715141651763270'
-    await message.add_reaction(emoji)
-  elif "alex" in messageContent or '<@770090117712314379>' in messageContent:
-    emoji = '\N{TRUMPET}'
-    await message.add_reaction(emoji)
-  
-  
 
 # Check daily at 10am for bamph birthday
 @tasks.loop(hours=24)
@@ -753,14 +491,12 @@ async def on_ready():
 #region context commands
 @bot.message_command(name="Discipline Point")
 async def discipline_point(ctx, message: discord.Message):
-  add_discipline_point(f"<@{message.author.id}>", '1', message.content)
-  print(message.author.id)
+  add_discipline_point(db, message.author.id, '1', message.content)
   await ctx.respond(f"<@{message.author.id}> was given 1 discipline point for this message.")
 
 @bot.message_command(name="Good Citizen Point")
 async def good_citizen_point(ctx, message: discord.Message):
-  add_good_citizen_point(f"<@{message.author.id}>", '1', message.content)
-  print(message.author.id)
+  add_good_citizen_point(db, message.author.id, '1', message.content)
   await ctx.respond(f"<@{message.author.id}> was given 1 good citizen point for this message.")
 
 #1455447745958776905
@@ -790,8 +526,10 @@ async def meg(ctx):
 
   await ctx.respond(f"https://files.catbox.moe/p8gggz.gif")
 
+
 # Beer bitch functionality
 # /bb_iou
+'''
 @bot.slash_command(name="bb_iou",
                 description="Record a missed Beer Bitch $1 payment",
                 guild_ids=[692123814989004862])
@@ -807,7 +545,7 @@ async def bb_iou(ctx, debtor):
     await ctx.respond(f"{debtor} owes $1 to {beer_bitch}. {beer_bitch} please use <thumb emoji> in response to this message to confirm payment.")
   else:
     ctx.respond(result)
-
+'''
 
 # /bb_paid
 
@@ -822,7 +560,7 @@ async def quote(ctx):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel    
 
-  await ctx.respond(get_locker_inventory())
+  await ctx.respond(get_locker_inventory(db))
 
 # /add_bottle 
 @bot.slash_command(name="add_bottle",
@@ -832,19 +570,19 @@ async def quote(ctx, bottle_name, liquor_type):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel    
 
-  add_bottle(bottle_name, liquor_type)
+  add_bottle(db, bottle_name, liquor_type)
 
   await ctx.respond(f'{bottle_name} added to locker inventory.')
 
 # /remove_bottle
 @bot.slash_command(name="remove_bottle",
-                description="Remove a bottle to the Cigar Bar locker inventory.",
+                description="Remove a bottle from the Cigar Bar locker inventory.",
                 guild_ids=[692123814989004862])
 async def quote(ctx, bottle_id):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel    
 
-  rem_bottle(bottle_id)
+  rem_bottle(db, bottle_id)
 
   await ctx.respond(f'Bottle #{bottle_id} removed locker inventory.')
 
@@ -856,7 +594,7 @@ async def quote(ctx, bottle_id):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel    
 
-  mark_bottle_low(bottle_id)
+  mark_bottle_low(db, bottle_id)
 
   await ctx.respond(f'Bottle #{bottle_id} has been marked low. Please resupply.')
 
@@ -868,7 +606,7 @@ async def quote(ctx):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel    
 
-  await ctx.respond(get_quote())
+  await ctx.respond(get_quote(db))
 
 # /reset_bot_conversation
 @bot.slash_command(name="reset_bot_conversation",
@@ -891,7 +629,7 @@ async def add_quote(ctx, quote, author):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
 
-  result = add_quote_to_db(quote, author)
+  result = add_quote_to_db(db, quote, author)
   
   if result == "Success":
     await ctx.respond(f"{quote} - {author} - Added")
@@ -907,7 +645,7 @@ async def add_quote(ctx, prompt):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
 
-  update_ai_prompt(prompt)
+  update_ai_prompt(db, prompt)
   # Reset prompt and memory
   globals()['messages'] = []
 
@@ -921,7 +659,7 @@ async def add_quote(ctx):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
 
-  prompt = get_ai_prompt()
+  prompt = get_ai_prompt(db)
 
   await ctx.respond(f"Currently I am programmed to respond based on this: {prompt}")
 
@@ -934,7 +672,7 @@ async def mantrip(ctx):
     return msg.author == ctx.author and msg.channel == ctx.channel
   
   today = datetime.now().date()
-  mantrip = date(2026, 1, 16)
+  mantrip = date(2027, 1, 15)
   days_til = mantrip - today
   days_til = days_til.days
 
@@ -971,7 +709,7 @@ async def give_beer(ctx, owed_to, reason):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel
   
-  give_beer_insert(ctx.author.id, owed_to, reason)
+  give_beer_insert(db, ctx.author.id, owed_to, reason)
 
   await ctx.respond(f"<@{ctx.author.id}> has just given {owed_to} a beer for {reason}!")
 # /claim_beer - remove the given beer after claiming
@@ -1012,7 +750,7 @@ async def discipline_point(ctx, user):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
 
-  total_points = get_discipline_point(user)
+  total_points = get_discipline_point(db, user)
 
   await ctx.respond(f"{user} currently has {total_points} discipline point(s).")
 
@@ -1025,7 +763,7 @@ async def photo(ctx):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
   
-  photo = get_photo()
+  photo = get_photo(db)
 
   await ctx.respond(f"{photo}")
 
@@ -1038,7 +776,7 @@ async def all_user_points(ctx, user):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
 
-  points = get_discipline_point_desc(user)
+  points = get_discipline_point_desc(db, user)
 
   # Handle the instance of the user not currently having any points assigned to them
   if isinstance(points, str) == True:
@@ -1059,7 +797,7 @@ async def top10dp(ctx):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
   
-  results = dp_point_rankings()
+  results = dp_point_rankings(db)
   result_set = ""
   for result in results:
     result_set = result_set + f"\n{result[0]} - {result[1]}"
@@ -1078,48 +816,6 @@ async def course_status(ctx):
 
   await ctx.respond(f"Bradshaw Course Status: {course_status}")
 
-# /punish_jeff - On / Off. If On, Jeff is given a discipline point everytime he makes a post.
-@bot.slash_command(name="punish_jeff",
-                  description="Punish Jeff for being Jeff.",
-                  guild_ids=[692123814989004862],
-                  role_ids=[1092591212202045552])
-async def punish_jeff(ctx):
-  def check(msg):
-    return msg.author == ctx.author and msg.channel == ctx.channel 
-  flag = punish_check('punish_jeff')
-
-  if flag == 1:
-    # Turn off Jeff punishment
-    punish_set('punish_jeff', 0)
-    message = "<@804804163904340029> will be spared."
-  else:
-    # Turn on Jeff punishment
-    punish_set('punish_jeff', 1)
-    message = "<@804804163904340029> will be punished."
-
-  await ctx.respond(f"{message}")
-
-# /punish_taylor - On / Off. If On, Taylor is given a discipline point everytime he makes a post.
-@bot.slash_command(name="punish_taylor",
-                  description="Punish Taylor for being Taylor.",
-                  guild_ids=[692123814989004862],
-                  role_ids=[1092591212202045552])
-async def punish_taylor(ctx):
-  def check(msg):
-    return msg.author == ctx.author and msg.channel == ctx.channel 
-  flag = punish_check('punish_taylor')
-
-  if flag == 1:
-    # Turn off Jeff punishment
-    punish_set('punish_taylor', 0)
-    message = "<@768312411156643840> will be spared."
-  else:
-    # Turn on Jeff punishment
-    punish_set('punish_taylor', 1)
-    message = "<@768312411156643840> will be punished."
-
-  await ctx.respond(f"{message}")
-
 # /get_ai_prompt_log - Returns the globals()['messages'] value
 @bot.slash_command(name="get_ai_prompt_log",
                   description="Return the bots prompt log",
@@ -1132,6 +828,7 @@ async def get_ai_prompt_log(ctx):
 
 #region Bot Events
 
+'''
 @bot.event
 async def on_message(message):
   channel = message.channel
@@ -1206,6 +903,39 @@ async def on_message(message):
     if punish_check('punish_taylor') == True:
       add_discipline_point('<@768312411156643840>', 1, messageContent)
       await message.channel.send(f"<@768312411156643840> was punished 1 discipline point for this message.")
+'''      
+
+intents = discord.Intents.all()
+intents.typing = True
+intents.messages = True
+intents.message_content = True
+bot = discord.Bot(intents=intents)
+
+# Bot emoji replies
+@bot.event
+async def on_message(message):
+
+  # Ignore bot messages
+  if message.author.bot:
+    return
+
+  messageContent = message.content.lower()
+
+  triggers = {
+    "clemson": "\N{PILE OF POO}",
+    "clempson": "\N{PILE OF POO}",
+    "jeff": "mynameisjeff:1096781925114466405",
+    "berry": "berry:1096783181228814438",
+    "chuggy": "chuggy:1148715141651763270",
+    "alex": "\N{TRUMPET}",
+  }
+
+  for trigger, emoji in triggers.items():
+    if trigger in messageContent:
+      await message.add_reaction(emoji)
+      break
+
+  await bot.process_commands(message)
     
 
 #endregion Bot Events
