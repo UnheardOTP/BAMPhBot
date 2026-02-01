@@ -1,4 +1,4 @@
-def error_log(err):
+async def error_log(err):
   channel = bot.get_channel(1245331722342629376)
   
   if channel:
