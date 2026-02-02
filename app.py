@@ -45,7 +45,7 @@ bot = discord.Bot(intents=intents)
 #endregion Bot Definitions
 
 # Error logging
-async def await error_log(err):
+async def error_log(err):
     # Extract traceback info
     tb = err.__traceback__
     tb_str = "".join(traceback.format_exception(type(err), err, tb))
