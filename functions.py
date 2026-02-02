@@ -1,4 +1,4 @@
-async def error_log(err):
+def error_log(err):
   db = database(db_host, db_user, db_password, db_database)  
   
   db.query("insert into bot_error_log (datetime, error_message) values (%s, %s)", (datetime.now(), err))
