@@ -434,7 +434,7 @@ async def rand_quote():
 @tasks.loop(hours=28)
 async def rand_photo():
     channel = bot.get_channel(1092446896158679131)
-    if datetime.now() - timedelta(hours=27.9) > datetime.fromisoformat(db, last_run_time(db, 'photo')):
+    if datetime.now() - timedelta(hours=27.9) > datetime.fromisoformat(last_run_time(db, 'photo')):
       print(f'Photo Run {datetime.now()}')
       await channel.send(get_photo(db))
       update_last_run(db, 'photo', datetime.now().isoformat())
