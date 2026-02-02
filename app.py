@@ -261,12 +261,12 @@ def last_quote_check(db):
 # Last available quote check
 def last_photo_check(db):
   try:
-    result = db.query("select count(*) from photos where used = 0")
+    result = db.query("select count(*) as count from photos where used = 0")
 
     if not result:
       return False
 
-    photo_count = result[0][0]
+    photo_count = result[0]["count"]
  
     return photo_count == 1
 
