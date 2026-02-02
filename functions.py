@@ -1,8 +1,7 @@
 async def error_log(err):
-  channel = bot.get_channel(1245331722342629376)
+  db = database(db_host, db_user, db_password, db_database)  
   
-  if channel:
-    await channel.send(f"BAMPhBot Error @ {datetime.now()}: {err}.")
+  db.query("insert into bot_error_log (datetime, error_message) values (%s, %s)", (datetime.now(), err))
 
 def get_beer_bitch_info(db):
     
