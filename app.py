@@ -150,10 +150,10 @@ def get_discipline_point_desc(db, user):
   
 def get_discipline_point(db, user):   
   try:
-    result = db.query("select sum(point_amount) from discipline_points where user = %s", (user,))
+    result = db.query("select sum(point_amount) as point_sum from discipline_points where user = %s", (user,))
 
     if result:
-      point_total = result[0][0]
+      point_total = result[0]["point_sum"]
       return int(point_total) if point_total is not None else 0
     else:
       return 0
@@ -176,7 +176,7 @@ def get_ai_prompt(db):
     result = db.query("select prompt from ai_prompt")
 
     if result:
-      return str(result[0][0]) if result[0][0] is not None else ""
+      return str(result[0]["prompt"]) if result[0]["prompt"] is not None else ""
     else:
       return ""
   except Exception as err:
