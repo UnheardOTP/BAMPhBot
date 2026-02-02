@@ -425,7 +425,7 @@ async def rand_quote():
     channel = bot.get_channel(1092446896158679131)
     if datetime.now() - timedelta(hours=23.9) > datetime.fromisoformat(last_run_time(db, 'quote')):
       print(f'Quote Run {datetime.now()}')
-      await channel.send(get_quote())
+      await channel.send(get_quote(db))
       update_last_run(db, 'quote', datetime.now().isoformat())
 
 # Send a random quote every 6 hours
@@ -434,7 +434,7 @@ async def rand_photo():
     channel = bot.get_channel(1092446896158679131)
     if datetime.now() - timedelta(hours=27.9) > datetime.fromisoformat(db, last_run_time(db, 'photo')):
       print(f'Photo Run {datetime.now()}')
-      await channel.send(get_photo())
+      await channel.send(get_photo(db))
       update_last_run(db, 'photo', datetime.now().isoformat())
 
 @tasks.loop(minutes=15)
