@@ -211,15 +211,16 @@ def reset_photos(db):
 # Get last run time for photo or quote
 def last_run_time(db, type):    
   try:
-    last_run = db.query("select last_run from last_runs where type = %s", (type,))
-    if last_run:
-      last_run = last_run[0][0]
-      return str(last_run) if last_run is not None else 0
-    else:
-      return 0
+    result = db.query("select last_run from last_runs where type = %s", (type,))
+    if not result:
+      return None
+
+    last_run = result[0][0]
+    return last_run.isoformat() if hasattr(last_run, "isoformat") else str(last_run)
 
   except Exception as err:
     error_log(err)
+    return None
 
 # Update last run time for photo or quote
 def update_last_run(db, type, last_run):
