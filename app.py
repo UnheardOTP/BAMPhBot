@@ -33,8 +33,19 @@ db_database=secrets['DATABASE']
 # Create multi use db object
 db = database(db_host, db_user, db_password, db_database)
 
+#region Bot Definitions
+
+intents = discord.Intents.all()
+intents.typing = True
+intents.messages = True
+intents.message_content = True
+intents.members = True
+bot = discord.Bot(intents=intents)
+
+#endregion Bot Definitions
+
 # Error logging
-def error_log(err):
+async def error_log(err):
     # Extract traceback info
     tb = err.__traceback__
     tb_str = "".join(traceback.format_exception(type(err), err, tb))
@@ -62,19 +73,10 @@ def error_log(err):
     )
     db.commit()
 
+    channel = bot.get_channel(1245331722342629376)
+    if channel:
+      await channel.send(f"⚠️ **BAMPhBot Error** - Logged @ {datetime.now()}")
 
-#region Bot Definitions
-
-intents = discord.Intents.all()
-intents.typing = True
-intents.messages = True
-intents.message_content = True
-intents.members = True
-bot = discord.Bot(intents=intents)
-
-globals()['messages'] = 0
-
-#endregion Bot Definitions
 
 #region Secrets
 
