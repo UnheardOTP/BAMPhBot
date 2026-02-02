@@ -75,7 +75,7 @@ def add_bottle(db, bottle_name, liquor_type):
 
     return True
   except Exception as err:
-    functions.error_log(err)
+    error_log(err)
 
 def rem_bottle(db, bottle_id):
   try:
@@ -84,7 +84,7 @@ def rem_bottle(db, bottle_id):
 
     return True
   except Exception as err:
-    functions.error_log(err)
+    error_log(err)
 
 def mark_bottle_low(db, bottle_id):
   try:
@@ -93,13 +93,13 @@ def mark_bottle_low(db, bottle_id):
     
     return True
   except Exception as err:
-    functions.error_log(err)
+    error_log(err)
 
 def get_locker_inventory(db):
   try:
     return db.query("select * from locker_inventory")
   except Exception as err:
-    functions.error_log(err)
+    error_log(err)
 
 def get_course_status():
   url = 'https://www.bradshawfarmgc.com/'
@@ -123,7 +123,7 @@ def add_discipline_point(db, user, points, reason):
 
     return True
   except Exception as err:
-    functions.error_log(err)
+    error_log(err)
 
 # Good Citizen Points
 def add_good_citizen_point(db, user, points, reason): 
@@ -133,7 +133,7 @@ def add_good_citizen_point(db, user, points, reason):
 
     return True
   except Exception as err:
-    functions.error_log(err)
+    error_log(err)
 
 def get_discipline_point_desc(db, user):
   try:
@@ -144,7 +144,7 @@ def get_discipline_point_desc(db, user):
     else:
       return result
   except Exception as err:
-    functions.error_log(err)
+    error_log(err)
       
   
 def get_discipline_point(db, user):   
@@ -157,7 +157,7 @@ def get_discipline_point(db, user):
     else:
       return 0
   except Exception as err:
-    functions.error_log(err)
+    error_log(err)
   
 # Beer credits
 def give_beer_insert(db, giver, receiver, reason):
@@ -167,7 +167,7 @@ def give_beer_insert(db, giver, receiver, reason):
 
     return True
   except Exception as err:
-    functions.error_log(err)
+    error_log(err)
 
 # Get current AI training prompt
 def get_ai_prompt(db):
@@ -179,7 +179,7 @@ def get_ai_prompt(db):
     else:
       return ""
   except Exception as err:
-    functions.error_log(err)
+    error_log(err)
 
 # Update AI Prompt
 def update_ai_prompt(db, prompt):
@@ -196,7 +196,7 @@ def reset_quotes(db):
 
     return True
   except Exception as err:
-    functions.error_log(err) 
+    error_log(err) 
 
 # Used photo reset (when all photos have been used)
 def reset_photos(db):
@@ -206,7 +206,7 @@ def reset_photos(db):
 
     return True
   except Exception as err:
-    functions.error_log(err)
+    error_log(err)
     
 # Get last run time for photo or quote
 def last_run_time(db, type):    
@@ -219,7 +219,7 @@ def last_run_time(db, type):
       return 0
 
   except Exception as err:
-    functions.error_log(err)
+    error_log(err)
 
 # Update last run time for photo or quote
 def update_last_run(db, type, last_run):
@@ -229,7 +229,7 @@ def update_last_run(db, type, last_run):
 
     return True
   except Exception as err:
-    functions.error_log(err)
+    error_log(err)
 
 # Add quote
 def add_quote_to_db(db, quote, author):
@@ -239,7 +239,7 @@ def add_quote_to_db(db, quote, author):
 
     return True
   except Exception as err:
-     functions.error_log(err)
+     error_log(err)
    
 # Last available quote check
 def last_quote_check(db):
@@ -254,7 +254,7 @@ def last_quote_check(db):
     return quote_count == 1
 
   except Exception as err:
-    functions.error_log(err)
+    error_log(err)
 
 # Last available quote check
 def last_photo_check(db):
@@ -269,7 +269,7 @@ def last_photo_check(db):
     return photo_count == 1
 
   except Exception as err:
-    functions.error_log(err)
+    error_log(err)
 
 def add_photo(db, image_url):
   try:
@@ -291,7 +291,7 @@ def add_photo(db, image_url):
 
     return True
   except Exception as err:
-    functions.error_log(err)
+    error_log(err)
 
 # Get random quote
 def get_quote(db):
@@ -322,7 +322,7 @@ def get_quote(db):
 
     return rand_quote
   except Exception as err:
-    functions.error_log(err)
+    error_log(err)
 
 # Get random photo
 def get_photo(db):
@@ -344,7 +344,7 @@ def get_photo(db):
 
     return photo_link
   except Exception as err:
-    functions.error_log(err)
+    error_log(err)
 
   
 def birthday_check(db):
@@ -375,7 +375,7 @@ def get_chuggys_temp():
 
     return temp
   except Exception as err:
-    functions.error_log(err)
+    error_log(err)
 
 def chat_with_bot(question):
     # Check to see where we are in the conversation. Conversations are limited to 4 items.
@@ -400,7 +400,7 @@ def dp_point_rankings(db):
 
     return list(result) if result else []
   except Exception as err:
-    functions.error_log(err)
+    error_log(err)
    
 
 #endregion functions
@@ -466,7 +466,7 @@ async def on_ready():
   try:
     x = 1/0
   except Exception as err:
-    functions.error_log(err)
+    error_log(err)
   
 
 #endregion Cron Jobs
