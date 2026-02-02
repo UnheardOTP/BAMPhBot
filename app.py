@@ -522,13 +522,7 @@ async def on_ready():
   if channel:
     print(f"BAMPhBot Online @ {datetime.now()}.")
     await channel.send(f"BAMPhBot Online @ {datetime.now()}.")
-
-  try:
-    x = 1/0
-  except Exception as err:
-    asyncio.create_task(error_log(err))
-
-  
+ 
 
 #endregion Cron Jobs
 
