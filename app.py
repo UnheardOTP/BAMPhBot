@@ -308,12 +308,13 @@ def get_quote(db):
     if last_quote_check(db):
         reset_quotes(db)      
 
-    quote_id, quote_text, author, created_date = result[0]
+    quote_id = result[0]["id"]
+    quote_text = result[0]["quote"]
+    author = result[0]["author"]
+    created_date = result[0]["created_date"]
 
     if created_date == date(1900, 1, 1):
         created_date = 'Date Unknown'
-    else:
-        created_date = created_date.strftime("%m-%d-%Y")
 
     # Build return string
     rand_quote = f"{quote_text} - {author} - {created_date}"
