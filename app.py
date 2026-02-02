@@ -12,6 +12,10 @@ from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 from database import database
 import functions
+import traceback
+import inspect
+import sys
+
 
 #region Secrets
 with open('secrets.txt', 'r') as f:
@@ -29,12 +33,35 @@ db_database=secrets['DATABASE']
 # Create multi use db object
 db = database(db_host, db_user, db_password, db_database)
 
+# Error logging
 def error_log(err):
-  try:
-    db.query("insert into bot_error_log (datetime, error_message) values (%s, %s)", (datetime.now(), str(err)))
+    # Extract traceback info
+    tb = err.__traceback__
+    tb_str = "".join(traceback.format_exception(type(err), err, tb))
+
+    # Extract function name and line number
+    frame = traceback.extract_tb(tb)[-1]  # last frame = where it actually failed
+    function_name = frame.name
+    line_number = frame.lineno
+
+    # Insert into DB
+    db.query(
+        """
+        INSERT INTO bot_error_log 
+        (datetime, error_message, error_type, traceback, function_name, line_number)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        """,
+        (
+            datetime.now(),
+            str(err),
+            type(err).__name__,
+            tb_str,
+            function_name,
+            line_number
+        )
+    )
     db.commit()
-  except Exception as err:
-    print(err)
+
 
 #region Bot Definitions
 
