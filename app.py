@@ -339,7 +339,8 @@ def get_photo(db):
     if last_photo_check(db):
         reset_photos(db)
     
-    photo_id, photo_link = result[0]
+    photo_id = result[0]["id"]
+    photo_link = result[0]["photo_link"]
 
     # Update random photo as used
     db.query("update photos set used = 1 where id = %s", (photo_id,))
