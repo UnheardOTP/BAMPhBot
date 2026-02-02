@@ -215,7 +215,7 @@ def last_run_time(db, type):
     if not result:
       return None
 
-    last_run = result[0][0]
+    last_run = result[0]["last_run"]
     return last_run.isoformat() if hasattr(last_run, "isoformat") else str(last_run)
 
   except Exception as err:
