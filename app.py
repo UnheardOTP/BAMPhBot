@@ -59,7 +59,7 @@ async def error_log(err):
     # Insert into DB
     db.query(
         """
-        INSERT INTO bot_await error_log 
+        INSERT INTO bot_error_log 
         (datetime, error_message, error_type, traceback, function_name, line_number)
         VALUES (%s, %s, %s, %s, %s, %s)
         """,
