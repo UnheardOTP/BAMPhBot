@@ -31,6 +31,7 @@ db = database(db_host, db_user, db_password, db_database)
 
 def error_log(err):  
   db.query("insert into bot_error_log (datetime, error_message) values (%s, %s)", (datetime.now(), err))
+  db.commit()
 
 #region Bot Definitions
 
