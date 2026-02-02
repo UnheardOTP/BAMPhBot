@@ -1,3 +1,5 @@
+from database import database
+
 def error_log(err):
   db = database(db_host, db_user, db_password, db_database)  
   
