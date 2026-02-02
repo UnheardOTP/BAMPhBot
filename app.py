@@ -245,17 +245,18 @@ def add_quote_to_db(db, quote, author):
 # Last available quote check
 def last_quote_check(db):
   try:
-    result = db.query("select count(*) from quotes where quote_used = 0")
+    result = db.query("select count(*) as count from quotes where quote_used = 0")
 
     if not result:
       return False
 
-    quote_count = result[0][0]
+    quote_count = result[0]["count"]
  
     return quote_count == 1
 
   except Exception as err:
     error_log(err)
+    return False
 
 # Last available quote check
 def last_photo_check(db):
