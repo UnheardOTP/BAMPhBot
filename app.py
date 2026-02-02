@@ -30,8 +30,11 @@ db_database=secrets['DATABASE']
 db = database(db_host, db_user, db_password, db_database)
 
 def error_log(err):
-  db.query("insert into error_log (datetime, error_message) values (%s, %s)", (datetime.now(), str(err)))
-  db.commit()
+  try:
+    db.query("insert into error_log (datetime, error_message) values (%s, %s)", (datetime.now(), str(err)))
+    db.commit()
+  except Exception as err:
+    print(err)
 
 #region Bot Definitions
 
