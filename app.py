@@ -884,7 +884,8 @@ async def on_message(message):
     "chuggy": {"type": "reaction", "value": "chuggy:1148715141651763270"},
     "alex": {"type": "reaction", "value": "\N{TRUMPET}"},
     "nice": {"type": "response", "value": "Noice."},
-    "goal": {"type": "response", "value": "https://tenor.com/view/doritos-bird-bird-bird-hype-doritos-cheer-bird-gif-27234641"}
+    "goal": {"type": "response", "value": "https://tenor.com/view/doritos-bird-bird-bird-hype-doritos-cheer-bird-gif-27234641"},
+    "no u": {"type": "response", "value": "No u!"}
   }
 
   for trigger, action in triggers.items():
