@@ -888,7 +888,7 @@ async def on_message(message):
   for trigger, emoji in triggers.items():
     if trigger in messageContent:
       await message.add_reaction(emoji)
-      break
+      #break
     
 
 #endregion Bot Events
