@@ -877,18 +877,23 @@ async def on_message(message):
   messageContent = message.content.lower()
 
   triggers = {
-    "clemson": "\N{PILE OF POO}",
-    "clempson": "\N{PILE OF POO}",
-    "jeff": "mynameisjeff:1096781925114466405",
-    "berry": "berry:1096783181228814438",
-    "chuggy": "chuggy:1148715141651763270",
-    "alex": "\N{TRUMPET}",
+    "clemson": {"type": "reaction", "value": "\N{PILE OF POO}"},
+    "clempson": {"type": "reaction", "value": "\N{PILE OF POO}"},
+    "jeff": {"type": "reaction", "value": "mynameisjeff:1096781925114466405"},
+    "berry": {"type": "reaction", "value": "berry:1096783181228814438"},
+    "chuggy": {"type": "reaction", "value": "chuggy:1148715141651763270"},
+    "alex": {"type": "reaction", "value": "\N{TRUMPET}"},
+    "nice": {"type": "response", "value": "Noice."},
+    "goal": {"type": "response", "value": "https://tenor.com/view/doritos-bird-bird-bird-hype-doritos-cheer-bird-gif-27234641"}
   }
 
-  for trigger, emoji in triggers.items():
+  for trigger, action in triggers.items():
     if trigger in messageContent:
-      await message.add_reaction(emoji)
-      #break
+      if action["type"] == "reaction":
+        await message.add_reaction(action["value"])
+      elif action["type"] == "response":
+        await message.channel.send(action["value"])
+
     
 
 #endregion Bot Events
