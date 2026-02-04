@@ -16,6 +16,15 @@ def set_course_status(db, course_status):
 
     return 0;
 
+def permanent_record(db, type, user, giver, reason):
+  try:
+    db.query("insert into permanent_record (user, point_type, reason, given_by) values (%s, %s, %s, %s)", (user, type, reason, giver))
+    db.commit()
+
+    return True
+  except Exception as err:
+    asyncio.create_task(error_log(err))
+
 #region Locker Inventory
 def add_bottle(db, bottle_name, liquor_type):
   try:
@@ -85,6 +94,8 @@ def get_locker_inventory():
     return err
 
 #endregion
+
+
 
 
 

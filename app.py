@@ -529,20 +529,22 @@ async def on_ready():
 #region context commands
 @bot.message_command(name="Discipline Point")
 async def discipline_point(ctx, message: discord.Message):
-  add_discipline_point(db, message.author.id, '1', message.content)
+  functions.permanent_record(db, 'discipline', message.author.id, ctx.author.id, message.content)
+  await message.add_reaction("👮‍♂️")
   await ctx.respond(f"<@{message.author.id}> was given 1 discipline point by <@{ctx.author.id}> for this message.")
 
 @bot.message_command(name="Good Citizen Point")
 async def good_citizen_point(ctx, message: discord.Message):
-  add_good_citizen_point(db, message.author.id, '1', message.content)
+  functions.permanent_record(db, 'goodcitizen', message.author.id, ctx.author.id, message.content)
   await message.add_reaction("⭐")
-  await ctx.respond(f"<@{message.author.id}> was given 1 good citizen point for this message.")
+  await ctx.respond(f"<@{message.author.id}> was given 1 good citizen point by <@{ctx.author.id}> for this message.")
 
 #1455447745958776905
 @bot.message_command(name="Banish to #tards")
 async def tard(ctx, message: discord.message):
   user = message.author
   role = discord.utils.get(user.guild.roles, name="tard")
+  functions.permanent_record(db, 'tards', message.author.id, ctx.author.id, message.content)
   await user.add_roles(role)
   await message.add_reaction("👮‍♂️")
   await ctx.respond(f"<@{message.author.id}> was banished to <#1455447383524642900> for this message.")
