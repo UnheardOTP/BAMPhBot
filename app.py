@@ -530,12 +530,12 @@ async def on_ready():
 @bot.message_command(name="Discipline Point")
 async def discipline_point(ctx, message: discord.Message):
   add_discipline_point(db, message.author.id, '1', message.content)
-  await ctx.respond(f"<@{message.author.id}> was given 1 discipline point for this message.")
+  await ctx.respond(f"<@{message.author.id}> was given 1 discipline point by <@{ctx.author.id}> for this message.")
 
 @bot.message_command(name="Good Citizen Point")
 async def good_citizen_point(ctx, message: discord.Message):
   add_good_citizen_point(db, message.author.id, '1', message.content)
-  await message.add_reaction("🪙")
+  await message.add_reaction("⭐")
   await ctx.respond(f"<@{message.author.id}> was given 1 good citizen point for this message.")
 
 #1455447745958776905
@@ -544,6 +544,7 @@ async def tard(ctx, message: discord.message):
   user = message.author
   role = discord.utils.get(user.guild.roles, name="tard")
   await user.add_roles(role)
+  await message.add_reaction("👮‍♂️")
   await ctx.respond(f"<@{message.author.id}> was banished to <#1455447383524642900> for this message.")
 
 @bot.user_command(name="Unbanish from #tard")
@@ -655,8 +656,6 @@ async def quote(ctx):
 async def reset_bot_conversation(ctx):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel
-  
-  globals()['messages'] = ""
 
   await ctx.respond("My memory has been wiped and I am ready to start anew!")
 
@@ -766,20 +765,6 @@ async def say_stuff(ctx, words):
     return msg.author == ctx.author and msg.channel == ctx.channel 
 
   await ctx.respond(f"{words}")
-'''
-# /discipline_pint - give people points for being bad
-@bot.slash_command(name="discipline_point",
-                  description="Add discipline point to user.",
-                  guild_ids=[692123814989004862],
-                  role_ids=[1092591212202045552])
-async def discipline_point(ctx, amount, user, reason):
-  def check(msg):
-    return msg.author == ctx.author and msg.channel == ctx.channel 
-  
-  add_discipline_point(user, amount, reason)
-
-  await ctx.respond(f"{amount} discipline point(s) given to {user}. REASON - {reason}")
-'''
 
 # /discipline_point_total - check how many pointsa user has
 @bot.slash_command(name="discipline_point_total",
