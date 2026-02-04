@@ -153,38 +153,25 @@ def get_course_status():
 
   return course_status
 
-# Discipline Points
-def add_discipline_point(db, user, points, reason):
-  try:
-    db.query("insert into discipline_points (user, point_amount, reason) values (%s, %s, %s)", (user, points, reason))
-    db.commit()
-
-    return True
-  except Exception as err:
-    asyncio.create_task(error_log(err))
-
-
-# Good Citizen Points
-def add_good_citizen_point(db, user, points, reason): 
-  try:
-    db.query("insert into good_citizen_points (user, point_amount, reason) values (%s, %s, %s)", (user, points, reason))
-    db.commit()
-
-    return True
-  except Exception as err:
-    asyncio.create_task(error_log(err))
-
 
 def get_discipline_point_desc(db, user):
   try:
-    result = db.query("select point_amount, reason from discipline_points where user = %s", (user,))
+    result = db.query("select count(id) as point_count from permanent_record where user = %s and point_type = 'discipline'", (user,))
 
     if not result:
-      return f"User {user} has no points currently. Pehaps they don't belong in BAMPh?"
-    else:
-      return result
+      return f"User {user} has no points currently. Perhaps they don't belong in BAMPh?"
+
+    point_count = result[0]["point_count"]
+
+    if point_count is None or point_count == 0:
+      return f"User {user} has no points currently. Perhaps they don't belong in BAMPh?"
+
+    return int(point_count)
+
   except Exception as err:
     asyncio.create_task(error_log(err))
+    return "An error occurred while retrieving discipline points."
+
 
       
   
