@@ -890,7 +890,8 @@ async def on_message(message):
     "nice": {"type": "response", "value": "Noice."},
     "goal": {"type": "response", "value": "https://tenor.com/view/doritos-bird-bird-bird-hype-doritos-cheer-bird-gif-27234641"},
     "fsu": {"type": "response", "value": "https://tenor.com/view/a-goddamn-powerhouse-anne-workin-moms-611-youre-the-greatest-of-all-time-gif-25278141"},
-    "no u": {"type": "response", "value": "No u!"}
+    "no u": {"type": "response", "value": "No u!"},
+    "tax": {"type": "response", "value": "Taxation is theft!"}
   }
 
   for trigger, action in triggers.items():
