@@ -535,6 +535,7 @@ async def discipline_point(ctx, message: discord.Message):
 @bot.message_command(name="Good Citizen Point")
 async def good_citizen_point(ctx, message: discord.Message):
   add_good_citizen_point(db, message.author.id, '1', message.content)
+  await message.add_reaction("🪙")
   await ctx.respond(f"<@{message.author.id}> was given 1 good citizen point for this message.")
 
 #1455447745958776905
