@@ -547,7 +547,7 @@ async def tard(ctx, message: discord.message):
   functions.permanent_record(db, 'tards', message.author.id, ctx.author.id, message.content)
   await user.add_roles(role)
   await message.add_reaction("👮‍♂️")
-  await ctx.respond(f"<@{message.author.id}> was banished to <#1455447383524642900> for this message.")
+  await ctx.respond(f"<@{message.author.id}> was banished to <#1455447383524642900> by <@{ctx.author.id}> for this message.")
 
 @bot.user_command(name="Unbanish from #tard")
 async def tard(ctx, user: discord.Member):
