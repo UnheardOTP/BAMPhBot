@@ -16,6 +16,75 @@ def set_course_status(db, course_status):
 
     return 0;
 
+#region Locker Inventory
+def add_bottle(db, bottle_name, liquor_type):
+  try:
+    db.query("insert into locker_inventory (bottle_name, liquor_type) values ('%s', '%s')", (bottle_name, liquor_type,))
+
+    db_conn.commit()
+
+    return f"{bottle_name} added to locker inventory."
+  except Exception as err:
+    return err
+
+def rem_bottle(bottle_id):
+  db_conn = create_db_connection()
+  db_cursor = db_conn.cursor()
+
+  sql = f"delete from locker_inventory where id = {bottle_id}"
+  try:
+    db_cursor.execute(sql)
+    
+    value = db_cursor.fetchone()
+
+    db_conn.commit()
+    db_conn.close()
+
+    result = value[0]
+
+    return result
+  except Exception as err:
+    return err
+
+def mark_bottle_low(bottle_id):
+  db_conn = create_db_connection()
+  db_cursor = db_conn.cursor()
+  
+  sql = f"update locker_inventory set is_low = 1 where id = {bottle_id}"
+  try:
+    db_cursor.execute(sql)
+    
+    value = db_cursor.fetchone()
+
+    db_conn.commit()
+    db_conn.close()
+
+    result = value[0]
+
+    return result
+  except Exception as err:
+    return err
+
+def get_locker_inventory():
+  db_conn = create_db_connection()
+  db_cursor = db_conn.cursor()
+  
+  sql = f"select * from locker_inventory"
+  try:
+    db_cursor.execute(sql)
+    
+    value = db_cursor.fetchall()
+
+    db_conn.commit()
+    db_conn.close()
+
+    result = value
+
+    return result
+  except Exception as err:
+    return err
+
+#endregion
 
 
 
