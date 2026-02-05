@@ -163,7 +163,7 @@ def log_poop(db, user, message, datetime):
     asyncio.create_task(error_log(err))
     return False
 
-def missed_poop_check(db)
+def missed_poop_check(db):
   try:
     # Gather am-pooping-club members
     channel = bot.get_channel(1373255433011331122)
