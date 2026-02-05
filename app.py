@@ -897,7 +897,7 @@ async def on_message(message):
 
   if "MP" in message.content:
     log_poop(db, message.author.id, message.content, datetime.now())
-    await message.channel.send(f"<{@message.author.id}>'s poop has been logged at {datetime.now()}.")
+    await message.channel.send(f"<@{message.author.id}>'s poop has been logged at {datetime.now()}.")
 
 
 
