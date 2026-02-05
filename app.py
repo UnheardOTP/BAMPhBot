@@ -527,7 +527,7 @@ async def course_status_cron():
       functions.set_course_status(db, course_status)
       await channel.send(f"Bradshaw Course/Range Status Update: {course_status}")
 
-@tasks.loop(time=time(hour=14, minute=12, tzinfo=ET))
+@tasks.loop(time=time(hour=12, minute=0, tzinfo=ET))
 async def pooper_check():
   channel = bot.get_channel(1373255433011331122)
 
@@ -938,9 +938,16 @@ async def on_message(message):
         await message.channel.send("You need to attach a photo.")
 
   if "MP" in message.content and message.channel.id == 1373255433011331122:
-    log_poop(db, message.author.id, message.content, datetime.now())
-    await message.add_reaction("\N{PILE OF POO}")
-    await message.channel.send(f"<@{message.author.id}>'s poop has been logged at {datetime.now()}.")
+    now = datetime.now(ET).time()
+
+    if time(12, 0, 0) <= now <= time(23, 59, 59):
+      await message.channel.send(f"<@{message.author.id}> has attempted to log a poop in the PM and was given 1 discipline point for this action!")
+      await message.add_reaction("👮‍♂️")
+      functions.permanent_record(db, 'discipline', message.author.id, 1092634707541360762, message.content)
+    else:
+      log_poop(db, message.author.id, message.content, datetime.now())
+      await message.add_reaction("\N{PILE OF POO}")
+      await message.channel.send(f"<@{message.author.id}>'s poop has been logged at {datetime.now()}.")
 
 
 
