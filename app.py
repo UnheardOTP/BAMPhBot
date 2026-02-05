@@ -761,7 +761,7 @@ async def give_beer(ctx, owed_to, reason):
 async def say_stuff(ctx, words):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
-
+  await ctx.respond("Done.", ephemeral=True)
   await ctx.respond(f"{words}")
 
 # /discipline_point_total - check how many pointsa user has
