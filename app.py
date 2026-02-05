@@ -19,7 +19,6 @@ import asyncio
 from zoneinfo import ZoneInfo
 
 ET = ZoneInfo("America/New_York")
-noon_et = datetime.time(hour=13, minute=53, tzinfo=ET)
 
 #region Secrets
 with open('secrets.txt', 'r') as f:
@@ -528,7 +527,7 @@ async def course_status_cron():
       await channel.send(f"Bradshaw Course/Range Status Update: {course_status}")
 
 @tasks.loop(noon_et)
-async def pooper_check():
+async def pooper_check(time=time(hour=13, minute=54, tzinfo=ET)):
   channel = bot.get_channel(1245331722342629376)
 
   missed_pooper_ids = missed_poop_check(db)
