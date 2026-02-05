@@ -153,7 +153,7 @@ def get_course_status():
 
   return course_status
 
-def log_poop(user, message, datetime):
+def log_poop(db, user, message, datetime):
   try:
     db.query("insert into poop_log (user, message, datetime) values (%s, %s, %s)", (user, message, datetime))
     db.commit()
