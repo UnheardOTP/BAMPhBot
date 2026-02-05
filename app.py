@@ -186,8 +186,6 @@ def missed_poop_check(db):
     asyncio.create_task(error_log(err))
 
     
-
-print(member_ids)
 def get_discipline_point_desc(db, user):
   try:
     result = db.query("select count(id) as point_count from permanent_record where user = %s and point_type = 'discipline'", (user,))
