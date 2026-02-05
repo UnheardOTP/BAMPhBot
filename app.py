@@ -527,7 +527,7 @@ async def course_status_cron():
       functions.set_course_status(db, course_status)
       await channel.send(f"Bradshaw Course/Range Status Update: {course_status}")
 
-@tasks.loop(time=time(hour=14, minute=04, tzinfo=ET))
+@tasks.loop(time=time(hour=14, minute=5, tzinfo=ET))
 async def pooper_check():
   channel = bot.get_channel(1245331722342629376)
 
