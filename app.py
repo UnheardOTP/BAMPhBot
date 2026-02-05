@@ -16,7 +16,10 @@ import traceback
 import inspect
 import sys
 import asyncio
+from zoneinfo import ZoneInfo
 
+ET = ZoneInfo("America/New_York")
+noon_et = datetime.time(hour=13, minute=53, tzinfo=ET)
 
 #region Secrets
 with open('secrets.txt', 'r') as f:
@@ -524,7 +527,7 @@ async def course_status_cron():
       functions.set_course_status(db, course_status)
       await channel.send(f"Bradshaw Course/Range Status Update: {course_status}")
 
-@tasks.loop(time=time(hour=16, minute=26))
+@tasks.loop(noon_et)
 async def pooper_check():
   channel = bot.get_channel(1245331722342629376)
 
