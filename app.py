@@ -173,12 +173,12 @@ def missed_poop_check(db):
 
     missed_poopers = []
 
-    for member in channel.members.id:
+    for member in channel.members:
       poop_record = db.query('SELECT * FROM poop_log WHERE user = %s AND DATE(datetime) = CURDATE()', (member.id,))
 
       # If record not find, add them to missed poop record and list to be returned.
       if not poop_record:
-        missed_poopers.append(member)
+        missed_poopers.append(member.id)
 
     if len(missed_poopers) > 0:
       return missed_poopers
@@ -527,7 +527,7 @@ async def course_status_cron():
       functions.set_course_status(db, course_status)
       await channel.send(f"Bradshaw Course/Range Status Update: {course_status}")
 
-@tasks.loop(time=time(hour=14, minute=00, tzinfo=ET))
+@tasks.loop(time=time(hour=14, minute=04, tzinfo=ET))
 async def pooper_check():
   channel = bot.get_channel(1245331722342629376)
 
