@@ -762,7 +762,7 @@ async def say_stuff(ctx, words):
   def check(msg):
     return msg.author == ctx.author and msg.channel == ctx.channel 
   await ctx.respond("Done.", ephemeral=True)
-  await ctx.respond(f"{words}")
+  await ctx.channel.send(words)
 
 # /discipline_point_total - check how many pointsa user has
 @bot.slash_command(name="discipline_point_total",
