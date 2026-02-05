@@ -20,6 +20,7 @@ from zoneinfo import ZoneInfo
 
 ET = ZoneInfo("America/New_York")
 
+
 #region Secrets
 with open('secrets.txt', 'r') as f:
     data = f.read()
@@ -526,8 +527,8 @@ async def course_status_cron():
       functions.set_course_status(db, course_status)
       await channel.send(f"Bradshaw Course/Range Status Update: {course_status}")
 
-@tasks.loop(noon_et)
-async def pooper_check(time=time(hour=13, minute=54, tzinfo=ET)):
+@tasks.loop(time=datetime.time(hour=13, minute=55, tzinfo=ET))
+async def pooper_check():
   channel = bot.get_channel(1245331722342629376)
 
   missed_pooper_ids = missed_poop_check(db)
