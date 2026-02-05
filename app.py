@@ -886,7 +886,7 @@ async def on_message(message):
     else:
         await message.channel.send("You need to attach a photo.")
 
-  if "MP" in messageContent:
+  if "MP" in message.content:
     print("Poop registered")
 
 
