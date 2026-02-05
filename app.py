@@ -153,6 +153,15 @@ def get_course_status():
 
   return course_status
 
+def log_poop(user, message, datetime):
+  try:
+    db.query("insert into poop_log (user, message, datetime) values (%s, %s, %s)", (user, message, datetime))
+    db.commit()
+
+    return True
+  except Exception as err:
+    asyncio.create_task(error_log(err))
+    return False
 
 def get_discipline_point_desc(db, user):
   try:
@@ -887,10 +896,11 @@ async def on_message(message):
         await message.channel.send("You need to attach a photo.")
 
   if "MP" in message.content:
-    print("Poop registered")
+    log_poop(db, message.author.id, message.content, datetime.now())
+    await message.channel.send(f"<{@message.author.id}>'s poop has been logged at {datetime.now()}.")
 
 
-    
+
 
 #endregion Bot Events
 
