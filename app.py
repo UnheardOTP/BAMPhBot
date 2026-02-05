@@ -895,7 +895,7 @@ async def on_message(message):
     else:
         await message.channel.send("You need to attach a photo.")
 
-  if "MP" in message.content:
+  if "MP" in message.content and message.channel.id == 1245331722342629376:
     log_poop(db, message.author.id, message.content, datetime.now())
     await message.channel.send(f"<@{message.author.id}>'s poop has been logged at {datetime.now()}.")
 
