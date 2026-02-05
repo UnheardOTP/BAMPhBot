@@ -881,7 +881,7 @@ async def on_message(message):
   if messageContent.startswith("!addphoto") and message.author.id != 1092634707541360762:
     if message.attachments:
       attachment = message.attachments[0]
-      add_photo(attachment.url)
+      add_photo(db, attachment.url)
       await message.channel.send(f"<@{message.author.id}> added a photo to the catalog.")
     else:
         await message.channel.send("You need to attach a photo.")
