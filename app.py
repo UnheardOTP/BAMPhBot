@@ -847,7 +847,7 @@ async def on_message(message):
 
   # Ignore bot messages
   if message.author.bot:
-    return
+      return
 
   messageContent = message.content.lower()
 
@@ -869,12 +869,23 @@ async def on_message(message):
     "tax": {"type": "response", "value": "Taxation is theft!"}
   }
 
+  # Run trigger actions
   for trigger, action in triggers.items():
     if trigger in messageContent:
       if action["type"] == "reaction":
         await message.add_reaction(action["value"])
       elif action["type"] == "response":
         await message.channel.send(action["value"])
+
+  # Handle addphoto separately
+  if messageContent.startswith("!addphoto") and message.author.id != 1092634707541360762:
+    if message.attachments:
+      attachment = message.attachments[0]
+      add_photo(attachment.url)
+      await message.channel.send(f"<@{message.author.id}> added a photo to the catalog.")
+    else:
+        await message.channel.send("You need to attach a photo.")
+
 
     
 
