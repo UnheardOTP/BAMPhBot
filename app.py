@@ -163,6 +163,31 @@ def log_poop(db, user, message, datetime):
     asyncio.create_task(error_log(err))
     return False
 
+def missed_poop_check(db)
+  try:
+    # Gather am-pooping-club members
+    channel = bot.get_channel(1373255433011331122)
+
+    missed_poopers = []
+
+    for member in channel.members:
+      poop_record = db.query('SELECT * FROM poop_log WHERE user = %s AND DATE(datetime) = CURDATE()', (member.id,))
+
+      # If record not find, add them to missed poop record and list to be returned.
+      if not poop_record:
+        missed_poopers.append(member)
+
+    if len(missed_poopers) > 0:
+      return missed_poopers
+      #TODO: Log the missed poop logic
+    
+    return []
+  except Exception as err:
+    asyncio.create_task(error_log(err))
+
+    
+
+print(member_ids)
 def get_discipline_point_desc(db, user):
   try:
     result = db.query("select count(id) as point_count from permanent_record where user = %s and point_type = 'discipline'", (user,))
@@ -500,6 +525,20 @@ async def course_status_cron():
     if course_status != functions.last_course_status(db):
       functions.set_course_status(db, course_status)
       await channel.send(f"Bradshaw Course/Range Status Update: {course_status}")
+
+@tasks.loop(time=dt.time(hour=13, minute=19))
+async def pooper_check():
+  channel = bot.get_channel(1245331722342629376)
+
+  missed_pooper_ids = missed_poop_check(db)
+
+  if missed_pooper_ids:
+    for missing_pooper_id in missed_pooper_ids:
+      await channel.send(f"<@{missing_pooper_id}> did not check in today!")
+  else:
+    today = date.today().strftime("%m/%d/%Y")
+    await channel.send(f"All poopers have checked in for {today}!")
+
   
 
 # Start cron jobs
@@ -513,6 +552,8 @@ async def on_ready():
     rand_photo.start() 
   if not course_status_cron.is_running():
     course_status_cron.start()
+  if not pooper_check.is_running():
+    pooper_check.start()
 
   channel = bot.get_channel(1245331722342629376)
   if channel:
