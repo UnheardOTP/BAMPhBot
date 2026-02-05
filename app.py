@@ -527,7 +527,7 @@ async def course_status_cron():
       functions.set_course_status(db, course_status)
       await channel.send(f"Bradshaw Course/Range Status Update: {course_status}")
 
-@tasks.loop(time=time(hour=14, minute=5, tzinfo=ET))
+@tasks.loop(time=time(hour=14, minute=6, tzinfo=ET))
 async def pooper_check():
   channel = bot.get_channel(1245331722342629376)
 
@@ -535,7 +535,8 @@ async def pooper_check():
 
   if missed_pooper_ids:
     for missing_pooper_id in missed_pooper_ids:
-      await channel.send(f"<@{missing_pooper_id}> did not check in today!")
+      if missing_pooper_id != 1092634707541360762:
+        await channel.send(f"<@{missing_pooper_id}> did not check in today!")
   else:
     today = date.today().strftime("%m/%d/%Y")
     await channel.send(f"All poopers have checked in for {today}!")
