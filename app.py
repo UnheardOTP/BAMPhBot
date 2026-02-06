@@ -216,7 +216,7 @@ def make_poops_per_day_chart(poops):
   plt.tight_layout()
 
   buffer = BytesIO()
-  plt.savefig(buffer, format="png")
+  plt.savefig(format="jpeg", dpi=80)
   buffer.seek(0)
   plt.close()
   return buffer
@@ -250,7 +250,7 @@ def make_poop_heatmap(poops):
     plt.tight_layout()
 
     buffer = BytesIO()
-    plt.savefig(buffer, format="png")
+    plt.savefig(format="jpeg", dpi=80)
     buffer.seek(0)
     plt.close()
     return buffer
@@ -356,7 +356,7 @@ def make_poops_per_user_chart(poops):
   plt.tight_layout()
 
   buffer = BytesIO()
-  plt.savefig(buffer, format="png")
+  plt.savefig(buffer, format="jpeg", dpi=80)
   buffer.seek(0)
   plt.close()
   return buffer
@@ -375,7 +375,7 @@ def make_time_of_day_chart(poops):
     plt.tight_layout()
 
     buffer = BytesIO()
-    plt.savefig(buffer, format="png")
+    plt.savefig(buffer, format="jpeg", dpi=80)
     buffer.seek(0)
     plt.close()
     return buffer
@@ -881,11 +881,11 @@ async def poop_stats(ctx):
     chart5 = make_multi_user_heatmap_grid(poops)
 
     files = [
-        discord.File(chart1, filename="poops_per_day.png"),
-        discord.File(chart2, filename="poops_per_user.png"),
-        discord.File(chart3, filename="poop_time_distribution.png"),
-        discord.File(chart4, filename="poop_heatmap.png"),
-        discord.File(chart4, filename="poop_heatmap_multi_user.png")
+        discord.File(chart1, filename="poops_per_day.jpg"),
+        discord.File(chart2, filename="poops_per_user.jpg"),
+        discord.File(chart3, filename="poop_time_distribution.jpg"),
+        discord.File(chart4, filename="poop_heatmap.jpg"),
+        discord.File(chart4, filename="poop_heatmap_multi_user.jpg")
     ]
 
     await ctx.channel.send(
