@@ -213,7 +213,6 @@ def make_poops_per_day_chart(poops):
   plt.ylabel("Number of Poops")
 
   plt.xticks(x_positions, labels, rotation=45)
-  plt.tight_layout()
 
   buffer = BytesIO()
   plt.savefig(buffer, format="jpeg", dpi=80)
@@ -247,7 +246,6 @@ def make_poop_heatmap(poops):
     plt.yticks(range(7), ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"])
 
     plt.colorbar(label="Number of Poops")
-    plt.tight_layout()
 
     buffer = BytesIO()
     plt.savefig(buffer, format="jpeg", dpi=80)
@@ -353,7 +351,6 @@ def make_poops_per_user_chart(poops):
   plt.xlabel("User")
   plt.ylabel("Poops Logged")
   plt.xticks(rotation=45)
-  plt.tight_layout()
 
   buffer = BytesIO()
   plt.savefig(buffer, format="jpeg", dpi=80)
@@ -372,7 +369,6 @@ def make_time_of_day_chart(poops):
     plt.xlabel("Hour of Day")
     plt.ylabel("Poops")
     plt.xticks(range(0, 24))
-    plt.tight_layout()
 
     buffer = BytesIO()
     plt.savefig(buffer, format="jpeg", dpi=80)
