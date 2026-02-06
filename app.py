@@ -16,7 +16,13 @@ import traceback
 import inspect
 import sys
 import asyncio
+<<<<<<< HEAD
+import matplotlib.pyplot as plt
+from collections import Counter
+from io import BytesIO
+=======
 from zoneinfo import ZoneInfo
+>>>>>>> 9ee0703ba69f20f65276888cd5faf01b5bace09f
 
 ET = ZoneInfo("America/New_York")
 
@@ -606,6 +612,46 @@ async def meg(ctx):
 
   await ctx.respond(f"https://files.catbox.moe/p8gggz.gif")
 
+@bot.slash_command(
+    name="poops_per_day",
+    description="Generate a bar chart of poops per day",
+    guild_ids=[692123814989004862]
+)
+async def poops_per_day(ctx):
+
+    await ctx.respond("Generating chart...", ephemeral=True)
+
+    # Query the database
+    poops = db.query("SELECT * FROM poop_log")
+
+    # Extract dates only
+    dates = [row['datetime'].date() for row in poops]
+
+    # Count occurrences per day
+    counts = Counter(dates)
+
+    # Prepare data for plotting
+    x = list(counts.keys())
+    y = list(counts.values())
+
+    # Create the plot
+    plt.figure(figsize=(10, 5))
+    plt.bar(x, y, color="saddlebrown")
+    plt.title("Poops Per Day")
+    plt.xlabel("Date")
+    plt.ylabel("Number of Poops")
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+
+    # Save to in-memory buffer
+    buffer = BytesIO()
+    plt.savefig(buffer, format="png")
+    buffer.seek(0)
+    plt.close()
+
+    # Send to Discord
+    file = discord.File(buffer, filename="poops_per_day.png")
+    await ctx.channel.send(file=file)
 
 # Beer bitch functionality
 # /bb_iou
