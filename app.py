@@ -884,10 +884,11 @@ async def poop_stats(ctx):
         discord.File(chart4, filename="poop_heatmap_multi_user.jpg")
     ]
 
-    await ctx.channel.send(
-        content="📊 **Poop Statistics Dashboard**",
-        files=files
-    )
+    await ctx.channel.send("📊 **Poop Statistics Dashboard**")
+    await ctx.send(files=[chart1, chart2])
+    await ctx.send(files=[chart3, chart4])
+    await ctx.send(files=[chart5])
+
 
 
 # Beer bitch functionality
