@@ -214,24 +214,26 @@ def make_poops_per_day_chart(poops):
 
 
 def make_poops_per_user_chart(poops):
-    users = [row['user'] for row in poops]
-    counts = Counter(users)
+  names = [row['displayname'] or str(row['user']) for row in poops]
+  counts = Counter(names)
 
-    x = list(counts.keys())
-    y = list(counts.values())
+  x = list(counts.keys())
+  y = list(counts.values())
 
-    plt.figure(figsize=(10, 5))
-    plt.bar(x, y, color="darkgreen")
-    plt.title("Poops Per User")
-    plt.xlabel("User ID")
-    plt.ylabel("Poops Logged")
-    plt.tight_layout()
+  plt.figure(figsize=(10, 5))
+  plt.bar(x, y, color="darkgreen")
+  plt.title("Poops Per User")
+  plt.xlabel("User")
+  plt.ylabel("Poops Logged")
+  plt.xticks(rotation=45)
+  plt.tight_layout()
 
-    buffer = BytesIO()
-    plt.savefig(buffer, format="png")
-    buffer.seek(0)
-    plt.close()
-    return buffer
+  buffer = BytesIO()
+  plt.savefig(buffer, format="png")
+  buffer.seek(0)
+  plt.close()
+  return buffer
+
 
 
 def make_time_of_day_chart(poops):
@@ -735,7 +737,15 @@ async def poop_stats(ctx):
 
     await ctx.respond("Generating poop dashboard...", ephemeral=True)
 
-    poops = db.query("SELECT * FROM poop_log")
+    poops = db.query("""
+        SELECT poop_log.user,
+              poop_log.datetime,
+              server_members.displayname
+        FROM poop_log
+        LEFT JOIN server_members
+          ON poop_log.user = server_members.user
+    """)
+
 
     chart1 = make_poops_per_day_chart(poops)
     chart2 = make_poops_per_user_chart(poops)
