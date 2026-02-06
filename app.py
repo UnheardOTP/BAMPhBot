@@ -615,9 +615,9 @@ async def meg(ctx):
     guild_ids=[692123814989004862]
 )
 async def poops_per_day(ctx):
-  if ctx.channel.id != ALLOWED_CHANNEL:
+  if ctx.channel.id != 1373255433011331122:
     await ctx.respond(
-        f"This command can only be used in <#{ALLOWED_CHANNEL}>.",
+        f"This command can only be used in <#1373255433011331122>.",
         ephemeral=True
     )
     return
