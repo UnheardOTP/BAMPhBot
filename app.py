@@ -331,7 +331,7 @@ def make_multi_user_heatmap_grid(poops):
     fig.tight_layout(rect=[0, 0, 1, 0.97])
 
     buffer = BytesIO()
-    fig.savefig(buffer, format="jpeg", quality=85)
+    fig.savefig(buffer, format="jpeg", dpi=80)
     buffer.seek(0)
     plt.close(fig)
 
