@@ -880,7 +880,7 @@ async def poop_stats(ctx):
         discord.File(chart2, filename="poops_per_user.jpg"),
         discord.File(chart3, filename="poop_time_distribution.jpg"),
         discord.File(chart4, filename="poop_heatmap.jpg"),
-        discord.File(chart4, filename="poop_heatmap_multi_user.jpg")
+        discord.File(chart5, filename="poop_heatmap_multi_user.jpg")
     ]
 
     await ctx.channel.send("📊 **Poop Statistics Dashboard**")
