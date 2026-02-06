@@ -259,10 +259,10 @@ async def refresh_members_table(db, guild):
     # Repopulate with current members
     for member in guild.members:
         user_id = member.id
-        nickname = member.display_name  # nickname or username fallback
+        displayname = member.display_name  # nickname or username fallback
 
         db.query(
-            "INSERT INTO server_members (user, nickname) VALUES (%s, %s)",
+            "INSERT INTO server_members (user, displayname) VALUES (%s, %s)",
             (user_id, nickname)
         )
         db.commit()
