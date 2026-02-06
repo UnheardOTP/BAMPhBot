@@ -615,40 +615,46 @@ async def meg(ctx):
     guild_ids=[692123814989004862]
 )
 async def poops_per_day(ctx):
+  if ctx.channel.id != ALLOWED_CHANNEL:
+    await ctx.respond(
+        f"This command can only be used in <#{ALLOWED_CHANNEL}>.",
+        ephemeral=True
+    )
+    return
 
-    await ctx.respond("Generating chart...", ephemeral=True)
+  await ctx.respond("Generating chart...", ephemeral=True)
 
-    # Query the database
-    poops = db.query("SELECT * FROM poop_log")
+  # Query the database
+  poops = db.query("SELECT * FROM poop_log")
 
-    # Extract dates only
-    dates = [row['datetime'].date() for row in poops]
+  # Extract dates only
+  dates = [row['datetime'].date() for row in poops]
 
-    # Count occurrences per day
-    counts = Counter(dates)
+  # Count occurrences per day
+  counts = Counter(dates)
 
-    # Prepare data for plotting
-    x = list(counts.keys())
-    y = list(counts.values())
+  # Prepare data for plotting
+  x = list(counts.keys())
+  y = list(counts.values())
 
-    # Create the plot
-    plt.figure(figsize=(10, 5))
-    plt.bar(x, y, color="saddlebrown")
-    plt.title("Poops Per Day")
-    plt.xlabel("Date")
-    plt.ylabel("Number of Poops")
-    plt.xticks(rotation=45)
-    plt.tight_layout()
+  # Create the plot
+  plt.figure(figsize=(10, 5))
+  plt.bar(x, y, color="saddlebrown")
+  plt.title("Poops Per Day")
+  plt.xlabel("Date")
+  plt.ylabel("Number of Poops")
+  plt.xticks(rotation=45)
+  plt.tight_layout()
 
-    # Save to in-memory buffer
-    buffer = BytesIO()
-    plt.savefig(buffer, format="png")
-    buffer.seek(0)
-    plt.close()
+  # Save to in-memory buffer
+  buffer = BytesIO()
+  plt.savefig(buffer, format="png")
+  buffer.seek(0)
+  plt.close()
 
-    # Send to Discord
-    file = discord.File(buffer, filename="poops_per_day.png")
-    await ctx.channel.send(file=file)
+  # Send to Discord
+  file = discord.File(buffer, filename="poops_per_day.png")
+  await ctx.channel.send(file=file)
 
 # Beer bitch functionality
 # /bb_iou
