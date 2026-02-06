@@ -326,7 +326,6 @@ def make_multi_user_heatmap_grid(poops):
     fig.colorbar(im, ax=axes.ravel().tolist(), label="Poops")
 
     fig.suptitle("Per‑User Poop Heatmaps", fontsize=18)
-    fig.tight_layout(rect=[0, 0, 1, 0.97])
 
     buffer = BytesIO()
     fig.savefig(buffer, format="jpeg", dpi=80)
