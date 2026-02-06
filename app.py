@@ -253,17 +253,19 @@ def make_time_of_day_chart(poops):
 
 async def refresh_members_table(db, guild):
     # Clear the table
-    db.execute("DELETE FROM server_members")
+    db.query("DELETE FROM server_members")
+    db.commit()
 
     # Repopulate with current members
     for member in guild.members:
         user_id = member.id
         nickname = member.display_name  # nickname or username fallback
 
-        db.execute(
+        db.query(
             "INSERT INTO server_members (user, nickname) VALUES (%s, %s)",
             (user_id, nickname)
         )
+        db.commit()
 
     
 def get_discipline_point_desc(db, user):
