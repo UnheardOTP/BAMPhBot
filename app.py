@@ -193,11 +193,13 @@ def missed_poop_check(db):
     asyncio.create_task(error_log(err))
 
 def make_poops_per_day_chart(poops):
-    # Extract date objects
-    dates = [row['datetime'].date() for row in poops]
-    counts = Counter(dates)
+    # Convert to ET before extracting the date
+    dates = [
+        row['datetime'].astimezone(ET).date()
+        for row in poops
+    ]
 
-    # Sort by date so the bars appear in order
+    counts = Counter(dates)
     x, y = zip(*sorted(counts.items()))
 
     plt.figure(figsize=(10, 5))
@@ -206,7 +208,6 @@ def make_poops_per_day_chart(poops):
     plt.xlabel("Date")
     plt.ylabel("Number of Poops")
 
-    # Force clean date formatting (MM-DD)
     ax = plt.gca()
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%m-%d'))
 
@@ -218,6 +219,7 @@ def make_poops_per_day_chart(poops):
     buffer.seek(0)
     plt.close()
     return buffer
+
 
 
 
