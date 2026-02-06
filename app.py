@@ -191,6 +191,68 @@ def missed_poop_check(db):
   except Exception as err:
     asyncio.create_task(error_log(err))
 
+def make_poops_per_day_chart(poops):
+    dates = [row['datetime'].date() for row in poops]
+    counts = Counter(dates)
+
+    x = list(counts.keys())
+    y = list(counts.values())
+
+    plt.figure(figsize=(10, 5))
+    plt.bar(x, y, color="saddlebrown")
+    plt.title("Poops Per Day")
+    plt.xlabel("Date")
+    plt.ylabel("Number of Poops")
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+
+    buffer = BytesIO()
+    plt.savefig(buffer, format="png")
+    buffer.seek(0)
+    plt.close()
+    return buffer
+
+
+def make_poops_per_user_chart(poops):
+    users = [row['user'] for row in poops]
+    counts = Counter(users)
+
+    x = list(counts.keys())
+    y = list(counts.values())
+
+    plt.figure(figsize=(10, 5))
+    plt.bar(x, y, color="darkgreen")
+    plt.title("Poops Per User")
+    plt.xlabel("User ID")
+    plt.ylabel("Poops Logged")
+    plt.tight_layout()
+
+    buffer = BytesIO()
+    plt.savefig(buffer, format="png")
+    buffer.seek(0)
+    plt.close()
+    return buffer
+
+
+def make_time_of_day_chart(poops):
+    hours = [row['datetime'].hour for row in poops]
+
+    plt.figure(figsize=(10, 5))
+    plt.hist(hours, bins=24, range=(0, 24), color="steelblue")
+    plt.title("Poop Time Distribution")
+    plt.xlabel("Hour of Day")
+    plt.ylabel("Poops")
+    plt.xticks(range(0, 24))
+    plt.tight_layout()
+
+    buffer = BytesIO()
+    plt.savefig(buffer, format="png")
+    buffer.seek(0)
+    plt.close()
+    return buffer
+
+
+
     
 def get_discipline_point_desc(db, user):
   try:
@@ -610,51 +672,38 @@ async def meg(ctx):
   await ctx.respond(f"https://files.catbox.moe/p8gggz.gif")
 
 @bot.slash_command(
-    name="poops_per_day",
-    description="Generate a bar chart of poops per day",
+    name="poop_stats",
+    description="Generate a multi-chart poop statistics dashboard",
     guild_ids=[692123814989004862]
 )
-async def poops_per_day(ctx):
-  if ctx.channel.id != 1373255433011331122:
-    await ctx.respond(
-        f"This command can only be used in <#1373255433011331122>.",
-        ephemeral=True
+async def poop_stats(ctx):
+
+    if ctx.channel.id != 1373255433011331122:
+        await ctx.respond(
+            f"This command can only be used in <#1373255433011331122>.",
+            ephemeral=True
+        )
+        return
+
+    await ctx.respond("Generating poop dashboard...", ephemeral=True)
+
+    poops = db.query("SELECT * FROM poop_log")
+
+    chart1 = make_poops_per_day_chart(poops)
+    chart2 = make_poops_per_user_chart(poops)
+    chart3 = make_time_of_day_chart(poops)
+
+    files = [
+        discord.File(chart1, filename="poops_per_day.png"),
+        discord.File(chart2, filename="poops_per_user.png"),
+        discord.File(chart3, filename="poop_time_distribution.png")
+    ]
+
+    await ctx.channel.send(
+        content="📊 **Poop Statistics Dashboard**",
+        files=files
     )
-    return
 
-  await ctx.respond("Generating chart...", ephemeral=True)
-
-  # Query the database
-  poops = db.query("SELECT * FROM poop_log")
-
-  # Extract dates only
-  dates = [row['datetime'].date() for row in poops]
-
-  # Count occurrences per day
-  counts = Counter(dates)
-
-  # Prepare data for plotting
-  x = list(counts.keys())
-  y = list(counts.values())
-
-  # Create the plot
-  plt.figure(figsize=(10, 5))
-  plt.bar(x, y, color="saddlebrown")
-  plt.title("Poops Per Day")
-  plt.xlabel("Date")
-  plt.ylabel("Number of Poops")
-  plt.xticks(rotation=45)
-  plt.tight_layout()
-
-  # Save to in-memory buffer
-  buffer = BytesIO()
-  plt.savefig(buffer, format="png")
-  buffer.seek(0)
-  plt.close()
-
-  # Send to Discord
-  file = discord.File(buffer, filename="poops_per_day.png")
-  await ctx.channel.send(file=file)
 
 # Beer bitch functionality
 # /bb_iou
