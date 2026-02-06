@@ -263,7 +263,7 @@ async def refresh_members_table(db, guild):
 
         db.query(
             "INSERT INTO server_members (user, displayname) VALUES (%s, %s)",
-            (user_id, nickname)
+            (user_id, displayname)
         )
         db.commit()
 
