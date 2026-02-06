@@ -216,7 +216,7 @@ def make_poops_per_day_chart(poops):
   plt.tight_layout()
 
   buffer = BytesIO()
-  plt.savefig(format="jpeg", dpi=80)
+  plt.savefig(buffer, format="jpeg", dpi=80)
   buffer.seek(0)
   plt.close()
   return buffer
@@ -250,7 +250,7 @@ def make_poop_heatmap(poops):
     plt.tight_layout()
 
     buffer = BytesIO()
-    plt.savefig(format="jpeg", dpi=80)
+    plt.savefig(buffer, format="jpeg", dpi=80)
     buffer.seek(0)
     plt.close()
     return buffer
