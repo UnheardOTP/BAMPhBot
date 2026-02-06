@@ -16,13 +16,10 @@ import traceback
 import inspect
 import sys
 import asyncio
-<<<<<<< HEAD
 import matplotlib.pyplot as plt
 from collections import Counter
 from io import BytesIO
-=======
 from zoneinfo import ZoneInfo
->>>>>>> 9ee0703ba69f20f65276888cd5faf01b5bace09f
 
 ET = ZoneInfo("America/New_York")
 
