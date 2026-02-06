@@ -253,90 +253,6 @@ def make_poop_heatmap(poops):
     plt.close()
     return buffer
 
-def make_multi_user_heatmap_grid(poops):
-    # Group poops by user
-    users = {}
-    for row in poops:
-        uid = row['user']
-        name = row.get('nickname') or str(uid)
-        dt = row['datetime'].astimezone(ET)
-
-        if uid not in users:
-            users[uid] = {
-                "name": name,
-                "times": []
-            }
-
-        users[uid]["times"].append(dt)
-
-    user_ids = list(users.keys())
-    n_users = len(user_ids)
-
-    # Grid layout: square-ish
-    cols = math.ceil(math.sqrt(n_users))
-    rows = math.ceil(n_users / cols)
-
-    # Prepare figure
-    fig, axes = plt.subplots(rows, cols, figsize=(5 * cols, 4 * rows))
-    axes = np.array(axes).reshape(rows, cols)
-
-    # Compute global max for consistent color scaling
-    global_max = 0
-    heatmaps = {}
-
-    # First pass: build heatmaps
-    for uid in user_ids:
-        times = users[uid]["times"]
-        heatmap = np.zeros((7, 24), dtype=int)
-
-        for t in times:
-            dow = t.weekday()
-            hour = t.hour
-            heatmap[dow, hour] += 1
-
-        heatmaps[uid] = heatmap
-        global_max = max(global_max, heatmap.max())
-
-    # Second pass: plot each heatmap
-    for idx, uid in enumerate(user_ids):
-        r = idx // cols
-        c = idx % cols
-        ax = axes[r, c]
-
-        hm = heatmaps[uid]
-        name = users[uid]["name"]
-
-        im = ax.imshow(hm, aspect='auto', cmap='YlOrBr', vmin=0, vmax=global_max)
-
-        ax.set_title(name)
-        ax.set_xlabel("Hour")
-        ax.set_ylabel("Day")
-
-        ax.set_xticks(range(24))
-        ax.set_yticks(range(7))
-        ax.set_yticklabels(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"])
-
-    # Hide unused subplots
-    for idx in range(n_users, rows * cols):
-        r = idx // cols
-        c = idx % cols
-        axes[r, c].axis("off")
-
-    # Add one shared colorbar
-    fig.colorbar(im, ax=axes.ravel().tolist(), label="Poops")
-
-    fig.suptitle("Per‑User Poop Heatmaps", fontsize=18)
-
-    buffer = BytesIO()
-    fig.savefig(buffer, format="jpeg", dpi=80)
-    buffer.seek(0)
-    plt.close(fig)
-
-    return buffer
-
-
-
-
 def make_poops_per_user_chart(poops):
   names = [row['displayname'] or str(row['user']) for row in poops]
   counts = Counter(names)
@@ -879,8 +795,7 @@ async def poop_stats(ctx):
         discord.File(chart1, filename="poops_per_day.jpg"),
         discord.File(chart2, filename="poops_per_user.jpg"),
         discord.File(chart3, filename="poop_time_distribution.jpg"),
-        discord.File(chart4, filename="poop_heatmap.jpg"),
-        discord.File(chart5, filename="poop_heatmap_multi_user.jpg")
+        discord.File(chart4, filename="poop_heatmap.jpg")
     ]
 
     await ctx.channel.send("📊 **Poop Statistics Dashboard**")
