@@ -251,7 +251,19 @@ def make_time_of_day_chart(poops):
     plt.close()
     return buffer
 
+async def refresh_members_table(db, guild):
+    # Clear the table
+    db.execute("DELETE FROM server_members")
 
+    # Repopulate with current members
+    for member in guild.members:
+        user_id = member.id
+        nickname = member.display_name  # nickname or username fallback
+
+        db.execute(
+            "INSERT INTO server_members (user, nickname) VALUES (%s, %s)",
+            (user_id, nickname)
+        )
 
     
 def get_discipline_point_desc(db, user):
@@ -554,6 +566,16 @@ def dp_point_rankings(db):
 
 
 #region Cron Jobs
+# Flush and repopulate server membership @ midnight each day.
+@tasks.loop(time=time(hour=0, minute=0, tzinfo=ET))
+async def refresh_server_members():
+    guild = bot.get_guild(692123814989004862)
+    if guild is None:
+        return
+
+    await refresh_members_table(db, guild)
+    print("server_members table refreshed at midnight")
+
 
 # Check daily at 10am for bamph birthday
 @tasks.loop(hours=24)
@@ -620,6 +642,9 @@ async def on_ready():
     course_status_cron.start()
   if not pooper_check.is_running():
     pooper_check.start()
+  if not refresh_server_members.is_running():
+    refresh_server_members.start()
+
 
   channel = bot.get_channel(1245331722342629376)
   if channel:
@@ -661,6 +686,27 @@ async def tard(ctx, user: discord.Member):
 #endregion context commands
   
 #region Slash Commands
+@bot.slash_command(
+    name="refresh_members",
+    description="Refresh the server_members table with current server users",
+    guild_ids=[692123814989004862],
+    role_ids=[1092591212202045552]
+)
+async def refresh_members(ctx):
+
+    if ctx.channel.id != 1245331722342629376:
+        await ctx.respond(
+            f"This command can only be used in <#{ALLOWED_CHANNEL}>.",
+            ephemeral=True
+        )
+        return
+
+    await ctx.respond("Refreshing server members...", ephemeral=True)
+
+    guild = ctx.guild
+    await refresh_members_table(db, guild)
+
+    await ctx.channel.send("Server members table has been refreshed.")
 
 @bot.slash_command(name="meg",
                   description="Meg",
