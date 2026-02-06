@@ -21,9 +21,9 @@ import matplotlib.dates as mdates
 from collections import Counter
 from io import BytesIO
 from zoneinfo import ZoneInfo
+import numpy as np
 
 ET = ZoneInfo("America/New_York")
-
 
 #region Secrets
 with open('secrets.txt', 'r') as f:
@@ -221,6 +221,38 @@ def make_poops_per_day_chart(poops):
   return buffer
 
 
+def make_poop_heatmap(poops):
+    # Convert timestamps to ET if needed:
+    # times = [row['datetime'].astimezone(ET) for row in poops]
+
+    times = [row['datetime'] for row in poops]
+
+    # Prepare a 7x24 grid (days x hours)
+    heatmap = np.zeros((7, 24), dtype=int)
+
+    for t in times:
+        dow = t.weekday()      # Monday=0, Sunday=6
+        hour = t.hour          # 0–23
+        heatmap[dow, hour] += 1
+
+    plt.figure(figsize=(12, 6))
+    plt.imshow(heatmap, aspect='auto', cmap='YlOrBr')
+
+    plt.title("Poop Heatmap (Day of Week × Hour of Day)")
+    plt.xlabel("Hour of Day")
+    plt.ylabel("Day of Week")
+
+    plt.xticks(range(24))
+    plt.yticks(range(7), ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"])
+
+    plt.colorbar(label="Number of Poops")
+    plt.tight_layout()
+
+    buffer = BytesIO()
+    plt.savefig(buffer, format="png")
+    buffer.seek(0)
+    plt.close()
+    return buffer
 
 
 
@@ -761,11 +793,13 @@ async def poop_stats(ctx):
     chart1 = make_poops_per_day_chart(poops)
     chart2 = make_poops_per_user_chart(poops)
     chart3 = make_time_of_day_chart(poops)
+    chart4 = make_poop_heatmap(poops)
 
     files = [
         discord.File(chart1, filename="poops_per_day.png"),
         discord.File(chart2, filename="poops_per_user.png"),
-        discord.File(chart3, filename="poop_time_distribution.png")
+        discord.File(chart3, filename="poop_time_distribution.png"),
+        discord.File(chart4, filename="poop_heatmap.png")
     ]
 
     await ctx.channel.send(
