@@ -193,32 +193,33 @@ def missed_poop_check(db):
     asyncio.create_task(error_log(err))
 
 def make_poops_per_day_chart(poops):
-    # Convert to ET before extracting the date
-    dates = [
-        row['datetime'].astimezone(ET).date()
-        for row in poops
-    ]
+  dates = [row['datetime'].date() for row in poops]
+  counts = Counter(dates)
 
-    counts = Counter(dates)
-    x, y = zip(*sorted(counts.items()))
+  # Sort by date
+  sorted_items = sorted(counts.items())
+  dates_sorted = [d for d, _ in sorted_items]
+  counts_sorted = [c for _, c in sorted_items]
 
-    plt.figure(figsize=(10, 5))
-    plt.bar(x, y, color="saddlebrown")
-    plt.title("Poops Per Day")
-    plt.xlabel("Date")
-    plt.ylabel("Number of Poops")
+  # Turn dates into simple string labels
+  labels = [d.strftime('%m-%d') for d in dates_sorted]
+  x_positions = range(len(labels))
 
-    ax = plt.gca()
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%m-%d'))
+  plt.figure(figsize=(10, 5))
+  plt.bar(x_positions, counts_sorted, color="saddlebrown")
+  plt.title("Poops Per Day")
+  plt.xlabel("Date")
+  plt.ylabel("Number of Poops")
 
-    plt.xticks(rotation=45)
-    plt.tight_layout()
+  plt.xticks(x_positions, labels, rotation=45)
+  plt.tight_layout()
 
-    buffer = BytesIO()
-    plt.savefig(buffer, format="png")
-    buffer.seek(0)
-    plt.close()
-    return buffer
+  buffer = BytesIO()
+  plt.savefig(buffer, format="png")
+  buffer.seek(0)
+  plt.close()
+  return buffer
+
 
 
 
