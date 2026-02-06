@@ -254,72 +254,78 @@ def make_poop_heatmap(poops):
     return buffer
 
 def make_multi_user_heatmap_grid(poops):
-    # Group poops by user
     users = {}
     for row in poops:
         uid = row['user']
-        name = row.get('displayname') or str(uid)   # ✔ already using displayname
+        name = row.get('displayname') or str(uid)
         dt = row['datetime'].astimezone(ET)
 
         if uid not in users:
-            users[uid] = {
-                "name": name,
-                "times": []
-            }
+            users[uid] = {"name": name, "times": []}
 
         users[uid]["times"].append(dt)
 
     user_ids = list(users.keys())
     n_users = len(user_ids)
 
-    # Grid layout: square-ish
     cols = math.ceil(math.sqrt(n_users))
     rows = math.ceil(n_users / cols)
 
-    # Prepare figure
-    fig, axes = plt.subplots(rows, cols, figsize=(5 * cols, 4 * rows))
+    fig, axes = plt.subplots(rows, cols, figsize=(3 * cols, 2.5 * rows), constrained_layout=True)
     axes = np.array(axes).reshape(rows, cols)
 
-    # ✔ AM hours only
-    hours = range(0, 12)
+    hours = list(range(0, 12))
 
-    # Compute global max for consistent color scaling
     global_max = 0
     heatmaps = {}
 
-    # First pass: build heatmaps
     for uid in user_ids:
-        times = users[uid]["times"]
-
-        # ✔ Heatmap now 7 days × 12 hours
         heatmap = np.zeros((7, len(hours)), dtype=int)
 
-        for t in times:
+        for t in users[uid]["times"]:
             dow = t.weekday()
             hour = t.hour
-
-            if hour in hours:                     # ✔ Only AM hours
+            if hour < 12:
                 heatmap[dow, hour] += 1
 
         heatmaps[uid] = heatmap
         global_max = max(global_max, heatmap.max())
 
-    # Second pass: plot each heatmap
+    last_im = None
     for idx, uid in enumerate(user_ids):
         r = idx // cols
         c = idx % cols
         ax = axes[r, c]
 
         hm = heatmaps[uid]
-        name = users[uid]["name"]                 # ✔ Display name already stored
+        name = users[uid]["name"]
 
         im = ax.imshow(hm, aspect='auto', cmap='YlOrBr', vmin=0, vmax=global_max)
+        last_im = im
 
         ax.set_title(name)
         ax.set_xlabel("Hour (AM)")
         ax.set_ylabel("Day")
 
-        ax.set_xticks(range(len(hours)))         
+        ax.set_xticks(range(len(hours)))
+        ax.set_xticklabels([str(h) for h in hours])
+
+        ax.set_yticks(range(7))
+        ax.set_yticklabels(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"])
+
+    for idx in range(n_users, rows * cols):
+        axes[idx // cols, idx % cols].axis("off")
+
+    fig.colorbar(last_im, ax=axes.ravel().tolist(), label="Poops")
+
+    fig.suptitle("Per‑User Poop Heatmaps (AM Only)", fontsize=16)
+
+    buffer = BytesIO()
+    fig.savefig(buffer, format="jpeg", dpi=80)
+    buffer.seek(0)
+    plt.close(fig)
+
+    return buffer
 
 
 
