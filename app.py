@@ -885,8 +885,9 @@ async def poop_stats(ctx):
     ]
 
     await ctx.channel.send("📊 **Poop Statistics Dashboard**")
-    for filename, buffer in files:
-      await ctx.send(file=discord.File(buffer, filename=filename))
+    for f in files:
+      await ctx.send(file=f)
+
 
 
 
