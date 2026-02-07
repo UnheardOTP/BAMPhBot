@@ -1,28 +1,33 @@
-import os
-import discord
+# ────────────────────────────────────────────────
+# Standard Library
+# ────────────────────────────────────────────────
 from datetime import datetime, timedelta, date, time
-from discord.ext import commands, tasks
-import mysql.connector
-import pandas as pd
-from sqlalchemy import create_engine
-import requests
 import json
-from openai import OpenAI
-from bs4 import BeautifulSoup
-from fake_useragent import UserAgent
-from database import database
-import functions
 import traceback
-import inspect
-import sys
 import asyncio
-import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
 from collections import Counter
 from io import BytesIO
 from zoneinfo import ZoneInfo
-import numpy as np
 import math
+
+# ────────────────────────────────────────────────
+# Third‑Party Libraries
+# ────────────────────────────────────────────────
+import discord
+from discord.ext import commands, tasks
+import requests
+from openai import OpenAI
+from bs4 import BeautifulSoup
+from fake_useragent import UserAgent
+import matplotlib.pyplot as plt
+import numpy as np
+
+# ────────────────────────────────────────────────
+# Local Modules
+# ────────────────────────────────────────────────
+from database import database
+import functions
+
 
 ET = ZoneInfo("America/New_York")
 
